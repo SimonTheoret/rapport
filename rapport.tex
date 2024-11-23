@@ -506,7 +506,11 @@ le moteur de correction anglais est un modèle ELECTRA provenant de la librairie
 Transformers, qui a été affiné sur un corpus contenant des erreurs ainsi que
 des annotations contenant le type d'erreur. Il existe des modèles ELECTRA
 préentraînés sur des corpus francophone. Néanmoins, aucun d'entre eux ne
-respectent nos contraintes de tailles et de vitesse.
+respectent nos contraintes de tailles et de vitesse. Il faut donc entraîner un
+modèle à partir d'un initialisation aléatoire.
+
+Nous disposons de deux corpus déjà préparés pour préentraîner et affiner
+un modèle Electra. 
 
 Ces annotations proviennent d'annotateurs employés par Druide. Le corpus annoté
 regroupe près de 100000 annotations et est utilisé pour la tâche d'affinage.
