@@ -380,7 +380,7 @@
 	MLM & Modélisation de langage avec masque, de l'anglais
 	\textit{Masked Language Modeling}\\
 	TAL & Traitement automatique du langage\\
-	NER & reconnaissance d'entitées, de l'anglais
+	NER & Reconnaissance d'entitées, de l'anglais
 	\textit{Named-Entity Recognition}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
@@ -400,7 +400,10 @@
 
 \chapter*{Remerciements}
 
-...remerciements...
+Je tiens remercier Joss, pour sa précieuse aide tout au long de mon stage. Je
+n'aurais pas pu demander un meilleur superviseur. \\
+%TODO: En rajouter un ti peu
+Je remercie aussi Momo pour son support moral constant.
 
 %
 % Fin des pages liminaires.  À partir d'ici, les
@@ -427,7 +430,7 @@ outils d'apprentissages automatique. En effet, la plupart des modèles de
 langues récents sont préentraînés sur des corpus majoritairement anglophones,
 avec des jetoniseurs spécialisés pour traiter le contenu anglophone. Ces deux
 facteurs limitent les modèles préentraînés disponibles ainsi que leur
-performance sur des tâches avec un corpus non anglophone.
+performance sur des tâches avec un corpus non anglophone.\\
 
 Druide Inc. est une compagnie basée à Montréal dont le principal produit est
 Antidote, un logiciel de correction orthographique et grammaticale. Leur
@@ -439,7 +442,7 @@ moteur de correction. L'équipe de Druide désire mettre en place un modèle de
 correction similaire, mais adapté à la langue française. En particulier, ils
 désirent préentraîner un modèle ELECTRA avec un corpus et un jetoniseur
 francophones pour que le modèle puisse détecter les erreurs grammaticales
-présentes dans les textes des utilisateurs d'Antidote.
+présentes dans les textes des utilisateurs d'Antidote.\\
 
 Pour la réalisation du projet, nous disposons d'un jeu de données d'environ 40
 GB de données non structuré. De plus, l'entraînement du modèle se fait
@@ -464,14 +467,14 @@ doit être rapide durant l'inférence. Finalement, le logiciel antidote cible
 deux système d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur
 les machines des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime}
 et CoreML.\@ Il est donc nécessaire que le modèle soit compatible avec les deux
-librairies.
+librairies. \\
 
 Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner
 des petits modèles Transformers\cite{vaswani2023attentionneed} avec
 encodeur. Ces derniers contiennent environ 14 millions de paramètres.
 
 \section{Méthode de préentraînement ELECTRA}
-% TODO: Ajouter citation de ELECTRA
+
 La méthode ELECTRA\cite{clark2020electrapretrainingtextencoders} est une
 méthode inspirée de la modélisation de langage avec masque (Masked Language
 Modeling; MLM), mais qui se veut plus efficace et rapide que le MLM. La méthode
@@ -482,7 +485,7 @@ position du masque. Les prédictions du modèle sont échantillonnés, de façon
 obtenir une nouvelle séquence, potentiellement différente de la séquence
 originale. Le discriminant reçoit la nouvelle séquence et à pour tâche de
 prédire quels jetons sont corrompus et lesquels n'ont pas été modifiés par le
-générateur. Seul le discriminant est réutilisé pour l'affinage.
+générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est visualisée dans la figure %TODO: Insérer figure d'entraînement de ELECTRA ici!\\
 
 Trois éléments rendent l'entraînement du discriminant plus facile.
 Premièrement, le générateur dispose de significativement moins de capacité que
@@ -495,7 +498,7 @@ du générateur sont initialisés aléatoirement et ce dernier est entraîné en
 temps que le discriminant, rendant la tâche de plus en plus difficile au fur et
 à mesure que le générateur s'entraîne. Ces trois facteurs rendent la tâche du
 discriminant plus facile et permettent de générer des erreurs similaire à ce
-que le modèle rencontrera en production.
+que le modèle rencontrera en production.\\
 
 La méthode ELECTRA a été choisie pour deux raisons: c'est une méthode de
 préentraînement similaire à la correction d'erreurs dans un texte et la méthode
@@ -527,7 +530,7 @@ Transformers\cite{wolf-etal-2020-transformers} permet un usage libre de
 différents modèles ELECTRA préentraînés. De plus, il existe quelques modèles
 ELECTRA préentraînés sur des corpus francophone. Cependant, aucun d'entre eux
 ne respectent nos contraintes de tailles et de vitesse. Il est donc nécessaire
-d'entraîner un modèle à partir d'un initialisation aléatoire.
+d'entraîner un modèle à partir d'un initialisation aléatoire.\\
 
 Nous disposons de deux corpus déjà préparés pour préentraîner et affiner un
 modèle Electra. Le corpus de préentraînement est une collection de textes non
@@ -539,7 +542,8 @@ pour le préentraînement par Google du modèle ELECTRA de même taille. Pour
 l'affinage, Druide dispose d'un corpus contenant près de 100000 annotations sur
 des textes francophones. Ces annotation sont fournies par Druide et proviennent
 d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
-les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par Druide.
+les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
+Druide.
 %TODO: Insérer un exemple d'annotation
 
 \chapter{Préentraînement d'un modèle initial}
