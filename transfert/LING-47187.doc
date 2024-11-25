@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LING-47187] Implémentation Electra originale</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://dagda.druide/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LING-47187]&nbsp;<a href="https://dagda.druide/browse/LING-47187">Implémentation Electra originale</a>
+            <span class="subText">
+               Création: 2024-08-06                   &nbsp;Mise à jour: 2024-10-02
+
+                                                    &nbsp;Résolue: 2024-10-02
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>État:</b></td>
+        <td width="80%">Fermé</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Projet:</b></td>
+        <td width="80%"><a href="https://dagda.druide/secure/BrowseProject.jspa?id=10905">LibLing</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Composants:</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affecte la/les version(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Version(s) corrigée(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Nouveauté
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priorité:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Normale
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Rapporteur:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_reporter_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Responsable:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_assignee_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Résolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Réglé
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Étiquettes:</b>
+        </td>
+        <td id="labels-324646-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            Aucune
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Estimation restante:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Temps consacré:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Estimation originale:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+                                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Tri:</b></td>
+                <td id="customfield_10700-324646-value" class="value" bgcolor="#ffffff" width="80%">    Indéterminé
+</td>
+            </tr>
+                                                                                                                                                            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Descriptif</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=scharest" class="user-hover" rel="scharest">Simon Charest</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=sgazali" class="user-hover" rel="sgazali">Saif Gazali</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=ntrudel" class="user-hover" rel="ntrudel">Nicolas Trudel-Mallet</a></p>
+
+<p>J'ai mis sur GitLab le <a href="https://git.druide.com/dev/electra-tensorflow" class="external-link" target="_blank" rel="nofollow noopener">dépôt</a> contenant l'implémentation originale d'Electra, utilisant la librairie TensorFlow. J'y ai mis la liste des dépendances Conda et pip, ce qui devrait permettre de reproduire l'environnement fonctionnel sur une machine Linux. J'ai ajouté quelques modifications, notamment des paramètres par défauts adaptés au français. Le modèle est désormais avec casse et ne retire pas les accents.</p>
+
+<p>De plus, j'ai ajouté une configuration <em>mini</em>, qui consiste en un Electra avec uniquement 3 couches. Finalement, j'ai ajouté un script permettant de convertir un modèle Electra sauvegardé avec le format TensorFlow en format Pytorch.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+Généré à Mon Nov 25 13:39:55 EST 2024 par Simon Th&amp;eacute;or&amp;ecirc;t avec Jira 9.12.1#9120001-sha1:8c0c8f70eab515e2bf355d9d5534c5f201e526a9.
+
+</body>
+</html>

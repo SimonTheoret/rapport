@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LING-47047] Pré-entraînement d&#39;un modèle Fast-Electra</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://dagda.druide/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LING-47047]&nbsp;<a href="https://dagda.druide/browse/LING-47047">Pré-entraînement d&#39;un modèle Fast-Electra</a>
+            <span class="subText">
+               Création: 2024-07-17                   &nbsp;Mise à jour: 2024-11-11
+
+                                                    &nbsp;Résolue: 2024-11-11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>État:</b></td>
+        <td width="80%">Fermé</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Projet:</b></td>
+        <td width="80%"><a href="https://dagda.druide/secure/BrowseProject.jspa?id=10905">LibLing</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Composants:</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affecte la/les version(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Version(s) corrigée(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Tâche
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priorité:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Normale
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Rapporteur:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_reporter_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Responsable:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_assignee_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Résolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Réglé
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Étiquettes:</b>
+        </td>
+        <td id="labels-323039-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            CorrectionNeuronale                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Estimation restante:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Temps consacré:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Estimation originale:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Pièces jointes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                    <img src="https://dagda.druide/images/icons/attach/file.gif" height="16" width="16" border="0" alt="Fichier" role="presentation">
+                    hp_optuna_fast_electra.json &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/image.gif" height="16" width="16" border="0" alt="Fichier PNG" role="presentation">
+                    image-2024-08-19-12-04-26-316.png &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/image.gif" height="16" width="16" border="0" alt="Fichier PNG" role="presentation">
+                    image-2024-08-19-12-04-59-516.png &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+                                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Tri:</b></td>
+                <td id="customfield_10700-323039-value" class="value" bgcolor="#ffffff" width="80%">    Indéterminé
+</td>
+            </tr>
+                                                                                                                                    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Descriptif</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>La technique Fast-Electra, décrite dans l'article <a href="https://arxiv.org/pdf/2310.07347" class="external-link" target="_blank" rel="nofollow noopener">Fast-Electra for Efficient Pretraining</a> est une modification de la méthode <a href="https://arxiv.org/pdf/2003.10555" class="external-link" target="_blank" rel="nofollow noopener">Electra</a>. En effet, cette dernière méthode est très sensible aux choix d'hyperparamètres et fait usage d'un modèle auxiliaire durant l'entraînement, ce qui augmente la durée de la phase de pré-entraînement. </p>
+
+<p>La méthode Fast-Electra cherche à palier à ce problèmes en étant plus stable durant l'entraînement, en étant moins plus performante et en faisant usage d'un seul modèle à la fois. De plus, il n'est pas nécessaire d'entraîner un générateur si l'on possède un modèle auxiliaire adapté à la tâche et au modèle utilisé. La technique employée dans l'article de Fast-Electra a deux parties:</p>
+<ol>
+	<li>Générer un corpus dont certains jetons sont corrompus à l'aide du modèle auxiliaire déjà entraîné. Pour générer des exemples plus faciles à identifier pour le modèle principal, les auteurs de l'article proposent de modifier la température de la distribution du modèle auxiliaire et d'échantillonner depuis cette nouvelle distribution. Cette hausse de la température rapproche la distribution générée par le modèle à une distribution uniforme. Finalement, la température est diminuée linéairement tout au long de l'entraînement jusqu'à atteindre 1.0.</li>
+	<li>Entraîner le modèle principal à prédire quels mots ont été corrompus par le modèle auxiliaire. Cette seconde tâche est essentiellement identique à la tâche originale de Electra, mais est plus rapide et plus stable.</li>
+</ol>
+
+
+<p>Dans l'article original de Fast-Electra, les auteurs utilisent un jetoniseur avec un vocabulaire de près de 128K jetons.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Commentaires</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-549889"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-07-17</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-549889"><td bgcolor="#ffffff">
+            <p>J'ai générer un Corpus (partie 1 de la technique Fast-Electra) avec une température initiale de 2.0. J'ai par la suite débuté les tests d'entraînement pour le modèle Fast-Electra. Cependant, mes tests préliminaires indiquent que les modèle ne fait de prédire la classe majoritaire à partir de son initialisation actuelle. J'ai tenté les approches suivantes:</p>
+<ol>
+	<li>Augmenter le poids des jetons corrompus. Un jeton corrompu prédit comme n'étant pas corrompu augmentera 10 fois plus la perte qu'un jeton normal prédit comme étant corrompu.</li>
+	<li>Changer la distribution d'initialisation des poids du modèles à une distribution Xavier uniforme.</li>
+	<li>Grandement augmenter le taux d'apprentissage initial. En ayant un haut taux d'apprentissage initial, le modèle pourrait rapidement quitter la zone entourant le minimum local et trouver un nouveau minimum local.</li>
+</ol>
+
+
+<p>Malheureusement, aucune de ces approches ou combinaisons d'approches n'a permis permis au modèle de suivre un pré-entraînement pertinent.</p>
+
+<p>Cependant, la 3ème méthode à pousser le modèle à alterner entre prédire uniquement la classe majoritaire et prédire uniquement la classe minoritaire. Il pourrait être intéressant de combiner un taux d'apprentissage initialement élevé, suivi d'un retour à un taux d'apprentissage normal.</p>
+        </td></tr>
+                <tr id="comment-header-549897"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-07-17</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-549897"><td bgcolor="#ffffff">
+            <p>J'ai regardé quelques exemples d'un corpus de Fast-Electra, générés avec une température de 2.0. Plusieurs jetons corrompus sont trop similaires aux jetons originaux. J'ai relancé la création du corpus Fast-Electra avec le corpus A12, mais cette fois-ci avec une température de 3.0.</p>
+
+<p>De plus, j'ai suivi la suggestion de <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> et j'ai brièvement testé la méthodologie d'entraînement de Fast-Electra avec un modèle qui avait déjà été pré-entraîné avec la technique Electra. Ce dernier modèle performe bien sur diverses tâches (DMM et correction neuronale) et est testé sur le nouveau corpus, qui a été généré avec une température de 3.0. Le comportement du modèle était ce à quoi on s'attend lors d'un entraînement: Il fait des prédictions diversifiées et obtient même, après plusieurs itérations, un excellent rappel. Ce test me pousse à croire que le problème actuel est avant tout un problème d'initialisation.</p>
+        </td></tr>
+                <tr id="comment-header-551272"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-07-23</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-551272"><td bgcolor="#ffffff">
+            <p>J'ai lancé l'entraînement de Fast-Electra sur corpus de Fast-Electra avec une température de 3.0. Cependant, le modèle continue de prédire uniquement la classe majoritaire. De plus, en inspectant quelques résultats, j'ai remarqué que les phrases du début du corpus (c'est-à-dire les phrases modifiées avec une température élevée) sont souvent trop modifiées:</p>
+
+<p><b>Phrase originale</b>: 'La recherche européenne est fragmentée, elle manque de coordination et est sous - financée en comparaison aux États - Unis, a déclaré M. Douste - Blazy.'</p>
+
+<p><b>Phrase modifiée</b>: 'La recherche européenne est fragmentée, elle manque de intelligents et est trahir choisie financée en comparaison aux États démoli Unis, aPE Mrud Douste - Blazy de'</p>
+
+<p><b>Température:</b> 3.0</p>
+
+<p><b>Phrase originale</b>: 'Depuis la démission en 1985 de son père fondateur, le Parti québécois a choisi en 2001 son quatrième successeur.'</p>
+
+<p><b>Phrase modifiée</b>: 'Depuis la démission en 1985 occupait son majoritaire fondateur, 12e Parti québécois a choisi en 2001 son rival successeur. tes'</p>
+
+<p><b>Température</b>: 3.0</p>
+
+<p>J'ai relancé la création du corpus, mais cette fois-ci en corrompant uniquement 7.5% des jetons, au lieu de 15%.</p>
+        </td></tr>
+                <tr id="comment-header-553583"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-07-31</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-553583"><td bgcolor="#ffffff">
+            <p>J'ai complété un premier pré-entraînement fructueux de Fast-Electra. L'entraînement a duré environ 36 heures. Un entraînement avec Electra (avec l'implémentation TensorFlow) dure environ 120 heures. J'ai utilisé la configuration d'entraînement suivante:</p>
+<ul>
+	<li>Optimisateur: implémentation HuggingFace de AdamW, <em>sans</em> correction du bias et avec une weight decay de 0.01</li>
+	<li>Taux d'apprentissage de 5e-5, au lieu de 5e-4</li>
+	<li>Initialisation des poids avec la distribution uniforme Xavier (implémentation Pytorch)</li>
+	<li>Taille de lot: 256</li>
+</ul>
+
+
+<p>Je vais tenter de trouver quel paramètre ou combinaison de paramètres à permis un entraînement de Fast-Electra.</p>
+        </td></tr>
+                <tr id="comment-header-553632"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-07-31</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-553632"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret" class="user-hover" rel="stheoret">Simon Théorêt</a> , pourrais-tu créer un dépôt git.druide avec ton implémentation pour la génération du corpus d'entrainement et l'entrainement?</p>
+        </td></tr>
+                <tr id="comment-header-555044"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-06</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-555044"><td bgcolor="#ffffff">
+            <p>Voici le dépôt gitlab: <a href="https://git.druide.com/dev/fast-electra" class="external-link" target="_blank" rel="nofollow noopener">https://git.druide.com/dev/electra-fr</a></p>
+        </td></tr>
+                <tr id="comment-header-555076"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-06</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-555076"><td bgcolor="#ffffff">
+            <p>Avant de trouver la configuration d'entraînement fonctionnelle, j'ai tenté les expériences suivantes, toujours avec un corpus ayant une température initiale de 3.0 et 7.5% des jetons masqués. De plus, la taille de lot est de 256.</p>
+<ul>
+	<li>Entraînement avec architecture Electra-small</li>
+	<li>Entraînement avec architecture Electra-base</li>
+	<li>Entraînement avec architecture Electra-base et donner un poids aux jetons modifiées de 14 dans la perte</li>
+	<li>Entraînement avec architecture Electra-small et donner un poids aux jetons modifiées de 14 dans la perte</li>
+	<li>Entraînement avec architecture Electra-small, donner un poids aux jetons modifiées de 14 dans la perte et l'implémentation HuggingFace de AdamW, <b>sans</b> correction du bias et <em>weight decay</em> de 0.01</li>
+	<li>Surapprentissage sur un unique exemple</li>
+</ul>
+
+
+<p>Les paramètres non spécifiés sont identiques aux paramètres rapportés dans l'implémentation officielle d'Electra</p>
+        </td></tr>
+                <tr id="comment-header-556303"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-556303"><td bgcolor="#ffffff">
+            <p>J'ai trouvé une nouvelle configuration fonctionnelle, plus proche des standards de pré-entraînement actuels. Il est suffisant d'utiliser le corpus de Fast-Electra avec une température initiale de 3.0 et 7.5% des jetons masqués, ainsi qu'une taille de lot de 128. La seule différence avec l'entraînement rapporté dans l'article d'Electra sont:</p>
+<ul>
+	<li>L'usage de l'implémentation Pytorch de AdamW, qui fait automatiquement la correction du bias</li>
+	<li>Taux d'apprentissage de 5e-5 au lieu de 5e-4.</li>
+</ul>
+
+
+<p>Je vais pouvoir comparer la performances des deux configurations fonctionnelles sur la tâche de <a href="https://dagda.druide/browse/LING-47041" class="external-link" rel="nofollow">correction neuronale.</a></p>
+        </td></tr>
+                <tr id="comment-header-557725"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-19</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-557725"><td bgcolor="#ffffff">
+            <p>J'ai apporté une modification quant à la température lors de la génération du corpus de Fast-Electra. Avant la modification, la température descendait très lentement et n'atteignait jamais 1. Cela avait comme effet de générer des courbes d'entraînement pour la mesure f0.5 comme celle-ci: <span class="image-wrap" style=""><img src="https://dagda.druide/secure/attachment/156529/156529_image-2024-08-19-12-04-59-516.png" style="border: 0px solid black" /></span></p>
+
+<p>La performance du modèle diminuait progressivement puisque la tâche devient de plus en plus difficile. Lorsque la tâche était proche de sa difficulté maximale, le taux d'apprentissage était très bas.</p>
+
+<p>J'ai modifié la température au cours de la génération du corpus pour que les paramètres soient similaires aux paramètres utilisés dans l'article de Fast-Electra. Les résultats préliminaires semblent indiquer que le modèle se comporte mieux: <span class="image-wrap" style=""><img src="https://dagda.druide/secure/attachment/156530/156530_image-2024-08-19-12-04-26-316.png" style="border: 0px solid black" /></span></p>
+
+<p>Je vais comparer la performance d'un modèle sur la tâche de <a href="https://dagda.druide/browse/LING-47041" class="external-link" rel="nofollow">correction neuronale</a></p>
+
+<p>J'ai apporté les modifications suivantes:</p>
+<ul>
+	<li>Température initiale: 3.0 à 2.0</li>
+	<li>Nombre d'itérations 2 500 000 à nombre d'itérations dans le jeu de données</li>
+	<li>Probabilité de jetons masqués: 7.5% à 15%</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-561488"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-30</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-561488"><td bgcolor="#ffffff">
+            <p>J'ai tenté de reproduire le plus fidèlement possible la sélection d'hyperparamètres de l'article de Fast-Electra. Cependant, je n'ai pas utilisé les paramètres suivants:</p>
+<ul>
+	<li>Admin durant le préentraînement</li>
+	<li>Profondeur du modèle auxiliaire de 4 au lieu de 12</li>
+	<li>Largeur du modèle auxiliaire</li>
+	<li>Taille de lot de 2048</li>
+</ul>
+
+
+<p>Néanmoins, j'ai obtenu un modèle préentraîné qui performe mieux que le modèle Electra-fr-casse sur la tâche d'Electra. J'ai préentraîné d'autres modèles à l'aide de Fast-Electra. La plupart d'entre eux performent mieux qu’Electra sur la tâche d'Electra. Les résultats des préentraînements sont disponibles sur le serveur MLFlow, sous l'expérience <b>Fast_Electra</b> et les résultats des évaluations sont disponibles sous l'expérience <b>eval-electras</b>. Ces évaluations estiment la performance des modèles sur la tâche d'Electra. Voici les résultats:</p>
+
+<p> </p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>AUC</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-corrige-papier</td>
+<td class='confluenceTd'>0.9298</td>
+<td class='confluenceTd'>0.7796</td>
+<td class='confluenceTd'>0.8358</td>
+<td class='confluenceTd'>0.6144</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-corrige</td>
+<td class='confluenceTd'>0.9187</td>
+<td class='confluenceTd'>0.7664</td>
+<td class='confluenceTd'>0.8253</td>
+<td class='confluenceTd'>0.5963</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-full-train</td>
+<td class='confluenceTd'>0.8798</td>
+<td class='confluenceTd'>0.7230</td>
+<td class='confluenceTd'>0.8789</td>
+<td class='confluenceTd'>0.4230</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-casse</td>
+<td class='confluenceTd'>0.8205</td>
+<td class='confluenceTd'>0.7096</td>
+<td class='confluenceTd'>0.8274</td>
+<td class='confluenceTd'>0.4521</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-premiere-config</td>
+<td class='confluenceTd'>0.8565</td>
+<td class='confluenceTd'>0.6704</td>
+<td class='confluenceTd'>0.8338</td>
+<td class='confluenceTd'>0.3578</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>Le seul modèle entraîné avec la méthode Electra est le modèle  Electra-fr-casse.  Actuellement, c'est le modèle Electra ayant le mieux performé sur la tâche de correction neuronale. Les autres modèles ont été préentraînés avec la méthode Fast-Electra. J'ai lancé une recherche d'hyperparamètres avec le meilleur modèle, c'est-à-dire Fast-Electra-corrige-papier.</p>
+
+<p> </p>
+        </td></tr>
+                <tr id="comment-header-561502"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-30</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-561502"><td bgcolor="#ffffff">
+            <p>J'ai trois autres approches à tester quant au pré-entraînement de Fast-Electra:</p>
+<ol>
+	<li>Utiliser Admin durant le pré-entraînement</li>
+	<li>Générer le corpus de Fast-Electra avec le corpus de A12FR nettoyé (voir <a href="https://dagda.druide/browse/LING-47325" class="external-link" rel="nofollow">billet</a> du nettoyage)</li>
+	<li> Changer la couche de classification ou couches d'encodeur linéaires en des couches KAN</li>
+</ol>
+
+        </td></tr>
+                <tr id="comment-header-564141"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-09-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-564141"><td bgcolor="#ffffff">
+            <p>J'ai complété la recherche d'hyper-paramètres avec Fast-Electra pour la tâche de correction neuronale. J'ai obtenu une f-mesure maximale de 38,74. Néanmoins, une recherche d'hyper-paramètres avec Electra a permis d'atteindre une f-mesure de 41,23. Je compte tester les approches de mon commentaire précédent, suivi d'une recherche d'hyper-paramètres sur la tâche de correction-neuronale. </p>
+
+<p>Le fichier <span class="nobr"><a href="https://dagda.druide/secure/attachment/158645/158645_hp_optuna_fast_electra.json" title="hp_optuna_fast_electra.json attached to LING-47047">hp_optuna_fast_electra.json<sup><img class="rendericon" src="https://dagda.druide/images/icons/link_attachment_7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span> contient les hyper-paramètres utilisés ainsi que la f-mesure qui en résulte. La f0.5 correspond à la f-mesure de la dernière époque.</p>
+        </td></tr>
+                <tr id="comment-header-585320"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-11-11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-585320"><td bgcolor="#ffffff">
+            <p>L'entraînement d'un modèle Fast-Electra est instable et le modèle final performe souvent moins bien qu'un modèle Electra. Je ferme le billet.</p>
+        </td></tr>
+            </table>
+Généré à Mon Nov 25 13:39:33 EST 2024 par Simon Th&amp;eacute;or&amp;ecirc;t avec Jira 9.12.1#9120001-sha1:8c0c8f70eab515e2bf355d9d5534c5f201e526a9.
+
+</body>
+</html>

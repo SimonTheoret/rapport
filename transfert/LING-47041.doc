@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LING-47041] Correction neuronale (FR) à l&#39;aide des modèles Electra préentraînés</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://dagda.druide/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LING-47041]&nbsp;<a href="https://dagda.druide/browse/LING-47041">Correction neuronale (FR) à l&#39;aide des modèles Electra préentraînés</a>
+            <span class="subText">
+               Création: 2024-07-16                   &nbsp;Mise à jour: 2024-11-11
+
+                                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>État:</b></td>
+        <td width="80%">Ouvert</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Projet:</b></td>
+        <td width="80%"><a href="https://dagda.druide/secure/BrowseProject.jspa?id=10905">LibLing</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Composants:</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affecte la/les version(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Version(s) corrigée(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Tâche
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priorité:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Normale
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Rapporteur:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_reporter_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Responsable:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_assignee_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Résolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+            				Non résolu
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Étiquettes:</b>
+        </td>
+        <td id="labels-322946-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            Aucune
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Estimation restante:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Temps consacré:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Estimation originale:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Pièces jointes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                    <img src="https://dagda.druide/images/icons/attach/file.gif" height="16" width="16" border="0" alt="Fichier" role="presentation">
+                    optimisations.json &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/file.gif" height="16" width="16" border="0" alt="Fichier" role="presentation">
+                    types.json &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+                                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Tri:</b></td>
+                <td id="customfield_10700-322946-value" class="value" bgcolor="#ffffff" width="80%">    Indéterminé
+</td>
+            </tr>
+                                                                                                                                    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Descriptif</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <h3><a name="Sommaire"></a>Sommaire</h3>
+
+<p>J'ai comparé la performance de différents modèles Electra pré-entraînés sur le corpus A12 et affiné sur la tâche de mots manquants (Voir <a href="https://dagda.druide/browse/LING-47034" class="external-link" rel="nofollow">billet sur la détection des mots manquants</a>). La tâche de correction neuronale consiste à identifier les types de correction dans un corpus de phrases fautives. La liste des types est contenue dans le fichier <span class="nobr"><a href="https://dagda.druide/secure/attachment/153773/153773_types.json" title="types.json attached to LING-47041">types.json<sup><img class="rendericon" src="https://dagda.druide/images/icons/link_attachment_7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span></p>
+<h3><a name="R%C3%A9sultats"></a>Résultats</h3>
+
+<p>J'ai obtenu les résultats suivants:</p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-0</td>
+<td class='confluenceTd'>39.59</td>
+<td class='confluenceTd'>23.84</td>
+<td class='confluenceTd'>34.97</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-1</td>
+<td class='confluenceTd'>40.22</td>
+<td class='confluenceTd'>24.46</td>
+<td class='confluenceTd'>35.63</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-2</td>
+<td class='confluenceTd'>39.85</td>
+<td class='confluenceTd'>24.88</td>
+<td class='confluenceTd'>35.57</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse</td>
+<td class='confluenceTd'>42.59</td>
+<td class='confluenceTd'>25.81</td>
+<td class='confluenceTd'>37.69</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-europeana-base</td>
+<td class='confluenceTd'>39.61</td>
+<td class='confluenceTd'>29.46</td>
+<td class='confluenceTd'>37.06</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base</td>
+<td class='confluenceTd'>44.74</td>
+<td class='confluenceTd'>29.3</td>
+<td class='confluenceTd'>40.47</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-60-époques</td>
+<td class='confluenceTd'>38.32</td>
+<td class='confluenceTd'>27.3</td>
+<td class='confluenceTd'>35.45</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>Le modèle Camembert-base-60-époques a été entraîné à titre indicatif: <a href="https://dagda.druide/secure/ViewProfile.jspa?name=ntrudel" class="user-hover" rel="ntrudel">Nicolas Trudel-Mallet</a> avait précédemment entraîné un modèle Camembert-base sur la même tâche (voir <a href="https://dagda.druide/browse/LING-44697" class="external-link" rel="nofollow">le billet associé</a>) avec un corpus différent. Il avait obtenu les résultats suivants pour Camembert-base-60-époques: </p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+</tr>
+<tr>
+<td class='confluenceTd'>44,26</td>
+<td class='confluenceTd'>27,34</td>
+<td class='confluenceTd'>39,39</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>Le modèle Camembert-base a été affiné pendant 100 époques.</p>
+<h3><a name="Provenancedesmod%C3%A8les"></a>Provenance des modèles</h3>
+<ul>
+	<li>Tous les modèles, à l'exception des modèles Camembert-base ainsi que Camembert-base-60-époques, ont été préalablement affinés sur la tâche de détection des mots manquants (voir <a href="https://dagda.druide/browse/LING-47034" class="external-link" rel="nofollow">billet sur la détection des mots manquants</a> pour leurs performance préalable). Ces deux modèles ont été sélectionné directement depuis le Hub de HuggingFace.</li>
+</ul>
+
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Commentaires</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-557697"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-19</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-557697"><td bgcolor="#ffffff">
+            <p>Voici les résultats de l'affinage des deux modèles pré-entraînés avec Fast-Electra:</p>
+
+<p> </p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-0</td>
+<td class='confluenceTd'>39.59</td>
+<td class='confluenceTd'>23.84</td>
+<td class='confluenceTd'>34.97</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-1</td>
+<td class='confluenceTd'>40.22</td>
+<td class='confluenceTd'>24.46</td>
+<td class='confluenceTd'>35.63</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-2</td>
+<td class='confluenceTd'>39.85</td>
+<td class='confluenceTd'>24.88</td>
+<td class='confluenceTd'>35.57</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse</td>
+<td class='confluenceTd'>42.59</td>
+<td class='confluenceTd'>25.81</td>
+<td class='confluenceTd'>37.69</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-europeana-base</td>
+<td class='confluenceTd'>39.61</td>
+<td class='confluenceTd'>29.46</td>
+<td class='confluenceTd'>37.06</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base</td>
+<td class='confluenceTd'>44.74</td>
+<td class='confluenceTd'>29.3</td>
+<td class='confluenceTd'>40.47</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-60-époques</td>
+<td class='confluenceTd'>38.32</td>
+<td class='confluenceTd'>27.3</td>
+<td class='confluenceTd'>35.45</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-complet</td>
+<td class='confluenceTd'>28.93</td>
+<td class='confluenceTd'>21.67</td>
+<td class='confluenceTd'>27.11</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-partiel</td>
+<td class='confluenceTd'>31.17</td>
+<td class='confluenceTd'>19.1</td>
+<td class='confluenceTd'>27.67</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>Le modèle Fast-Electra-complet correspond au modèle préentraîné sur tout le corpus A12FR, tandis que le modèle Fast-Electra-partiel correspond au modèle préentraîné sur le tiers du corpus A12FR. À la différence des modèles Electra-fr du tableau, ces deux modèles n'ont pas été affinés sur la tâche de détection des mots manquants préalablement.</p>
+
+
+<p>Je vais générer un corpus Fast-Electra auxiliaire en utilisant des hyperparamètres plus proches de ceux décrits dans l'article de Fast-Electra.</p>
+
+<p> </p>
+        </td></tr>
+                <tr id="comment-header-564137"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-09-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-564137"><td bgcolor="#ffffff">
+            <p>J'ai lancé un recherche d'hyper-paramètres pour le modèle Electra, basé sur le modèle Electra-fr-casse. Le modèle n'a pas été affiné sur la tâche de DMM avant d'être affiné sur la tâche de correction neuronale. De plus, tel qu'indiqué dans le <a href="https://dagda.druide/browse/LING-47047" class="external-link" rel="nofollow">billet de Fast-Electra</a>, j'ai effectué une recherche d'hyper-paramètres pour le modèle Fast-Electra performant le mieux sur la tâche d'Electra. Voici le tableau des modèles sur la tâche de correction neuronale:</p>
+
+<p> </p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-0</td>
+<td class='confluenceTd'>39.59</td>
+<td class='confluenceTd'>23.84</td>
+<td class='confluenceTd'>34.97</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-1</td>
+<td class='confluenceTd'>40.22</td>
+<td class='confluenceTd'>24.46</td>
+<td class='confluenceTd'>35.63</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-2</td>
+<td class='confluenceTd'>39.85</td>
+<td class='confluenceTd'>24.88</td>
+<td class='confluenceTd'>35.57</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse</td>
+<td class='confluenceTd'>42.59</td>
+<td class='confluenceTd'>25.81</td>
+<td class='confluenceTd'>37.69</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-europeana-base</td>
+<td class='confluenceTd'>39.61</td>
+<td class='confluenceTd'>29.46</td>
+<td class='confluenceTd'>37.06</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base</td>
+<td class='confluenceTd'>44.74</td>
+<td class='confluenceTd'>29.3</td>
+<td class='confluenceTd'>40.47</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-60-époques</td>
+<td class='confluenceTd'>38.32</td>
+<td class='confluenceTd'>27.3</td>
+<td class='confluenceTd'>35.45</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-complet</td>
+<td class='confluenceTd'>28.93</td>
+<td class='confluenceTd'>21.67</td>
+<td class='confluenceTd'>27.11</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-partiel</td>
+<td class='confluenceTd'>31.17</td>
+<td class='confluenceTd'>19.1</td>
+<td class='confluenceTd'>27.67</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-corrige-papier</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>38.74</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse (Optuna)</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>41.23</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>Les valeurs de précision ainsi que de rappel n'ont pas été enregistrés durant la recherche d'hyper-paramètres. La f-mesure rapportée est la f-mesure maximale atteinte durant la recherche d'hyper-paramètres.</p>
+
+<p>Le fichier <span class="nobr"><a href="https://dagda.druide/secure/attachment/158635/158635_optimisations.json" title="optimisations.json attached to LING-47041">optimisations.json<sup><img class="rendericon" src="https://dagda.druide/images/icons/link_attachment_7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span> contient les hyper-paramètres utilisés ainsi que la f-mesure qui en résulte pour Electra. La mesure f0.5 rapportée dans le fichier correspond à la f-mesure de la dernière époque, et non pas la f-mesure maximale.</p>
+        </td></tr>
+                <tr id="comment-header-573349"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-10-02</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-573349"><td bgcolor="#ffffff">
+            <p>J'ai entraîné un nouveau modèle Electra, mais avec 2 différences importantes.</p>
+<ol>
+	<li>J'ai utilisé le jetoniseur SentencePiece au lieu du jetoniseur WordPiece, tel que suggéré par <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> </li>
+	<li>J'ai créé un corpus de phrases annotées à partir des données de AWeb.  Seules les annotations acceptées par les utilisateurs sont présentes dans le nouveau corpus.</li>
+</ol>
+
+
+<p>Le nouveau modèle performe mieux que l'ancien meilleur modèle:</p>
+
+<p> </p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+<td class='confluenceTd'> </td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse (Optuna)</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>41.23</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'><b>46.39</b> (+5.16)</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p> </p>
+
+<p> </p>
+
+<p>Voici les résultats complets, en prenant en compte le nouveau modèle:</p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-0</td>
+<td class='confluenceTd'>39.59</td>
+<td class='confluenceTd'>23.84</td>
+<td class='confluenceTd'>34.97</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-1</td>
+<td class='confluenceTd'>40.22</td>
+<td class='confluenceTd'>24.46</td>
+<td class='confluenceTd'>35.63</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-2</td>
+<td class='confluenceTd'>39.85</td>
+<td class='confluenceTd'>24.88</td>
+<td class='confluenceTd'>35.57</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse</td>
+<td class='confluenceTd'>42.59</td>
+<td class='confluenceTd'>25.81</td>
+<td class='confluenceTd'>37.69</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-europeana-base</td>
+<td class='confluenceTd'>39.61</td>
+<td class='confluenceTd'>29.46</td>
+<td class='confluenceTd'>37.06</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base</td>
+<td class='confluenceTd'>44.74</td>
+<td class='confluenceTd'>29.3</td>
+<td class='confluenceTd'>40.47</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-60-époques</td>
+<td class='confluenceTd'>38.32</td>
+<td class='confluenceTd'>27.3</td>
+<td class='confluenceTd'>35.45</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-complet</td>
+<td class='confluenceTd'>28.93</td>
+<td class='confluenceTd'>21.67</td>
+<td class='confluenceTd'>27.11</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-partiel</td>
+<td class='confluenceTd'>31.17</td>
+<td class='confluenceTd'>19.1</td>
+<td class='confluenceTd'>27.67</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-corrige-papier</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>38.74</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse (Optuna)</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>41.23</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'><b>46.39</b></td>
+<td class='confluenceTd'>14M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>J'ai entraîné le modèle sur les données de AWeb appliqué pour une seule époque avant de l'affiner sur la tâche de correction neuronale. Je vais effectuer des expériences pour déterminer s'il est bénéfique de l'entraîner pour plus d'une époque.</p>
+        </td></tr>
+                <tr id="comment-header-585380"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-11-11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-585380"><td bgcolor="#ffffff">
+            <p>J'ai entraîné un modèle pour deux époques sur AWeb appliqué. Il n'y a pratiquement aucune différence de performance. Cependant, l'époque supplémentaire ajoute 5 heures de plus à l'entraînement.</p>
+
+
+<p>De plus, j'ai limité les types présents dans la correction neuronale. Initialement, le corpus utilisé pour la correction neuronale contient près de 750 types de corrections. Bon nombre d'entre eux ne sont pas adaptés à un réseau neuronal. Par exemple, les retours de chariot en milieu de phrase et les majuscules au début de la phrase ne devraient pas être corrigés par un modèle Electra. D'autres types sont impossibles à corriger pour le modèle, puisqu'ils sont effacés durant la phase de normalisation. </p>
+
+<p>J'ai sélectionné 50 types courants et propices à la correction par un modèle neuronal. J'ai filtré les types présents dans le corpus AWeb appliqué et regénéré le corpus de correction neuronale pour que les deux corpus n'aient que des annotations contenant un des 50 types sélectionnés. J'ai entraîné un modèle Electra préentraîné sur les deux corpus. <br/>
+J'ai répété les opérations ci-haut avec 80 types (les 50 types initiaux plus 30 nouveaux types) et 120 types (les 80 types et 40 nouveaux types). J'ai obtenu les résultats suivants:</p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle</th>
+<th class='confluenceTh'>Précision</th>
+<th class='confluenceTh'>Rappel</th>
+<th class='confluenceTh'>F0.5</th>
+<th class='confluenceTh'>Paramètres</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-0</td>
+<td class='confluenceTd'>39.59</td>
+<td class='confluenceTd'>23.84</td>
+<td class='confluenceTd'>34.97</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-1</td>
+<td class='confluenceTd'>40.22</td>
+<td class='confluenceTd'>24.46</td>
+<td class='confluenceTd'>35.63</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-2</td>
+<td class='confluenceTd'>39.85</td>
+<td class='confluenceTd'>24.88</td>
+<td class='confluenceTd'>35.57</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse</td>
+<td class='confluenceTd'>42.59</td>
+<td class='confluenceTd'>25.81</td>
+<td class='confluenceTd'>37.69</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-europeana-base</td>
+<td class='confluenceTd'>39.61</td>
+<td class='confluenceTd'>29.46</td>
+<td class='confluenceTd'>37.06</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base</td>
+<td class='confluenceTd'>44.74</td>
+<td class='confluenceTd'>29.3</td>
+<td class='confluenceTd'>40.47</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-60-époques</td>
+<td class='confluenceTd'>38.32</td>
+<td class='confluenceTd'>27.3</td>
+<td class='confluenceTd'>35.45</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-complet</td>
+<td class='confluenceTd'>28.93</td>
+<td class='confluenceTd'>21.67</td>
+<td class='confluenceTd'>27.11</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-partiel</td>
+<td class='confluenceTd'>31.17</td>
+<td class='confluenceTd'>19.1</td>
+<td class='confluenceTd'>27.67</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Fast-Electra-corrige-papier</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>38.74</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-modèle-casse (Optuna)</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>41.23</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>46.39</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb-50-types</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>68.5</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb-80-types</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>64.73</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Electra-fr-SentencePiece-Aweb-120-types</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>59.42</td>
+<td class='confluenceTd'>14M</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Camembert-base-AWeb-80-types</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>-</td>
+<td class='confluenceTd'>62.92</td>
+<td class='confluenceTd'>110M</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p> </p>
+
+<p>De plus, j'ai tenté d'augmenter la vitesse du modèle en utilisant une méthode d'élagage. J'ai implémenté la méthode proposée dans l'article <a href="https://arxiv.org/pdf/2406.15786" class="external-link" target="_blank" rel="nofollow noopener">What Matters in Transformers? Not All Attention is Needed</a>. En retirant la couche d'attention de la première couche, ainsi que les couches linéaires des couches d'encodeur 2 et 7, j'ai obtenu une f-mesure de 64.41 sur le corpus avec 80 types. En retirant les mêmes couches ainsi que la couche linéaire de la 9e couche d'encodeur, j'ai obtenu une f-mesure de 63.68.</p>
+        </td></tr>
+            </table>
+Généré à Mon Nov 25 13:39:14 EST 2024 par Simon Th&amp;eacute;or&amp;ecirc;t avec Jira 9.12.1#9120001-sha1:8c0c8f70eab515e2bf355d9d5534c5f201e526a9.
+
+</body>
+</html>
