@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LING-47218] Pré-entraînement d&#39;un modèle Mixtral</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://dagda.druide/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LING-47218]&nbsp;<a href="https://dagda.druide/browse/LING-47218">Pré-entraînement d&#39;un modèle Mixtral</a>
+            <span class="subText">
+               Création: 2024-08-12                   &nbsp;Mise à jour: 2024-09-26
+
+                                                    &nbsp;Résolue: 2024-09-26
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>État:</b></td>
+        <td width="80%">Fermé</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Projet:</b></td>
+        <td width="80%"><a href="https://dagda.druide/secure/BrowseProject.jspa?id=10905">LibLing</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Composants:</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affecte la/les version(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Version(s) corrigée(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Nouveauté
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priorité:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Normale
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Rapporteur:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_reporter_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Responsable:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_assignee_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Résolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Impossible à régler
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Étiquettes:</b>
+        </td>
+        <td id="labels-325033-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            Aucune
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Estimation restante:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Temps consacré:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Estimation originale:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Pièces jointes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                    <img src="https://dagda.druide/images/icons/attach/file.gif" height="16" width="16" border="0" alt="Fichier" role="presentation">
+                    vitesse_mixtral_electra.csv &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+                                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Tri:</b></td>
+                <td id="customfield_10700-325033-value" class="value" bgcolor="#ffffff" width="80%">    Indéterminé
+</td>
+            </tr>
+                                                                                                                                                            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Descriptif</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=scharest" class="user-hover" rel="scharest">Simon Charest</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=sgazali" class="user-hover" rel="sgazali">Saif Gazali</a> <a href="https://dagda.druide/secure/ViewProfile.jspa?name=ntrudel" class="user-hover" rel="ntrudel">Nicolas Trudel-Mallet</a> </p>
+
+<p>Je compte entraîner un modèle Mixtral à l'aide de la méthode Fast-Electra. Cependant, le modèle Mixtral est beaucoup trop volumineux, avec plus de 42 milliards de paramètres. J'ai donc modifié la configuration par défaut du modèle, en tâchant d'imiter la configuration par défaut du modèle Electra-small. J'ai donc réduit la taille des paramètres comme suit:</p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Paramètre</th>
+<th class='confluenceTh'>Valeur par défaut</th>
+<th class='confluenceTh'>Nouvelle valeur</th>
+</tr>
+<tr>
+<td class='confluenceTd'>Nombre d'experts par jetons</td>
+<td class='confluenceTd'>2</td>
+<td class='confluenceTd'>1</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Taille des couches cachées</td>
+<td class='confluenceTd'>4096</td>
+<td class='confluenceTd'>256</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Tailles des couches intermédiaires</td>
+<td class='confluenceTd'>14336</td>
+<td class='confluenceTd'>1024</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Taille du vocabulaire</td>
+<td class='confluenceTd'>32000</td>
+<td class='confluenceTd'>30522</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>De plus, j'ai effectué des benchmark avec divers hyperparamètres manipulant le nombre total de paramètres ainsi que la vitesse d'inférence. Pour chaque architecture, j'ai calculé le nombre de paramètres ainsi que la vitesse d'inférence moyenne sur le CPU de gpix3. Les modèles ont utilisé une taille de lot de 1. Voici les résultats, triés de l'architecture la plus rapide à la plus lente.</p>
+<div class='table-wrap'>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Modèle  </th>
+<th class='confluenceTh'>#Couches cachées</th>
+<th class='confluenceTh'>#Experts </th>
+<th class='confluenceTh'>#Paramètres </th>
+<th class='confluenceTh'>Durée d'inférence (s) (moyenne)</th>
+<th class='confluenceTh'>#Experts par jeton</th>
+<th class='confluenceTh'>Durée d'inférence (s) (écart-type)</th>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>1</td>
+<td class='confluenceTd'>13 520 128</td>
+<td class='confluenceTd'>0.011874</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001258</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>2</td>
+<td class='confluenceTd'>18 240 256</td>
+<td class='confluenceTd'>0.013175</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001014</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>1</td>
+<td class='confluenceTd'>14 471 168</td>
+<td class='confluenceTd'>0.013997</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001548</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>3</td>
+<td class='confluenceTd'>22 960 384</td>
+<td class='confluenceTd'>0.015054</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002095</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>2</td>
+<td class='confluenceTd'>19 977 984</td>
+<td class='confluenceTd'>0.015490</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001655</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>4</td>
+<td class='confluenceTd'>27 680 512</td>
+<td class='confluenceTd'>0.015586</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001644</td>
+</tr>
+<tr>
+<th class='confluenceTh'><b>Electra</b></th>
+<td class='confluenceTd'><b>12</b></td>
+<td class='confluenceTd'><b>Nan</b></td>
+<td class='confluenceTd'><b>13 483 008</b></td>
+<td class='confluenceTd'><b>0.015823</b></td>
+<td class='confluenceTd'><b>NaN</b></td>
+<td class='confluenceTd'><b>0.001763</b></td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>1</td>
+<td class='confluenceTd'>15 422 208</td>
+<td class='confluenceTd'>0.015840</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001678</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>3</td>
+<td class='confluenceTd'>25 484 800</td>
+<td class='confluenceTd'>0.017004</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001789</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>37 120 768</td>
+<td class='confluenceTd'>0.017162</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001322</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>5</td>
+<td class='confluenceTd'>32 400 640</td>
+<td class='confluenceTd'>0.017309</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002430</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>1</td>
+<td class='confluenceTd'>16 373 248</td>
+<td class='confluenceTd'>0.017623</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001860</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>2</td>
+<td class='confluenceTd'>21 715 712</td>
+<td class='confluenceTd'>0.017706</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001994</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>4</td>
+<td class='confluenceTd'>30 991 616</td>
+<td class='confluenceTd'>0.017991</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002339</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>5</td>
+<td class='confluenceTd'>36 498 432</td>
+<td class='confluenceTd'>0.018607</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001798</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>3</td>
+<td class='confluenceTd'>28 009 216</td>
+<td class='confluenceTd'>0.018843</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001668</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>46 561 024</td>
+<td class='confluenceTd'>0.018966</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001870</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>2</td>
+<td class='confluenceTd'>23 453 440</td>
+<td class='confluenceTd'>0.019662</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001812</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>4</td>
+<td class='confluenceTd'>34 302 720</td>
+<td class='confluenceTd'>0.020104</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001742</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>42 005 248</td>
+<td class='confluenceTd'>0.020166</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002132</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>5</td>
+<td class='confluenceTd'>40 596 224</td>
+<td class='confluenceTd'>0.021236</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001435</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>3</td>
+<td class='confluenceTd'>30 533 632</td>
+<td class='confluenceTd'>0.021445</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002659</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>53 018 880</td>
+<td class='confluenceTd'>0.021790</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001876</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>46 889 728</td>
+<td class='confluenceTd'>0.022437</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002103</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>4</td>
+<td class='confluenceTd'>37 613 824</td>
+<td class='confluenceTd'>0.023103</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002623</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>5</td>
+<td class='confluenceTd'>44 694 016</td>
+<td class='confluenceTd'>0.023605</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001618</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>16</td>
+<td class='confluenceTd'>84 322 048</td>
+<td class='confluenceTd'>0.024530</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002410</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>59 476 736</td>
+<td class='confluenceTd'>0.025172</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002323</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>6</td>
+<td class='confluenceTd'>51 774 208</td>
+<td class='confluenceTd'>0.025254</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.001526</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>65 934 592</td>
+<td class='confluenceTd'>0.027761</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002342</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>7</td>
+<td class='confluenceTd'>16</td>
+<td class='confluenceTd'>97 073 408</td>
+<td class='confluenceTd'>0.028606</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002279</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>8</td>
+<td class='confluenceTd'>16</td>
+<td class='confluenceTd'>109 824 768</td>
+<td class='confluenceTd'>0.032624</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.002474</td>
+</tr>
+<tr>
+<th class='confluenceTh'>Mixtral</th>
+<td class='confluenceTd'>9</td>
+<td class='confluenceTd'>16</td>
+<td class='confluenceTd'>122 576 128</td>
+<td class='confluenceTd'>0.036148</td>
+<td class='confluenceTd'>1.0</td>
+<td class='confluenceTd'>0.003372</td>
+</tr>
+</tbody></table>
+</div>
+
+
+<p>J'ai inclut le modèle Electra 12 couche, actuellement utilisé pour la correction en anglais à titre de comparaison.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Commentaires</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-557057"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="stheoret" id="word_commented_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2024-08-14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-557057"><td bgcolor="#ffffff">
+            <p>J'ai effectué le même test, mais cette fois-ci en utilisant 2 experts par jetons. J'ai compilé les résultats dans le fichier <span class="nobr"><a href="https://dagda.druide/secure/attachment/156232/156232_vitesse_mixtral_electra.csv" title="vitesse_mixtral_electra.csv attached to LING-47218">vitesse_mixtral_electra.csv<sup><img class="rendericon" src="https://dagda.druide/images/icons/link_attachment_7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span>. Les résultats indiquent qu’ajouter un second expert par jeton ralentit significativement la vitesse du modèle. Je vais donc limiter mes expériences à un unique expert par jeton.</p>
+        </td></tr>
+            </table>
+Généré à Mon Nov 25 13:40:07 EST 2024 par Simon Th&amp;eacute;or&amp;ecirc;t avec Jira 9.12.1#9120001-sha1:8c0c8f70eab515e2bf355d9d5534c5f201e526a9.
+
+</body>
+</html>

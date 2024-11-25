@@ -1,0 +1,96 @@
+[
+    {
+        "name": "\ud83d\udcd6 - READER: None",
+        "time_stats": 0,
+        "stats": {
+            "input_files": 36,
+            "doc_len": {
+                "total": 32824162474,
+                "n": 242710245,
+                "mean": 135.24011923765522,
+                "variance": 6319.054277083303,
+                "std_dev": 79.4924793743616,
+                "min": 3,
+                "max": 2039
+            },
+            "documents": {
+                "total": 242710209,
+                "n": 36,
+                "mean": 6741950.25,
+                "variance": 124981016173.44995,
+                "std_dev": 353526.5423888989,
+                "min": 5994189,
+                "max": 7608517,
+                "unit": "input_file"
+            }
+        }
+    },
+    {
+        "name": "\ud83e\udec2 - DEDUP: \ud83c\udfaf MinHash stage 4",
+        "time_stats": {
+            "total": 858.7996996810834,
+            "n": 242710245,
+            "mean": 3.538374326477567e-06,
+            "variance": 8.840097404389288e-12,
+            "std_dev": 2.973230129739252e-06,
+            "min": 2.282002242282033e-06,
+            "max": 0.02204367700323928,
+            "total_human": "14 minutes and 18 seconds",
+            "mean_human": "0.00 milliseconds",
+            "std_dev_human": "0.00 milliseconds",
+            "min_human": "0.00 milliseconds",
+            "max_human": "22.04 milliseconds",
+            "global_mean": 23.85554721336343,
+            "global_mean_human": "23 seconds",
+            "global_min": 20.778943283919943,
+            "global_min_human": "20 seconds",
+            "global_max": 26.310013993032044,
+            "global_max_human": "26 seconds",
+            "global_std_dev": 1.3000381084856432,
+            "global_std_dev_human": "1 second"
+        },
+        "stats": {
+            "total": 242710245,
+            "forwarded": 241903164,
+            "dropped": 807081
+        }
+    },
+    {
+        "name": "\ud83d\udcbd - WRITER: None",
+        "time_stats": {
+            "total": 4653.092597688781,
+            "n": 241903164,
+            "mean": 1.9235352364753903e-05,
+            "variance": 7.468003585362705e-09,
+            "std_dev": 8.641761154627397e-05,
+            "min": 1.2443008017726243e-05,
+            "max": 0.2966733600042062,
+            "total_human": "1 hour, 17 minutes and 33 seconds",
+            "mean_human": "0.02 milliseconds",
+            "std_dev_human": "0.09 milliseconds",
+            "min_human": "0.01 milliseconds",
+            "max_human": "296.67 milliseconds",
+            "global_mean": 129.25257215802174,
+            "global_mean_human": "2 minutes and 9 seconds",
+            "global_min": 113.54609761096071,
+            "global_min_human": "1 minute and 53 seconds",
+            "global_max": 141.95842187515518,
+            "global_max_human": "2 minutes and 21 seconds",
+            "global_std_dev": 6.785174683784099,
+            "global_std_dev_human": "6 seconds"
+        },
+        "stats": {
+            "XXXXX": 241903164,
+            "total": 241903164,
+            "doc_len": {
+                "total": 32786349372,
+                "n": 241903164,
+                "mean": 135.53501669783995,
+                "variance": 6310.23315021656,
+                "std_dev": 79.43697596344262,
+                "min": 3,
+                "max": 2039
+            }
+        }
+    }
+]

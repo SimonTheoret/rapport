@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LING-40420] Electra FR</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://dagda.druide/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LING-40420]&nbsp;<a href="https://dagda.druide/browse/LING-40420">Electra FR</a>
+            <span class="subText">
+               Création: 2021-10-28                   &nbsp;Mise à jour: 2024-07-26
+
+                                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>État:</b></td>
+        <td width="80%">Ouvert</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Projet:</b></td>
+        <td width="80%"><a href="https://dagda.druide/secure/BrowseProject.jspa?id=10905">LibLing</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Composants:</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affecte la/les version(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Version(s) corrigée(s):</b></td>
+            <td>
+                            Aucune
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Amélioration
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priorité:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Normale
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Rapporteur:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="jrakotobe" id="word_reporter_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Responsable:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="stheoret" id="word_assignee_stheoret" href="https://dagda.druide/secure/ViewProfile.jspa?name=stheoret">Simon Théorêt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Résolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+            				Non résolu
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Étiquettes:</b>
+        </td>
+        <td id="labels-278626-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            MotManquant, R&amp;D_2022                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Estimation restante:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            0 minutes
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Temps consacré:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            1 day, 2 hours, 56 minutes
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Estimation originale:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Non spécifié
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Pièces jointes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                    <img src="https://dagda.druide/images/icons/attach/zip.gif" height="16" width="16" border="0" alt="Archive Zip" role="presentation">
+                    LB_Multi_Electra.zip &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/zip.gif" height="16" width="16" border="0" alt="Archive Zip" role="presentation">
+                    WicoPaco-ElectraFR.zip &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/zip.gif" height="16" width="16" border="0" alt="Archive Zip" role="presentation">
+                    WicoPacoElectraV2.zip &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/image.gif" height="16" width="16" border="0" alt="Fichier PNG" role="presentation">
+                    image-2021-12-06-16-15-04-537.png &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/image.gif" height="16" width="16" border="0" alt="Fichier PNG" role="presentation">
+                    image-2021-12-16-14-25-54-095.png &nbsp;&nbsp;&nbsp;
+                                    <img src="https://dagda.druide/images/icons/attach/image.gif" height="16" width="16" border="0" alt="Fichier PNG" role="presentation">
+                    image-2022-01-12-19-07-04-735.png &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Liens des tickets:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Relates</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                est relié à
+            </td>
+            <td>
+                <a href="https://dagda.druide/browse/LING-42138">
+                     <strike>LING-42138</strike>                 </a>
+            </td>
+            <td>
+                rare et déconseillé &lt;surcorr. &quot;rares&quot;...
+            </td>
+            <td>
+                Fermé
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+                                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Tri:</b></td>
+                <td id="customfield_10700-278626-value" class="value" bgcolor="#ffffff" width="80%">    Indéterminé
+</td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Trouvé comment?:</b></td>
+                <td id="customfield_11500-278626-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_11500-field">
+        							<span>Développement/Commercial</span>			            </div>
+</td>
+            </tr>
+                                                                                                                                                </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Descriptif</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Il faut mettre à jour le code d'antidote avec le nouveau modèle Electra (3 couches) en français, puis faire les tests en régression et les tests de vitesse.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Commentaires</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-381448"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpironneau" id="word_commented_mpironneau" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpironneau">Maud Pironneau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-10-29</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-381448"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a>, peux-tu définir "mettre à jour le code d'antidote" ?</p>
+        </td></tr>
+                <tr id="comment-header-381721"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-10-31</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-381721"><td bgcolor="#ffffff">
+            <p>Désolé <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpironneau" class="user-hover" rel="mpironneau">Maud Pironneau</a> ! C'est la deuxième fois que ça te met en "Responsable" sans que je le veuille lorsque je crée un billet. Pourtant, je suis sûr de m'être mis comme "Responsable" cette fois-ci.  C'est moi qui vais faire les modifications au code d'Antidote (jetoniseur Bert, vocabulaire de mots manquants). Je vous reviens pour les tests une fois que j'aurais mis à jour le code.</p>
+        </td></tr>
+                <tr id="comment-header-387481"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-03</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387481"><td bgcolor="#ffffff">
+            <p>L'entraînement d'Electra en français touche pratiquement à sa fin. Je joins les fichiers de régression sur WicoPaco. <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a> , pourrais-tu regarder ça?</p>
+        </td></tr>
+                <tr id="comment-header-387482"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-03</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387482"><td bgcolor="#ffffff">
+            <p>Oui!</p>
+        </td></tr>
+                <tr id="comment-header-387483"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-03</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387483"><td bgcolor="#ffffff">
+            <p>Merci!</p>
+        </td></tr>
+                <tr id="comment-header-387739"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-06</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387739"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> : J'ai passé à travers les 911 phrases dans lesquelles le comportement d'Antidote a changé. J'ai modifié la BD de façon à accepter toutes les bonnes/meilleures corrections. Je n'arrive pas à tirer de tendances particulières, d'aspects spécifiques dans lesquels on est meilleurs/moins bons qu'avant. C'est somme toute positif, mais pas de beaucoup. On coupe comme on ajoute de mauvaises corrections. On coupe comme on ajoute de bonnes corrections. Voici les statistiques que ça donne pour les fichiers de régression que tu m'as fournis :</p>
+
+<p><span class="image-wrap" style=""><img src="https://dagda.druide/secure/attachment/104325/104325_image-2021-12-06-16-15-04-537.png" style="border: 0px solid black" /></span></p>
+
+<p> </p>
+        </td></tr>
+                <tr id="comment-header-387752"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-06</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387752"><td bgcolor="#ffffff">
+            <p>Merci <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a> ! Le modèle est deux fois plus petit, donc ça reste bien. Je vais attendre la fin de l'entrainement avant de lancer d'autres régressions.</p>
+        </td></tr>
+                <tr id="comment-header-387772"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-07</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-387772"><td bgcolor="#ffffff">
+            <p>Parfait!</p>
+        </td></tr>
+                <tr id="comment-header-388218"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-388218"><td bgcolor="#ffffff">
+            <p>Test de vitesse: sur 7823 lignes, on passe de 68s (Antidote 11 avec Camembert) à 69s (avec Electra) en release. Les résultats sont stables sur 4 tests.</p>
+        </td></tr>
+                <tr id="comment-header-388225"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jlapalme" id="word_commented_jlapalme" href="https://dagda.druide/secure/ViewProfile.jspa?name=jlapalme">Jasmin Lapalme</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-388225"><td bgcolor="#ffffff">
+            <p>et on passe de 47Mo à ~24 Mo?</p>
+        </td></tr>
+                <tr id="comment-header-388240"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-388240"><td bgcolor="#ffffff">
+            <p>Oui, de 45 Mo à 25 Mo.</p>
+        </td></tr>
+                <tr id="comment-header-388368"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-388368"><td bgcolor="#ffffff">
+            <p>Sur les M1, la vitesse est la même avec les deux modèles: ça prend 54s sur le tronc et pareillement avec Electra (et Electra FP16). Comme mentionné lors de la rencontre de ce matin, le modèle ne perd pas en  précision en fp16 et on atteint les 13 Mo !</p>
+
+<p>J'ai aussi retesté le modèle en int8 et les résultats ne sont pas encore bons: baisse de précision (attendue) et de vitesse sur les M1.</p>
+        </td></tr>
+                <tr id="comment-header-389095"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-16</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-389095"><td bgcolor="#ffffff">
+            <p>L'entrainement est terminé. J'ai mis le modèle à jour. Selon mon corpus de validation, il est supposé être meilleur maintenant, mais un coup d'oeil sur WicoPaco me fait penser le contraire. <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a>, pourrais-tu regarder les changements? Je joins les fichiers de régression: celui avec l'Electra que tu as déjà évalué et le nouveau.</p>
+        </td></tr>
+                <tr id="comment-header-389096"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-16</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-389096"><td bgcolor="#ffffff">
+            <p>Je te fais ça <img class="emoticon" src="https://dagda.druide/images/icons/emoticons/smile.png" height="16" width="16" align="absmiddle" alt="" border="0"/>.</p>
+        </td></tr>
+                <tr id="comment-header-389098"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-16</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-389098"><td bgcolor="#ffffff">
+            <p>Merci!</p>
+        </td></tr>
+                <tr id="comment-header-389119"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-16</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-389119"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a> : J'ai passé à travers les 400 phrases dans lesquelles le comportement d'Antidote a changé. J'ai modifié la BD de façon à accepter toutes les bonnes/meilleures corrections. Je dirais que c'est à peu près équivalent. Voici les statistiques que ça donne pour les fichiers de régression que tu m'as fournis :</p>
+
+<p><span class="image-wrap" style=""><img src="https://dagda.druide/secure/attachment/104760/104760_image-2021-12-16-14-25-54-095.png" style="border: 0px solid black" /></span></p>
+        </td></tr>
+                <tr id="comment-header-389220"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2021-12-16</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-389220"><td bgcolor="#ffffff">
+            <p>Wow, c'était rapide! Merci <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a>!</p>
+
+<p>Les tests de vitesse étaient correctes, est-ce qu'on teste sur les autres corpus <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jlapalme" class="user-hover" rel="jlapalme">Jasmin Lapalme</a> ? Je pense qu'on irait avec ce modèle pour la v2.</p>
+        </td></tr>
+                <tr id="comment-header-390618"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jlapalme" id="word_commented_jlapalme" href="https://dagda.druide/secure/ViewProfile.jspa?name=jlapalme">Jasmin Lapalme</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390618"><td bgcolor="#ffffff">
+            <p>Oui, j'aimerais qu'on teste les autres corpus pour la v2.</p>
+        </td></tr>
+                <tr id="comment-header-390620"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390620"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a>, je peux regarder ça si tu me fournis les fichiers de régression appropriés!</p>
+        </td></tr>
+                <tr id="comment-header-390631"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390631"><td bgcolor="#ffffff">
+            <p>J'ai donné à <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a> les commits pour qu'elle génère les fichiers de régression.</p>
+        </td></tr>
+                <tr id="comment-header-390688"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390688"><td bgcolor="#ffffff">
+            <p><a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a>, <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jlapalme" class="user-hover" rel="jlapalme">Jasmin Lapalme</a>, je ne suis pas capable d'enregistrer un état actuel de la branche electra-fr-tronc dans l'outil de régression. Ça passe à travers toutes les phrases, puis ça réfléchit à l'infini sans me donner accès aux stats et sans me permettre d'enregistrer l'état actuel.</p>
+
+<p>Il y a des messages de ce genre qui défilent dans Scriptorium toutes les quelques minutes :</p>
+<blockquote><p>2022-01-12 12:04:53.605358-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: guid: 82b20320-30ea-4294-913e-7bcc97b0e43f; nom: bc067951-1c5f-47b5-a2b9-be849f767227; version: 79; type: 8; estModifiay: 0; estSupprimay: 0<br/>
+ 2022-01-12 12:04:53.605825-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: PeutSynchroniserDocument<br/>
+ 2022-01-12 12:04:53.605852-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: guid: d708c596-657d-4197-b6b8-3ff1638e44b7; nom: 0acfd082-2f83-425d-be5f-48a73da23738; version: 25; type: 8; estModifiay: 0; estSupprimay: 0<br/>
+ 2022-01-12 12:04:53.606344-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: PeutSynchroniserDocument<br/>
+ 2022-01-12 12:04:53.646784-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: DebutePush<br/>
+ 2022-01-12 12:04:53.646855-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: guid: cfa1121c-ffde-441b-bd83-0127aaa6128e; nom: Alertes masquees.amq; version: 1; type: 16; estModifiay: 0; estSupprimay: 0<br/>
+ 2022-01-12 12:04:53.646870-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: PeutSynchroniserDocument<br/>
+ 2022-01-12 12:04:53.646928-0500 AntidoteFRDev<span class="error">&#91;50281:5652201&#93;</span> <span class="error">&#91;Synchro&#93;</span> DonneDonneesEtMetadonneesLocales: Fin<br/>
+ 2022-01-12 12:04:53.647000-0500 AntidoteFRDev<span class="error">&#91;50281:5652201&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-170<br/>
+ 2022-01-12 12:04:58.201386-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-131<br/>
+ 2022-01-12 12:06:53.614277-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-160<br/>
+ 2022-01-12 12:08:05.120845-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-141<br/>
+ 2022-01-12 12:08:07.315729-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-160<br/>
+ 2022-01-12 12:09:00.677577-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-141<br/>
+ 2022-01-12 12:09:02.843333-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-160<br/>
+ 2022-01-12 12:09:15.177287-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-141<br/>
+ 2022-01-12 12:09:17.369206-0500 AntidoteFRDev<span class="error">&#91;50281:5651624&#93;</span> <span class="error">&#91;Synchro&#93;</span> ESC-160</p></blockquote>
+<p>J'ai déjà perdu plus d'une demi-heure avec ça. Je vais attendre que l'un d'entre vous me fournisse les fichiers de régression pertinents pour que je puisse effectuer la comparaison demandée. Merci!</p>
+        </td></tr>
+                <tr id="comment-header-390785"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390785"><td bgcolor="#ffffff">
+            <p>Les branches étant un peu anciennes, il fallait ramener le tronc sur ces dernières. <a href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote" class="user-hover" rel="mpcote">Marie Côté</a> , j'ai ajouté les 4 fichiers de régression pour LB et Multi. </p>
+        </td></tr>
+                <tr id="comment-header-390829"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390829"><td bgcolor="#ffffff">
+            <p><b>Corpus LB :</b> J'ai passé à travers les 795 phrases dans lesquelles le comportement d'Antidote a changé. J'ai modifié la BD de façon à accepter toutes les bonnes/meilleures corrections. Les résultats sont moins bons, sur ce corpus. Voici les statistiques que ça donne pour les fichiers de régression que tu m'as fournis :</p>
+
+<p><span class="image-wrap" style=""><img src="https://dagda.druide/secure/attachment/105285/105285_image-2022-01-12-19-07-04-735.png" style="border: 0px solid black" /></span></p>
+
+<p>Je quitte pour la soirée, et je serai absente jusqu'à environ 14 h, demain. D'ici là, <a href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe" class="user-hover" rel="jrakotobe">Joss Rakotobe</a>, peux-tu me confirmer si ça vaut la peine que je passe également à travers le Multi ou si les résultats sont trop décevants dans le corpus LB pour qu'on puisse aller de l'avant avec cette version du modèle? Merci!</p>
+        </td></tr>
+                <tr id="comment-header-390895"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="jrakotobe" id="word_commented_jrakotobe" href="https://dagda.druide/secure/ViewProfile.jspa?name=jrakotobe">Joss Rakotobe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390895"><td bgcolor="#ffffff">
+            <p>Ok, je vais regarder ça d'abord.</p>
+        </td></tr>
+                <tr id="comment-header-390936"><td bgcolor="#f0f0f0">
+            Commentaire de  
+                                                        <a class="user-hover" rel="mpcote" id="word_commented_mpcote" href="https://dagda.druide/secure/ViewProfile.jspa?name=mpcote">Marie Côté</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">2022-01-13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-390936"><td bgcolor="#ffffff">
+            <p>Parfait, merci!</p>
+        </td></tr>
+            </table>
+Généré à Mon Nov 25 13:40:19 EST 2024 par Simon Th&amp;eacute;or&amp;ecirc;t avec Jira 9.12.1#9120001-sha1:8c0c8f70eab515e2bf355d9d5534c5f201e526a9.
+
+</body>
+</html>
