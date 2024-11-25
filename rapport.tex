@@ -380,6 +380,8 @@
 	MLM & Modélisation de langage avec masque, de l'anglais
 	\textit{Masked Language Modeling}\\
 	TAL & Traitement automatique du langage\\
+	NER & reconnaissance d'entitées, de l'anglais
+	\textit{Named-Entity Recognition}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
@@ -417,58 +419,56 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter*{Introduction}
-Le domaine du traitement automatique des langues connaît une
-explosion fulgurante de techniques, de jeux de données et de modèles
-permettant de résoudre de nouveaux problèmes. Néanmoins, bon nombre de
-ces applications restent hors de portée des organisations désirant
-mettre en application des outils d'apprentissages automatique. En
-effet, la plupart des modèles de langues récents sont préentraînés sur
-des corpus majoritairement anglophones, avec des jetoniseurs
-spécialisés pour traiter le contenu anglophone. Ces deux facteurs
-limitent les modèles préentraînés disponibles ainsi que leur
+Le domaine du traitement automatique des langues connaît une explosion
+fulgurante de techniques, de jeux de données et de modèles permettant de
+résoudre de nouveaux problèmes. Néanmoins, bon nombre de ces applications
+restent hors de portée des organisations désirant mettre en application des
+outils d'apprentissages automatique. En effet, la plupart des modèles de
+langues récents sont préentraînés sur des corpus majoritairement anglophones,
+avec des jetoniseurs spécialisés pour traiter le contenu anglophone. Ces deux
+facteurs limitent les modèles préentraînés disponibles ainsi que leur
 performance sur des tâches avec un corpus non anglophone.
 
-Druide Inc. est une compagnie basée à Montréal dont le principal
-produit est Antidote, un logiciel de correction orthographique et
-grammaticale. Leur logiciel phare fait déjà usage de l'apprentissage
-profond pour leur moteur de correction en anglais, en plus d'utiliser
-un correcteur symbolique pour certains types d'erreurs. Le modèle utilisé
-en production pour la correction en anglais fait près de 2 corrections
-sur 3 et représente une part importante du moteur de
-correction. L'équipe de Druide désire mettre en place un modèle de
-correction similaire, mais adapté à la langue française. En
-particulier, ils désirent préentraîner un modèle ELECTRA de 14
-millions de paramètres avec un corpus et un jetoniseur francophones.
+Druide Inc. est une compagnie basée à Montréal dont le principal produit est
+Antidote, un logiciel de correction orthographique et grammaticale. Leur
+logiciel phare fait déjà usage de l'apprentissage profond pour leur moteur de
+correction en anglais, en plus d'utiliser un correcteur symbolique pour
+certains types d'erreurs. Le modèle utilisé en production pour la correction en
+anglais fait près de 2 corrections sur 3 et représente une part importante du
+moteur de correction. L'équipe de Druide désire mettre en place un modèle de
+correction similaire, mais adapté à la langue française. En particulier, ils
+désirent préentraîner un modèle ELECTRA avec un corpus et un jetoniseur
+francophones pour que le modèle puisse détecter les erreurs grammaticales
+présentes dans les textes des utilisateurs d'Antidote.
 
-Pour la réalisation du projet, nous disposons d'un jeu de données
-d'environ 40 GB de données non structuré. De plus, l'entraînement du
-modèle se fait localement sur une machine ayant accès à 3 NVIDIA RTX
-A4000, disposant chacune de 16 GB de mémoire VRAM.
+Pour la réalisation du projet, nous disposons d'un jeu de données d'environ 40
+GB de données non structuré. De plus, l'entraînement du modèle se fait
+localement sur une machine ayant accès à 3 NVIDIA RTX A4000, disposant chacune
+de 16 GB de mémoire VRAM.
 
 
 %%------------------------------------------------- %
 %%                pages 1                           %
 %%------------------------------------------------- %
 
-\chapter{ELECTRA et contexte}
+\chapter{ELECTRA et Druide}
 \section{Contraintes}
-Le modèle doit être intégré dans le logiciel principal de Druide,
-Antidote. Or, le logiciel Antidote est déployé principalement sur les
-ordinateurs personnels des usagers. Cela implique d'importantes
-contraintes quant aux ressources disponibles pour l'exécution du
-modèle, notamment en ce qui à trait à la consommation de mémoire. De
-plus, le logiciel Antidote se doit d'être rapide, puisque attendre
-plusieurs minutes pour la correction d'un texte volumineux dégrade la
-qualité de l'expérience utilisateur. En d'autres mots, le modèle doit
-être rapide durant l'inférence. Finalement, le logiciel antidote cible
-deux système d'exploitation: Windows et MacOS.\@ Le déploiement du
-modèle se fait à l'aide des librairies ONNX\cite{onnxruntime} et
-CoreML.\@ Il est donc nécessaire que le modèle soit
-compatible avec les deux librairies.
+Le modèle doit être intégré dans le logiciel principal de Druide, Antidote. Or,
+le logiciel Antidote est déployé principalement sur les ordinateurs personnels
+des usagers. Cela implique d'importantes contraintes quant aux ressources
+disponibles pour l'exécution du modèle, notamment en ce qui à trait à la
+consommation de mémoire. De plus, le logiciel Antidote se doit d'être rapide,
+puisque attendre plusieurs minutes pour la correction d'un texte volumineux
+dégrade la qualité de l'expérience utilisateur. En d'autres mots, le modèle
+doit être rapide durant l'inférence. Finalement, le logiciel antidote cible
+deux système d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur
+les machines des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime}
+et CoreML.\@ Il est donc nécessaire que le modèle soit compatible avec les deux
+librairies.
 
 Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner
 des petits modèles Transformers\cite{vaswani2023attentionneed} avec
-encodeur contenant environ 14 millions de paramètres.
+encodeur. Ces derniers contiennent environ 14 millions de paramètres.
 
 \section{Méthode de préentraînement ELECTRA}
 % TODO: Ajouter citation de ELECTRA
@@ -497,31 +497,55 @@ temps que le discriminant, rendant la tâche de plus en plus difficile au fur et
 discriminant plus facile et permettent de générer des erreurs similaire à ce
 que le modèle rencontrera en production.
 
+La méthode ELECTRA a été choisie pour deux raisons: c'est une méthode de
+préentraînement similaire à la correction d'erreurs dans un texte et la méthode
+ELECTRA permet d'augmenter l'efficacité du préentraînement en obligeant le
+modèle à se concentrer sur tous les jetons de la phrase.
+
+\section{Affinage pour la détection d'erreurs}
+Une fois le modèle ELECTRA préentraîné, il est nécessaire d'adapter le modèle
+pour que celui-ci soit en mesure de détecter efficacement les erreurs dans les
+textes des utilisateurs. Druide a développé une liste des différents types
+d'erreurs, permettant de classifier les différents types d'erreurs en de
+grandes catégories, telles que les erreurs de virgules, les erreurs de mots
+manquants, les erreurs d'accord du nom, etc. Chaque erreur fait partie d'un de
+ces grandes catégories, et bon nombre de ces erreurs ont une sous-catégorie,
+précisant encore plus le contexte associée à l'erreur. La détection d'erreur
+est modélisée comme une tâche de détection d'entité nommée (DEN/NER), dans
+laquelle chaque jeton dispose d'un classe. Les classes d'erreurs sont
+représenté avec un identifiant, tandis que la classe représentant l'absence
+d'erreurs est représenté par l'identifiant $O$. Le modèle à comme objectif de
+spécifier la classe de chaque jeton de la séquence. Le schéma $IOB2$
+\cite{schemas} est utilisé pour représenter sans ambiguïté les jetons contigus
+contenus dans la même erreur.
+
 \section{Infrastructures en place}
 Notre tâche principale consistait à préentraîner un modèle ELECTRA.\@ Or, un
-modèle ELECTRA est déjà utilisé dans la tâche de correction en anglais. En
-effet, la librairie Transformers\cite{wolf-etal-2020-transformers} permet un
-usage libre de différents modèles ELECTRA préentraînés. Le modèle utilisé dans
-le moteur de correction anglais est un modèle ELECTRA provenant de la librairie
-Transformers, qui a été affiné sur un corpus contenant des erreurs ainsi que
-des annotations contenant le type d'erreur. Il existe des modèles ELECTRA
-préentraînés sur des corpus francophone. Néanmoins, aucun d'entre eux ne
-respectent nos contraintes de tailles et de vitesse. Il faut donc entraîner un
-modèle à partir d'un initialisation aléatoire.
+modèle ELECTRA est déjà utilisé pour la tâche de correction en anglais. Ce
+dernier n'a pas été préentraîné par Druide. En effet, la librairie
+Transformers\cite{wolf-etal-2020-transformers} permet un usage libre de
+différents modèles ELECTRA préentraînés. De plus, il existe quelques modèles
+ELECTRA préentraînés sur des corpus francophone. Cependant, aucun d'entre eux
+ne respectent nos contraintes de tailles et de vitesse. Il est donc nécessaire
+d'entraîner un modèle à partir d'un initialisation aléatoire.
 
-Nous disposons de deux corpus déjà préparés pour préentraîner et affiner
-un modèle Electra. 
-
-Ces annotations proviennent d'annotateurs employés par Druide. Le corpus annoté
-regroupe près de 100000 annotations et est utilisé pour la tâche d'affinage.
+Nous disposons de deux corpus déjà préparés pour préentraîner et affiner un
+modèle Electra. Le corpus de préentraînement est une collection de textes non
+structuré provenant de nombreuses sources, notamment des manuels, des articles
+de blogues, des livres. Ce corpus de préentraînement est appelé corpus des
+Combis et représente 40 gigaoctes (Go) de données et 7 milliard de jetons.
+C'est un corpus deux fois plus grand que le corpus de préentraînement utilisé
+pour le préentraînement par Google du modèle ELECTRA de même taille. Pour
+l'affinage, Druide dispose d'un corpus contenant près de 100000 annotations sur
+des textes francophones. Ces annotation sont fournies par Druide et proviennent
+d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
+les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par Druide.
 %TODO: Insérer un exemple d'annotation
 
-La méthode ELECTRA a été choisie pour deux raisons: c'est une tâche de
-préentraînement similaire à la correction d'erreurs dans un texte et blabla
 \chapter{Préentraînement d'un modèle initial}
 \chapter{Modèle final}
-\chapter{Directions futures}
 \chapter{Conclusions}
+%TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
 %%     index    %
 %%--------------%
