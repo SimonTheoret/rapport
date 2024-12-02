@@ -454,20 +454,26 @@ de 16 GB de mémoire VRAM.
 %%                pages 1                           %
 %%------------------------------------------------- %
 
-\chapter{ELECTRA et Druide}
+\chapter{Druide et ELECTRA}
+L'équipe de Druide dispose de deux modèles déjà en place pour la correction des
+erreurs. Néanmoins, leur modèle en anglais corrige une plus grande gamme
+d'erreurs. Druide désire améliorer leur moteur de correction en français à
+l'aide de l'apprentissage profond. %NOTE: Nécessaire?
+
 \section{Contraintes}
 Le modèle doit être intégré dans le logiciel principal de Druide, Antidote. Or,
-le logiciel Antidote est déployé principalement sur les ordinateurs personnels
-des usagers. Cela implique d'importantes contraintes quant aux ressources
-disponibles pour l'exécution du modèle, notamment en ce qui à trait à la
-consommation de mémoire. De plus, le logiciel Antidote se doit d'être rapide,
-puisque attendre plusieurs minutes pour la correction d'un texte volumineux
-dégrade la qualité de l'expérience utilisateur. En d'autres mots, le modèle
-doit être rapide durant l'inférence. Finalement, le logiciel antidote cible
-deux système d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur
-les machines des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime}
-et CoreML.\@ Il est donc nécessaire que le modèle soit compatible avec les deux
-librairies. \\
+le logiciel Antidote est déployé sur les ordinateurs personnels des usagers.
+Cela implique d'importantes contraintes quant aux ressources disponibles pour
+l'exécution du modèle, notamment en ce qui à trait à la consommation de
+mémoire. De plus, le logiciel Antidote se doit d'être rapide, puisque attendre
+plusieurs minutes pour la correction d'un texte volumineux dégrade la qualité
+de l'expérience des utilisateurs. En d'autres mots, le modèle doit être rapide
+durant l'inférence. Finalement, le logiciel antidote cible deux système
+d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur les machines
+des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime} et CoreML.\@
+Il est donc nécessaire que le modèle soit supporté par les deux librairies.
+En résumé, nous avons des limites quant aux ressources disponibles durant
+l'inférence ainsi que des contraintes quant aux couches et modèles utilisables.\\
 
 Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner
 des petits modèles Transformers\cite{vaswani2023attentionneed} avec
@@ -485,7 +491,8 @@ position du masque. Les prédictions du modèle sont échantillonnés, de façon
 obtenir une nouvelle séquence, potentiellement différente de la séquence
 originale. Le discriminant reçoit la nouvelle séquence et à pour tâche de
 prédire quels jetons sont corrompus et lesquels n'ont pas été modifiés par le
-générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est visualisée dans la figure %TODO: Insérer figure d'entraînement de ELECTRA ici!\\
+générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est
+visualisée dans la figure %TODO: Insérer figure d'entraînement de ELECTRA ici!\\
 
 Trois éléments rendent l'entraînement du discriminant plus facile.
 Premièrement, le générateur dispose de significativement moins de capacité que
@@ -502,8 +509,8 @@ que le modèle rencontrera en production.\\
 
 La méthode ELECTRA a été choisie pour deux raisons: c'est une méthode de
 préentraînement similaire à la correction d'erreurs dans un texte et la méthode
-ELECTRA permet d'augmenter l'efficacité du préentraînement en obligeant le
-modèle à se concentrer sur tous les jetons de la phrase.
+ELECTRA permet d'augmenter l'efficacité du préentraînement en atteignant des
+performances similaires aux performances du MLM en moins d'itérations.
 
 \section{Affinage pour la détection d'erreurs}
 Une fois le modèle ELECTRA préentraîné, il est nécessaire d'adapter le modèle
@@ -511,16 +518,17 @@ pour que celui-ci soit en mesure de détecter efficacement les erreurs dans les
 textes des utilisateurs. Druide a développé une liste des différents types
 d'erreurs, permettant de classifier les différents types d'erreurs en de
 grandes catégories, telles que les erreurs de virgules, les erreurs de mots
-manquants, les erreurs d'accord du nom, etc. Chaque erreur fait partie d'un de
-ces grandes catégories, et bon nombre de ces erreurs ont une sous-catégorie,
-précisant encore plus le contexte associée à l'erreur. La détection d'erreur
-est modélisée comme une tâche de détection d'entité nommée (DEN/NER), dans
-laquelle chaque jeton dispose d'un classe. Les classes d'erreurs sont
-représenté avec un identifiant, tandis que la classe représentant l'absence
-d'erreurs est représenté par l'identifiant $O$. Le modèle à comme objectif de
-spécifier la classe de chaque jeton de la séquence. Le schéma $IOB2$
-\cite{schemas} est utilisé pour représenter sans ambiguïté les jetons contigus
-contenus dans la même erreur.
+manquants, les erreurs d'accord du nom, etc. Cette liste contient 750
+différents types d'erreurs. Chaque erreur fait partie d'une de ces grandes
+catégories, et bon nombre de ces erreurs ont une sous-catégorie, précisant
+encore plus le contexte associée à l'erreur. La détection d'erreur est
+modélisée comme une tâche de détection d'entité nommée (DEN/NER), dans laquelle
+chaque jeton dispose d'un classe. Les classes d'erreurs sont représenté avec un
+identifiant, tandis que la classe représentant l'absence d'erreurs est
+représenté par l'identifiant $O$. Le modèle à comme objectif de spécifier la
+classe de chaque jeton de la séquence. Le schéma $IOB2$ \cite{schemas} est
+utilisé pour représenter sans ambiguïté les jetons contigus contenus dans la
+même erreur.
 
 \section{Infrastructures en place}
 Notre tâche principale consistait à préentraîner un modèle ELECTRA.\@ Or, un
@@ -546,7 +554,33 @@ les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
 Druide.
 %TODO: Insérer un exemple d'annotation
 
+
 \chapter{Préentraînement d'un modèle initial}
+Le préentraînement d'un modèle de langue se fait en trois étapes. Il est
+nécessaire de prétraiter les données, de sélectionner un jetonniseur adapté à
+la tâche ainsi que d'entraîner le modèle sur la tâche de préentraînement.
+
+\section{Normalisation des données et entraînement d'un jetoniseur}
+La normalisation consiste à réduire le nombre de charactèrs différents contenus
+dans le corpus. C'est une étape importante puisqu'elle permet de réduire la
+taille du vocabulaire du jetoniseur sans pour autant perdre des éléments
+syntaxiques. Notre normalisation consistait à tranformer tous les espaces en le
+même charactère d'espace (espaces insécables, tabulations), de transformer tous
+les guillements (guillements français, guillemets informatiques, etc.) en
+guillemets anglais, de retirer les espaces en trop et modifier les types
+d'apostrophes pour que ceux-ci soient uniformes. La normalisation modifie aussi
+certains les espacements entre certains mots, de façon à ce que par exemple le
+texte "11 ème étage" devienne "11ème étage".\\% TODO: Retravailler cette phrase
+
+Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
+la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece.
+%TODO: Ajouter citation pour wordpiece.
+C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
+actuellement utilisé en production chez Druide. Pour l'entraînement du
+jetoniseur, nous utilisons le corpus des combis normalisé, comprenant environ
+40 GO de données. Les hyper-paramètres sélectionnés pour le jetoniseur sont
+   dcnnés dans la figure %TODO: Insérer fig.
+
 \chapter{Modèle final}
 \chapter{Conclusions}
 %TODO: Discuter des directions futures: Génération de données artificielles
