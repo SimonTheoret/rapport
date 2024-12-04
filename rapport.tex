@@ -109,7 +109,7 @@
 %% subfigure    simplifie l'inclusion de figures côtes-à-côtes
 
 %% Packages parfois utiles.
-%%\usepackage{dsfont,mathrsfs,color,url,verbatim,booktabs}
+\usepackage{dsfont,mathrsfs,color,url,verbatim,booktabs}
 %% dsfont       symboles mathématiques \mathds
 %% mathrsfs     plus de symboles mathématiques \mathscr
 %% color        pour utiliser des couleurs (comparer avec <xcolor>)
@@ -382,6 +382,8 @@
 	TAL & Traitement automatique du langage\\
 	NER & Reconnaissance d'entitées, de l'anglais
 	\textit{Named-Entity Recognition}\\
+	DDP & Parallélisme distribué des données, de l'anglais
+	\textit{Distributed Data Parallel}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
@@ -555,7 +557,7 @@ Druide.
 %TODO: Insérer un exemple d'annotation
 
 
-\chapter{Préentraînement d'un modèle initial}
+\chapter{Entraînement de modèles initiaux}
 Le préentraînement d'un modèle de langue se fait en trois étapes. Il est
 nécessaire de prétraiter les données, de sélectionner un jetonniseur adapté à
 la tâche ainsi que d'entraîner le modèle sur la tâche de préentraînement.
@@ -576,10 +578,22 @@ Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté
 la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece.
 %TODO: Ajouter citation pour wordpiece.
 C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
-actuellement utilisé en production chez Druide. Pour l'entraînement du
-jetoniseur, nous utilisons le corpus des combis normalisé, comprenant environ
-40 GO de données. Les hyper-paramètres sélectionnés pour le jetoniseur sont
-   dcnnés dans la figure %TODO: Insérer fig.
+actuellement utilisé en production chez Druide. Il répond donc à nos
+contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
+combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
+sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau.\\
+%TODO: Insérer tableau des HP
+
+\section{Préentraînement original}
+Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
+Celle-ci est disponible au dépôt git suivant:
+\url{https://github.com/google-research/electra}. Notre machine dédiée à
+l'entraînement dispose de 3 GPUs de 16GB de VRAM chacun. Or, l'implémentation
+originale ne permet pas l'usage de DDP, limitant la vitesse d'entraînement
+ainsi que la taille de lot (\textit{batch size}). Pour tirer parti au maximum
+des 3 GPUs disponibles, nous avons initialisé aléatoirement trois modèle
+ELECTRA et avons changé l'ordre des données. En entraînant 3 modèles sur le même jeu de données modifié, nous espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une fois les modèles affinés.  %TODO: Retirer soupe si pas les résultats ?
+
 
 \chapter{Modèle final}
 \chapter{Conclusions}
@@ -588,7 +602,7 @@ jetoniseur, nous utilisons le corpus des combis normalisé, comprenant environ
 %%     index    %
 %%--------------%
 
-%% S'il y a lieu, décommenter la ligne pour mettre votre index
+%% S'il y a lieu, décommenter la ligne pour m ettre votre index
 
 %%\printindex
 
