@@ -51,6 +51,7 @@
 
 \usepackage[utf8]{inputenc} %Obligatoires
 \usepackage[T1]{fontenc}    %
+\usepackage{tabularx}
 
 %% <lmodern> incorpore les fontes en T1, pour
 %% faciliter le dépôt final. Ceci n'est pas la
@@ -183,6 +184,8 @@
 %%% commandes de la forme :
 %%%
 
+
+
 %%\newtheorem{cor}{\corollaryname}[section]
 %%\newtheorem{deff}{\definitionname}[section]
 %%\newtheorem{ex}{\examplename}[section]
@@ -218,7 +221,6 @@
 %% \usepackage[onehalfspacing]{setspace}
  % ou
 \renewcommand{\baselinestretch}{1.286} %Interligne et demi (environ 18pt (12pt+6pt) entre les lignes)
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%                                     %%%%%%%%%%%%%
@@ -494,7 +496,15 @@ obtenir une nouvelle séquence, potentiellement différente de la séquence
 originale. Le discriminant reçoit la nouvelle séquence et à pour tâche de
 prédire quels jetons sont corrompus et lesquels n'ont pas été modifiés par le
 générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est
-visualisée dans la figure %TODO: Insérer figure d'entraînement de ELECTRA ici!\\
+visualisée dans la figure \ref{fig:electra}.
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
+    \end{center}
+    \caption{Entraînement d'un modèle Electra. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+    \label{fig:electra}
+\end{figure}
 
 Trois éléments rendent l'entraînement du discriminant plus facile.
 Premièrement, le générateur dispose de significativement moins de capacité que
@@ -584,15 +594,49 @@ combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
 sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau.\\
 %TODO: Insérer tableau des HP
 
-\section{Préentraînement original}
+\section{Préentraînement initial}
 Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
 Celle-ci est disponible au dépôt git suivant:
 \url{https://github.com/google-research/electra}. Notre machine dédiée à
 l'entraînement dispose de 3 GPUs de 16GB de VRAM chacun. Or, l'implémentation
-originale ne permet pas l'usage de DDP, limitant la vitesse d'entraînement
-ainsi que la taille de lot (\textit{batch size}). Pour tirer parti au maximum
-des 3 GPUs disponibles, nous avons initialisé aléatoirement trois modèle
-ELECTRA et avons changé l'ordre des données. En entraînant 3 modèles sur le même jeu de données modifié, nous espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une fois les modèles affinés.  %TODO: Retirer soupe si pas les résultats ?
+originale utilise moins de 16GB de VRAM et ne permet pas l'usage de DDP,
+limitant la vitesse d'entraînement ainsi que la taille de lot (\textit{batch
+size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
+initialisé aléatoirement trois modèle ELECTRA et avons changé l'ordre des
+données. En entraînant 3 modèles sur le même jeu de données modifié, nous
+espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
+fois les modèles affinés et faire un meilleur usage des ressources
+computationnelles à notre disposition. Les hyper-paramètres utilisés durant
+l'entraînement des trois modèles sont décrits dans le tableau \ref{table:1}.
+%TODO: Insérer tableau des HPs
+%TODO: Retirer soupe si pas les résultats ?
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c||}
+ \hline
+ Hyper-paramètres & Discriminant & Générateur \\ [0.5ex]
+ \hline\hline
+ Nombre de couches  & 12 & 12 \\
+ Taille des couches cachées & 256 & 64 \\
+ Taille du MLP cachés & 15 & 15 \\
+ Taille des couches de projection & 128 & 128 \\
+ Nombre de couches d'attention & 4 & 4 \\
+ Taille du vocabulaire & 30522 & 30522 \\
+ \% des jetons masqués & - & 15 \\
+ Taux d'apprentissage & 5e-4 & 5e-4 \\
+ Poids de la perte du générateur & - & 1 \\
+ Poids de la perte du discriminant & 50 & - \\
+ Nombre d'itération de \textit{warmup} & 10000 & 10000\\
+ \hline
+\end{tabular}
+\caption{Table to test captions and labels.}
+\label{table:1}
+\end{table}
+
+
+
 
 
 \chapter{Modèle final}
