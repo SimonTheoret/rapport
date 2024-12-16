@@ -241,7 +241,6 @@
 %% \version est la version de votre manuscrit
 %%
 \version{1}
-\pagenumbering{roman}
 
 %%------------------------------------------------- %
 %%              pages i et ii                       %
@@ -502,7 +501,7 @@ visualisée dans la figure \ref{fig:electra}.
     \begin{center}
         \includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
     \end{center}
-    \caption{Entraînement d'un modèle Electra. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+    \caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
     \label{fig:electra}
 \end{figure}
 
@@ -592,7 +591,6 @@ actuellement utilisé en production chez Druide. Il répond donc à nos
 contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
 combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
 sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau.\\
-%TODO: Insérer tableau des HP
 
 \section{Préentraînement initial}
 Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
@@ -608,7 +606,8 @@ espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
 l'entraînement des trois modèles sont décrits dans le tableau \ref{table:1}.
-%TODO: Insérer tableau des HPs
+Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
+l'article original.
 %TODO: Retirer soupe si pas les résultats ?
 
 
@@ -636,6 +635,37 @@ l'entraînement des trois modèles sont décrits dans le tableau \ref{table:1}.
 \end{table}
 
 
+\section{Premiers modèles affinés}
+Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
+ces trois modèles sur la tâche de détection des erreurs en français.
+Les meilleur métriques enregistrées sont détaillées dans le tableau \ref{table:premiermodeles}
+
+Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois premiers modèles:
+
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=1.40\textwidth]{figures/3premiersmodelesf05.png}
+    \end{center}
+    \caption{Mesure F-0.5 des trois premiers modèles selon le nombre d'itérations sur données d'évaluation pour la détection d'erreurs en français.}
+    \label{fig:3premiermodeles}
+\end{figure}
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c | c | c||}
+ \hline
+    Modèle & Précision & Rappel & F0.5 \\ [0.5ex]
+ \hline\hline
+    Modèle initial 1  & 39.59 & 23.84 & 34.97 \\
+    Modèle initial 2  & 40.22 & 24.36 & 35.63 \\
+    Modèle initial 3  & 39.85 & 24.88 & 35.57  \\
+ \hline
+\end{tabular}
+\caption{Résultats des modèles préliminaires sur corpus d'évaluation}
+\label{table:premiermodeles}
+\end{table}
 
 
 
