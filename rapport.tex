@@ -312,17 +312,25 @@
 \francais
 
 \chapter*{Résumé}
+Le logiciel Antidote permet de corriger des textes en français et en anglais.
+Il détecte plusieurs milliers de types d’erreurs orthographiques et
+grammaticales. Le logiciel dispose d'un modèle ELECTRA capable de détecter
+efficacement les erreurs en français. L'équipe de TAL de Druide désire mettre
+en place un système similaire pour la langue française . Dans le cadre de ce
+stage, le but est de créer un modèle ELECTRA capable de détecter les erreurs
+grammaticales en français. Pour ce faire, plusieurs approches ont été testées
+et les résultats des derniers modèles sont prometteurs. On remarque entre autre
+une hausse importante des performances en introduisant une tâche intermédiaire
+et en faisant une recherche d'hyperparamètres.\\
 
-...sommaire et mots clés en français...
+\textit{Mots clés: Apprentissage automatique, Apprentissage profond,
+Apprentissage machine, Traitement de texte, Détection de mot manquants,
+Encodeur, Transformers, BERT, Electra, Réseaux de neurones, Intelligence
+artificielle.}
 
 %%------------------------------------------------- %
 %%              pages iv                            %
 %%------------------------------------------------- %
-
-\anglais
-\chapter*{Abstract}
-
-...summary and keywords in english...
 
 %%------------------------------------------------- %
 %%        page v --- Table de matieres              %
@@ -523,6 +531,34 @@ préentraînement similaire à la correction d'erreurs dans un texte et la méth
 ELECTRA permet d'augmenter l'efficacité du préentraînement en atteignant des
 performances similaires aux performances du MLM en moins d'itérations.
 
+
+\section{Architecture ELECTRA}
+Le modèle ELECTRA utilise une architecture basée sur les modules d'encodeurs
+des Transformers \cite{vaswani2023attentionneed}. L'usage d'une architecture
+basée sur les transformeur permet d'obtenir une représentation contextuelle
+pour tous les jetons d'une séquence. Cette avancée à été marquée par l'arrivée
+de \cite{bert},  un modèle Transformers (Bidirectional Encoder Representation
+from Transformers). Ce modèle a été développé par Google en 2018 et comprend de
+nombreuses versions de différentes tailles et entraînés sur différentes tâches.
+Les deux versions canoniques de BERT sont BERT-BASE et BERT-LARGE. Ces deux
+versions comprennent respectivement 12 couches et 24 couches, chacune étant
+composée de 768 unités de large, divisées en 12 têtes d’attention multiples.
+ELECTRA ajoute une nouvelle version plus petite de BERT, dénommée
+ELECTRA-small. Celle-ci consiste en 12 couches de 256 unités de large. Ces
+modèles à base d'encodeur sont composées de trois parties:
+\begin{itemize}
+    \item Un \textbf{jetoniseur}, qui s'occupe de traiter le texte entrant et
+        de le convertir un une séquence de d'entiers.
+    \item Une \textbf{couche de projection}, qui permet d'associer à chacun des
+        jetons d'entrées une représentation vectorielle qui dépend de la
+        position du jeton dans la séquence ainsi que du jeton lui-même.
+    \item Un module d'\textbf{encodeur}, qui permet d'obtenir une
+        représentation contextualisée des entrés. Cette représentation est
+        apprise et varie selon la tâche finale du modèle ainsi que le corpus
+        utiliser pour entraîner le modèle.
+\end{itemize}
+Notre modèle ELECTRA utilise l'architecture ELECTRA-small.
+
 \section{Affinage pour la détection d'erreurs}
 Une fois le modèle ELECTRA préentraîné, il est nécessaire d'adapter le modèle
 pour que celui-ci soit en mesure de détecter efficacement les erreurs dans les
@@ -590,7 +626,7 @@ C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
 actuellement utilisé en production chez Druide. Il répond donc à nos
 contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
 combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
-sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau.\\
+sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau \ref{table:hp}.\\
 
 \section{Préentraînement initial}
 Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
@@ -605,9 +641,9 @@ données. En entraînant 3 modèles sur le même jeu de données modifié, nous
 espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
-l'entraînement des trois modèles sont décrits dans le tableau \ref{table:1}.
+l'entraînement des trois modèles sont décrits dans le tableau \ref{table:hp}.
 Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
-l'article original.
+l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 %TODO: Retirer soupe si pas les résultats ?
 
 
@@ -621,8 +657,9 @@ l'article original.
  Taille des couches cachées & 256 & 64 \\
  Taille du MLP cachés & 15 & 15 \\
  Taille des couches de projection & 128 & 128 \\
- Nombre de couches d'attention & 4 & 4 \\
+ Nombre de têtes d'attention & 4 & 1 \\
  Taille du vocabulaire & 30522 & 30522 \\
+ Ignore la casse & oui & oui \\
  \% des jetons masqués & - & 15 \\
  Taux d'apprentissage & 5e-4 & 5e-4 \\
  Poids de la perte du générateur & - & 1 \\
@@ -630,10 +667,44 @@ l'article original.
  Nombre d'itération de \textit{warmup} & 10000 & 10000\\
  \hline
 \end{tabular}
-\caption{Table to test captions and labels.}
-\label{table:1}
+\caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
+\label{table:hp}
 \end{table}
 
+Une fois le préentraînement complété, nous avons obtenu les résultats suivants
+durant l'évaluation des modèles sur la tâche de ELECTRA:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c c||}
+ \hline
+    Métrique & Modèle 1 & Modèle 2 & Modèle 3 \\ [0.5ex]
+ \hline\hline
+    Exactitude du discriminant & 0.952 &  12 & 12 \\
+    AUC du discrimiantn & 0.934 &  12 & 12 \\
+    Perte du discriminant & 0.135 &  12 & 12 \\
+    Précision du discriminant & 0.801 &  12 & 12 \\
+    Rappel du discriminant & 0.469 &  12 & 12 \\
+    Perte totale & 8.967 &  12 & 12 \\
+    Exactitude du générateur & 0.570 &  12 & 12 \\
+    Perte du générateur & 2.216 &  12 & 12 \\
+    Exactitude du générateur & 0.469 &  12 & 12 \\
+ \hline
+\end{tabular}
+\caption{Table to test captions and labels.}
+\label{table:respreentrainement}
+\end{table}
+
+  % disc_accuracy = 0.9499838
+  % disc_auc = 0.9295881
+  % disc_loss = 0.14201258
+  % disc_precision = 0.794754
+  % disc_recall = 0.4497082
+  % global_step = 2500000
+  % loss = 9.411669
+  % masked_lm_accuracy = 0.56244427
+  % masked_lm_loss = 2.308568
+  % sampled_masked_lm_accuracy = 0.45832235      
 
 \section{Premiers modèles affinés}
 Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
@@ -667,6 +738,13 @@ Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois pre
 \label{table:premiermodeles}
 \end{table}
 
+
+\section{Entraînement modèle avec casse}
+Nos premiers modèles prentraînés sont limités en terme de performance par leur
+jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
+la case. Ce choix n'affecte que peu la performance du modèle durant le
+préentraînement, mais pose problème durant l'affinage sur la tâche de détection
+des erreurs.
 
 
 \chapter{Modèle final}
