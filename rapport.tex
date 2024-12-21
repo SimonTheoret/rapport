@@ -736,16 +736,47 @@ premiers modèles:
 \end{table}
 
 
-\section{Entraînement modèle avec casse}
+\section{Entraînement d'un modèle avec casse}
 Nos premiers modèles prentraînés sont limités en terme de performance par leur
 jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
 la case, et certains types d'erreurs, tel que les majuscules pour les noms
 propres, nécessite de connaître la casse des mots. Ce choix n'affecte que peu
 la performance du modèle durant le préentraînement, mais pose problème durant
-l'affinage sur la tâche de détection des erreurs.
+l'affinage sur la tâche de détection des erreurs. Nous avons donc entraîné un
+second jetoniseur WordPiece, cette fois-ci sensible à la casse et avec tous les
+autres hyper-paramètres identiques. Nous avons par la suite entraîné le modèle
+sur l'ensemble des données, encore une fois avec l'ordre des données mélangée.
+Les résultats du modèle avec casse ainsi que les modèles préliminaires sont
+contenus dans le tableau
+\ref{table:respreentrainementaveccasse}.
 
-\subsection{}
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c c c||}
+ \hline
+    Métrique & Modèle 1 & Modèle 2 & Modèle 3 & Modèle avec casse\\ [0.5ex]
+ \hline\hline
+    Exactitude du discriminant & 0.952 &  0.949 & 0.950 & 0.946 \\
+    AUC du discrimiantn & 0.934 &  0.929 & 0.934  & 0.931\\
+    Perte du discriminant & 0.135 &  0.142 & 0.138 & 0.149 \\
+    Précision du discriminant & 0.801 &  0.794 & 0.793 & 0.795\\
+    Rappel du discriminant & 0.469 &  0.449 & 0.483 & 0.471\\
+    Perte totale & 8.967 &  9.411 & 9.276 & 10.31\\
+    Exactitude du générateur & 0.570 &  0.562 & 0.550 & 0.499\\
+    Perte du générateur & 2.216 &  2.308 & 2.342 & 2.848\\
+    Exactitude du générateur & 0.469 &  0.458 & 0.448 & 0.403\\
+ \hline
+\end{tabular}
+\caption{Résultats d'évaluation des trois modèles et du modèle avec casse sur la tâche ELECTRA}
+\label{table:respreentrainementaveccasse}
+\end{table}
 
+La performance du discriminant sensible à la cassse est similaire à celles des
+autres discriminant. Cependant, le générateur sensible à la casse performe
+moins biens que les autres. Une explications possible est que la tâche de
+prédire le bon jeton en place en plus difficile avec la casse, puisque les
+jetons contenant la casse sont sont souvent syntaxiquement identiques, mais
+sont traités comme étant différents durant l'évaluation.
 
 \chapter{Modèle final}
 \chapter{Autre techniques} \label{chapitre:autretechnique}
