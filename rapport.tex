@@ -672,7 +672,7 @@ l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 \end{table}
 
 Une fois le préentraînement complété, nous avons obtenu les résultats suivants
-durant l'évaluation des modèles sur la tâche de ELECTRA:
+durant l'évaluation des modèles sur la tâche d'ELECTRA:
 
 \begin{table}[h!]
 \centering
@@ -680,38 +680,35 @@ durant l'évaluation des modèles sur la tâche de ELECTRA:
  \hline
     Métrique & Modèle 1 & Modèle 2 & Modèle 3 \\ [0.5ex]
  \hline\hline
-    Exactitude du discriminant & 0.952 &  12 & 12 \\
-    AUC du discrimiantn & 0.934 &  12 & 12 \\
-    Perte du discriminant & 0.135 &  12 & 12 \\
-    Précision du discriminant & 0.801 &  12 & 12 \\
-    Rappel du discriminant & 0.469 &  12 & 12 \\
-    Perte totale & 8.967 &  12 & 12 \\
-    Exactitude du générateur & 0.570 &  12 & 12 \\
-    Perte du générateur & 2.216 &  12 & 12 \\
-    Exactitude du générateur & 0.469 &  12 & 12 \\
+    Exactitude du discriminant & 0.952 &  0.949 & 0.950 \\
+    AUC du discrimiantn & 0.934 &  0.929 & 0.934 \\
+    Perte du discriminant & 0.135 &  0.142 & 0.138 \\
+    Précision du discriminant & 0.801 &  0.794 & 0.793 \\
+    Rappel du discriminant & 0.469 &  0.449 & 0.483 \\
+    Perte totale & 8.967 &  9.411 & 9.276 \\
+    Exactitude du générateur & 0.570 &  0.562 & 0.550 \\
+    Perte du générateur & 2.216 &  2.308 & 2.342 \\
+    Exactitude du générateur & 0.469 &  0.458 & 0.448 \\
  \hline
 \end{tabular}
-\caption{Table to test captions and labels.}
-\label{table:respreentrainement}
+\caption{Résultats d'évaluation des trois modèles sur la tâche ELECTRA}
+\label{table:respreentrainementsanscasse}
 \end{table}
+Malgré le changement de l'ordre des données, aucun des trois modèles n'a
+performé différemment des autres modèles. Cette remarque nous a poussé à
+utiliser la méthode de la soupe \cite{soup} dans le but d'améliorer la
+performance du modèle. Cette méthode sera discutée plus en détails dans la
+section \ref{chapitre:autretechnique}
 
-  % disc_accuracy = 0.9499838
-  % disc_auc = 0.9295881
-  % disc_loss = 0.14201258
-  % disc_precision = 0.794754
-  % disc_recall = 0.4497082
-  % global_step = 2500000
-  % loss = 9.411669
-  % masked_lm_accuracy = 0.56244427
-  % masked_lm_loss = 2.308568
-  % sampled_masked_lm_accuracy = 0.45832235      
 
 \section{Premiers modèles affinés}
 Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
-ces trois modèles sur la tâche de détection des erreurs en français.
-Les meilleur métriques enregistrées sont détaillées dans le tableau \ref{table:premiermodeles}
+ces trois modèles sur la tâche de détection des erreurs en français. Les
+meilleur métriques enregistrées sont détaillées dans le tableau
+\ref{table:premiermodeles}
 
-Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois premiers modèles:
+Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois
+premiers modèles:
 
 
 \begin{figure}
@@ -734,7 +731,7 @@ Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois pre
     Modèle initial 3  & 39.85 & 24.88 & 35.57  \\
  \hline
 \end{tabular}
-\caption{Résultats des modèles préliminaires sur corpus d'évaluation}
+    \caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction}
 \label{table:premiermodeles}
 \end{table}
 
@@ -742,12 +739,16 @@ Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois pre
 \section{Entraînement modèle avec casse}
 Nos premiers modèles prentraînés sont limités en terme de performance par leur
 jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
-la case. Ce choix n'affecte que peu la performance du modèle durant le
-préentraînement, mais pose problème durant l'affinage sur la tâche de détection
-des erreurs.
+la case, et certains types d'erreurs, tel que les majuscules pour les noms
+propres, nécessite de connaître la casse des mots. Ce choix n'affecte que peu
+la performance du modèle durant le préentraînement, mais pose problème durant
+l'affinage sur la tâche de détection des erreurs.
+
+\subsection{}
 
 
 \chapter{Modèle final}
+\chapter{Autre techniques} \label{chapitre:autretechnique}
 \chapter{Conclusions}
 %TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
