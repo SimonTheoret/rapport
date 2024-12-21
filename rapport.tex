@@ -393,6 +393,8 @@ artificielle.}
 	\textit{Named-Entity Recognition}\\
 	DDP & Parallélisme distribué des données, de l'anglais
 	\textit{Distributed Data Parallel}\\
+	MOE & Mélange d'expertes, de l'anglais
+	\textit{Mixture of experts}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
@@ -707,9 +709,10 @@ ces trois modèles sur la tâche de détection des erreurs en français. Les
 meilleur métriques enregistrées sont détaillées dans le tableau
 \ref{table:premiermodeles}
 
-Nous avons obtenu les mesures F-0.5 suivantes durant l'évaluation des trois
-premiers modèles:
+Les mesures F-0.5 obtenues sur l'ensemble de test durant
+l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}.
 
+%TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
 
 \begin{figure}
     \begin{center}
@@ -737,6 +740,7 @@ premiers modèles:
 
 
 \section{Entraînement d'un modèle avec casse}
+
 Nos premiers modèles prentraînés sont limités en terme de performance par leur
 jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
 la case, et certains types d'erreurs, tel que les majuscules pour les noms
@@ -745,9 +749,9 @@ la performance du modèle durant le préentraînement, mais pose problème duran
 l'affinage sur la tâche de détection des erreurs. Nous avons donc entraîné un
 second jetoniseur WordPiece, cette fois-ci sensible à la casse et avec tous les
 autres hyper-paramètres identiques. Nous avons par la suite entraîné le modèle
-sur l'ensemble des données, encore une fois avec l'ordre des données mélangée.
-Les résultats du modèle avec casse ainsi que les modèles préliminaires sont
-contenus dans le tableau
+sur l'ensemble des données, encore une fois avec l'ordre des données mélangée
+et avec les hyper-paramètres du tableau \ref{table:hp}. Les résultats du modèle
+avec casse ainsi que les modèles préliminaires sont contenus dans le tableau
 \ref{table:respreentrainementaveccasse}.
 
 \begin{table}[h!]
@@ -776,10 +780,47 @@ autres discriminant. Cependant, le générateur sensible à la casse performe
 moins biens que les autres. Une explications possible est que la tâche de
 prédire le bon jeton en place en plus difficile avec la casse, puisque les
 jetons contenant la casse sont sont souvent syntaxiquement identiques, mais
-sont traités comme étant différents durant l'évaluation.
+sont traités comme étant différents durant l'évaluation.\\
+
+Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
+détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
+des trois modèles précédents, contenus dans le tableau 
+%TODO: retirer cette partie s'il n'y a pas de tableau.
+
+%TODO: insérer ref à tableau, si le tabeau existe.
+
+Les mesures F-0.5 obtenues sur l'ensemble de test durant
+l'affinage pour le modèle avec casse sont contenues dans la figure
+\ref{fig:f05electraaveccasse}.
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/electraaveccassef05.png}
+    \end{center}
+    \caption{Mesure F-0.5 du modèle avec casse selon le nombre d'itérations sur
+    données d'évaluation pour la détection d'erreurs en
+    français.}\label{fig:f05electraaveccasse}
+\end{figure}
+
+%TODO: Insérer résultats de tableau pour ELECTRA avec casse + sans casse pour affinage
+
+\section{Comparaison avec CAMEMBERT}
+Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
+modèles plus volumineux, nous avons affiné une plus gros modèle et avons
+comparé la performances des modèles. Nous avons utilisé CAMEMBERT, un modèle
+basé sur BERT et préentraîné sur le corpus francophone OSCAR à l'aide de la
+méthode MLM. %TODO: insérer citations à camembert et oscar.
+%TODO: Insérer graphique des performances de CAMEMBERT
+%TODO: Mettre à jour tableau des performances de Camembert et les autres modèles
+
 
 \chapter{Modèle final}
+\subsection{Recherche d'hyper-paramètres}
+\subsection{Phase d'entraînement intermédiaire}
 \chapter{Autre techniques} \label{chapitre:autretechnique}
+\subsection{Soupe}
+\subsection{Nettoyage des données}
+\subsection{Fast-ELECTRA}
+\subsection{Architecture hybrides à base de MOE}
 \chapter{Conclusions}
 %TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
