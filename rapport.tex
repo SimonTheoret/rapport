@@ -259,7 +259,7 @@
 
 \department{Département d'informatique et de recherche opérationnelle}
 
-\date{\today} %Date du DÉPÔT INITIAL (ou du 2e dépôt s'il y a corrections majeures)
+\date{7 février 2025} %Date du DÉPÔT INITIAL (ou du 2e dépôt s'il y a corrections majeures)
 
 \sujet{informatique, \orientation{apprentissage automatique}}
 %%\orientation{orientation}%Ce champ est optionnel
@@ -324,9 +324,9 @@ une hausse importante des performances en introduisant une tâche intermédiaire
 et en faisant une recherche d'hyperparamètres.\\
 
 \textit{Mots clés: Apprentissage automatique, Apprentissage profond,
-Apprentissage machine, Traitement de texte, Détection de mot manquants,
-Encodeur, Transformers, BERT, Electra, Réseaux de neurones, Intelligence
-artificielle.}
+	Apprentissage machine, Traitement de texte, Détection de mot manquants,
+	Encodeur, Transformers, BERT, Electra, Réseaux de neurones, Intelligence
+	artificielle.}
 
 %%------------------------------------------------- %
 %%              pages iv                            %
@@ -395,6 +395,8 @@ artificielle.}
 	\textit{Distributed Data Parallel}\\
 	MOE & Mélange d'expertes, de l'anglais
 	\textit{Mixture of experts}\\
+	TPE & Estimateur de Parzen à base d'arbres, de l'anglais
+	\textit{Tree-Structured Parzen Estimator}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
@@ -415,7 +417,7 @@ artificielle.}
 
 Je tiens remercier Joss, pour sa précieuse aide tout au long de mon stage. Je
 n'aurais pas pu demander un meilleur superviseur. \\
-%TODO: En rajouter un ti peu
+%% TODO: En rajouter un ti peu
 Je remercie aussi Momo pour son support moral constant.
 
 %
@@ -509,11 +511,11 @@ générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode 
 visualisée dans la figure \ref{fig:electra}.
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
-    \end{center}
-    \caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
-    \label{fig:electra}
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
+	\end{center}
+	\caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+	\label{fig:electra}
 \end{figure}
 
 Trois éléments rendent l'entraînement du discriminant plus facile.
@@ -550,15 +552,15 @@ ELECTRA ajoute une nouvelle version plus petite de BERT, dénommée
 ELECTRA-small. Celle-ci consiste en 12 couches de 256 unités de large. Ces
 modèles à base d'encodeur sont composées de trois parties:
 \begin{itemize}
-    \item Un \textbf{jetoniseur}, qui s'occupe de traiter le texte entrant et
-        de le convertir un une séquence de d'entiers.
-    \item Une \textbf{couche de projection}, qui permet d'associer à chacun des
-        jetons d'entrées une représentation vectorielle qui dépend de la
-        position du jeton dans la séquence ainsi que du jeton lui-même.
-    \item Un module d'\textbf{encodeur}, qui permet d'obtenir une
-        représentation contextualisée des entrés. Cette représentation est
-        apprise et varie selon la tâche finale du modèle ainsi que le corpus
-        utiliser pour entraîner le modèle.
+	\item Un \textbf{jetoniseur}, qui s'occupe de traiter le texte entrant et
+	      de le convertir un une séquence de d'entiers.
+	\item Une \textbf{couche de projection}, qui permet d'associer à chacun des
+	      jetons d'entrées une représentation vectorielle qui dépend de la
+	      position du jeton dans la séquence ainsi que du jeton lui-même.
+	\item Un module d'\textbf{encodeur}, qui permet d'obtenir une
+	      représentation contextualisée des entrés. Cette représentation est
+	      apprise et varie selon la tâche finale du modèle ainsi que le corpus
+	      utiliser pour entraîner le modèle.
 \end{itemize}
 Notre modèle ELECTRA utilise l'architecture ELECTRA-small.
 
@@ -602,7 +604,7 @@ des textes francophones. Ces annotation sont fournies par Druide et proviennent
 d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
 les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
 Druide.
-%TODO: Insérer un exemple d'annotation
+%% TODO: Insérer un exemple d'annotation
 
 
 \chapter{Entraînement de modèles initiaux}
@@ -624,7 +626,7 @@ texte "11 ème étage" devienne "11ème étage".\\% TODO: Retravailler cette phr
 
 Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
 la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece.
-%TODO: Ajouter citation pour wordpiece.
+%% TODO: Ajouter citation pour wordpiece.
 C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
 actuellement utilisé en production chez Druide. Il répond donc à nos
 contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
@@ -638,7 +640,7 @@ Celle-ci est disponible au dépôt git suivant:
 l'entraînement dispose de 3 GPUs de 16GB de VRAM chacun. Or, l'implémentation
 originale utilise moins de 16GB de VRAM et ne permet pas l'usage de DDP,
 limitant la vitesse d'entraînement ainsi que la taille de lot (\textit{batch
-size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
+	size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
 initialisé aléatoirement trois modèle ELECTRA et avons changé l'ordre des
 données. En entraînant 3 modèles sur le même jeu de données modifié, nous
 espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
@@ -647,55 +649,55 @@ computationnelles à notre disposition. Les hyper-paramètres utilisés durant
 l'entraînement des trois modèles sont décrits dans le tableau \ref{table:hp}.
 Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
 l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
-%TODO: Retirer soupe si pas les résultats ?
+%% TODO: Retirer soupe si pas les résultats ?
 
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{||c | c c||}
- \hline
- Hyper-paramètres & Discriminant & Générateur \\ [0.5ex]
- \hline\hline
- Nombre de couches  & 12 & 12 \\
- Taille des couches cachées & 256 & 64 \\
- Taille du MLP cachés & 15 & 15 \\
- Taille des couches de projection & 128 & 128 \\
- Nombre de têtes d'attention & 4 & 1 \\
- Taille du vocabulaire & 30522 & 30522 \\
- Ignore la casse & oui & oui \\
- \% des jetons masqués & - & 15 \\
- Taux d'apprentissage & 5e-4 & 5e-4 \\
- Poids de la perte du générateur & - & 1 \\
- Poids de la perte du discriminant & 50 & - \\
- Nombre d'itérations de \textit{warmup} & 10000 & 10000\\
- \hline
-\end{tabular}
-\caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
-\label{table:hp}
+	\centering
+	\begin{tabular}{||c | c c||}
+		\hline
+		Hyper-paramètres                       & Discriminant & Générateur \\ [0.5ex]
+		\hline\hline
+		Nombre de couches                      & 12           & 12         \\
+		Taille des couches cachées             & 256          & 64         \\
+		Taille du MLP cachés                   & 15           & 15         \\
+		Taille des couches de projection       & 128          & 128        \\
+		Nombre de têtes d'attention            & 4            & 1          \\
+		Taille du vocabulaire                  & 30522        & 30522      \\
+		Ignore la casse                        & oui          & oui        \\
+		\% des jetons masqués                  & -            & 15         \\
+		Taux d'apprentissage                   & 5e-4         & 5e-4       \\
+		Poids de la perte du générateur        & -            & 1          \\
+		Poids de la perte du discriminant      & 50           & -          \\
+		Nombre d'itérations de \textit{warmup} & 10000        & 10000      \\
+		\hline
+	\end{tabular}
+	\caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
+	\label{table:hp}
 \end{table}
 
 Une fois le préentraînement complété, nous avons obtenu les résultats suivants
 durant l'évaluation des modèles sur la tâche d'ELECTRA:
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{||c | c c c||}
- \hline
-    Métrique & Modèle 1 & Modèle 2 & Modèle 3 \\ [0.5ex]
- \hline\hline
-    Exactitude du discriminant & 0.952 &  0.949 & 0.950 \\
-    AUC du discrimiantn & 0.934 &  0.929 & 0.934 \\
-    Perte du discriminant & 0.135 &  0.142 & 0.138 \\
-    Précision du discriminant & 0.801 &  0.794 & 0.793 \\
-    Rappel du discriminant & 0.469 &  0.449 & 0.483 \\
-    Perte totale & 8.967 &  9.411 & 9.276 \\
-    Exactitude du générateur & 0.570 &  0.562 & 0.550 \\
-    Perte du générateur & 2.216 &  2.308 & 2.342 \\
-    Exactitude du générateur & 0.469 &  0.458 & 0.448 \\
- \hline
-\end{tabular}
-\caption{Résultats d'évaluation des trois modèles sur la tâche ELECTRA}
-\label{table:respreentrainementsanscasse}
+	\centering
+	\begin{tabular}{||c | c c c||}
+		\hline
+		Métrique                   & Modèle 1 & Modèle 2 & Modèle 3 \\ [0.5ex]
+		\hline\hline
+		Exactitude du discriminant & 0.952    & 0.949    & 0.950    \\
+		AUC du discrimiantn        & 0.934    & 0.929    & 0.934    \\
+		Perte du discriminant      & 0.135    & 0.142    & 0.138    \\
+		Précision du discriminant  & 0.801    & 0.794    & 0.793    \\
+		Rappel du discriminant     & 0.469    & 0.449    & 0.483    \\
+		Perte totale               & 8.967    & 9.411    & 9.276    \\
+		Exactitude du générateur   & 0.570    & 0.562    & 0.550    \\
+		Perte du générateur        & 2.216    & 2.308    & 2.342    \\
+		Exactitude du générateur   & 0.469    & 0.458    & 0.448    \\
+		\hline
+	\end{tabular}
+	\caption{Résultats d'évaluation des trois modèles sur la tâche ELECTRA}
+	\label{table:respreentrainementsanscasse}
 \end{table}
 Malgré le changement de l'ordre des données, aucun des trois modèles n'a
 performé différemment des autres modèles. Cette remarque nous a poussé à
@@ -713,30 +715,30 @@ meilleur métriques enregistrées sont détaillées dans le tableau
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
 l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}.
 
-%TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
+%% TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=1.40\textwidth]{figures/3premiersmodelesf05.png}
-    \end{center}
-    \caption{Mesure F-0.5 des trois premiers modèles selon le nombre d'itérations sur données d'évaluation pour la détection d'erreurs en français.}
-    \label{fig:3premiermodeles}
+	\begin{center}
+		\includegraphics[width=1.40\textwidth]{figures/3premiersmodelesf05.png}
+	\end{center}
+	\caption{Mesure F-0.5 des trois premiers modèles selon le nombre d'itérations sur données d'évaluation pour la détection d'erreurs en français.}
+	\label{fig:3premiermodeles}
 \end{figure}
 
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{||c | c | c | c||}
- \hline
-    Modèle & Précision & Rappel & F0.5 \\ [0.5ex]
- \hline\hline
-    Modèle initial 1  & 39.59 & 23.84 & 34.97 \\
-    Modèle initial 2  & 40.22 & 24.36 & 35.63 \\
-    Modèle initial 3  & 39.85 & 24.88 & 35.57  \\
- \hline
-\end{tabular}
-    \caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction}
-\label{table:premiermodeles}
+	\centering
+	\begin{tabular}{||c | c | c | c||}
+		\hline
+		Modèle           & Précision & Rappel & F0.5  \\ [0.5ex]
+		\hline\hline
+		Modèle initial 1 & 39.59     & 23.84  & 34.97 \\
+		Modèle initial 2 & 40.22     & 24.36  & 35.63 \\
+		Modèle initial 3 & 39.85     & 24.88  & 35.57 \\
+		\hline
+	\end{tabular}
+	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction}
+	\label{table:premiermodeles}
 \end{table}
 
 
@@ -756,24 +758,24 @@ avec casse ainsi que les modèles préliminaires sont contenus dans le tableau
 \ref{table:respreentrainementaveccasse}.
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{||c | c c c c||}
- \hline
-    Métrique & Modèle 1 & Modèle 2 & Modèle 3 & Modèle avec casse\\ [0.5ex]
- \hline\hline
-    Exactitude du discriminant & 0.952 &  0.949 & 0.950 & 0.946 \\
-    AUC du discrimiantn & 0.934 &  0.929 & 0.934  & 0.931\\
-    Perte du discriminant & 0.135 &  0.142 & 0.138 & 0.149 \\
-    Précision du discriminant & 0.801 &  0.794 & 0.793 & 0.795\\
-    Rappel du discriminant & 0.469 &  0.449 & 0.483 & 0.471\\
-    Perte totale & 8.967 &  9.411 & 9.276 & 10.31\\
-    Exactitude du générateur & 0.570 &  0.562 & 0.550 & 0.499\\
-    Perte du générateur & 2.216 &  2.308 & 2.342 & 2.848\\
-    Exactitude du générateur & 0.469 &  0.458 & 0.448 & 0.403\\
- \hline
-\end{tabular}
-\caption{Résultats d'évaluation des trois modèles et du modèle avec casse sur la tâche ELECTRA}
-\label{table:respreentrainementaveccasse}
+	\centering
+	\begin{tabular}{||c | c c c c||}
+		\hline
+		Métrique                   & Modèle 1 & Modèle 2 & Modèle 3 & Modèle avec casse \\ [0.5ex]
+		\hline\hline
+		Exactitude du discriminant & 0.952    & 0.949    & 0.950    & 0.946             \\
+		AUC du discrimiantn        & 0.934    & 0.929    & 0.934    & 0.931             \\
+		Perte du discriminant      & 0.135    & 0.142    & 0.138    & 0.149             \\
+		Précision du discriminant  & 0.801    & 0.794    & 0.793    & 0.795             \\
+		Rappel du discriminant     & 0.469    & 0.449    & 0.483    & 0.471             \\
+		Perte totale               & 8.967    & 9.411    & 9.276    & 10.31             \\
+		Exactitude du générateur   & 0.570    & 0.562    & 0.550    & 0.499             \\
+		Perte du générateur        & 2.216    & 2.308    & 2.342    & 2.848             \\
+		Exactitude du générateur   & 0.469    & 0.458    & 0.448    & 0.403             \\
+		\hline
+	\end{tabular}
+	\caption{Résultats d'évaluation des trois modèles et du modèle avec casse sur la tâche ELECTRA}
+	\label{table:respreentrainementaveccasse}
 \end{table}
 
 La performance du discriminant sensible à la cassse est similaire à celles des
@@ -786,22 +788,22 @@ sont traités comme étant différents durant l'évaluation.\\
 Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
 détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
 des trois modèles précédents, contenus dans le tableau.
-%TODO: retirer cette partie s'il n'y a pas de tableau.
-%TODO: insérer ref à tableau, si le tabeau existe.
+%% TODO: retirer cette partie s'il n'y a pas de tableau.
+%% TODO: insérer ref à tableau, si le tabeau existe.
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
 l'affinage pour le modèle avec casse sont contenues dans la figure
 \ref{fig:f05electraaveccasse}.
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=0.95\textwidth]{figures/electraaveccassef05.png}
-    \end{center}
-    \caption{Mesure F-0.5 du modèle avec casse selon le nombre d'itérations sur
-    données d'évaluation pour la détection d'erreurs en
-    français.}\label{fig:f05electraaveccasse}
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{figures/electraaveccassef05.png}
+	\end{center}
+	\caption{Mesure F-0.5 du modèle avec casse selon le nombre d'itérations sur
+		données d'évaluation pour la détection d'erreurs en
+		français.}\label{fig:f05electraaveccasse}
 \end{figure}
 
-%TODO: Insérer résultats de tableau pour ELECTRA avec casse + sans casse pour affinage
+%% TODO: Insérer résultats de tableau pour ELECTRA avec casse + sans casse pour affinage
 
 \section{Comparaison avec CAMEMBERT}
 Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
@@ -817,29 +819,38 @@ peuvent atteindre. \\
 Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
 CAMEMBERT sur la tâche de détection des erreurs en français:
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=0.95\textwidth]{figures/camembertbasef05100epoquesnat.png}
-    \end{center}
-    \caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
-    données d'évaluation pour la détection d'erreurs en
-    français.}\label{fig:f05camembert}
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{figures/camembertbasef05100epoquesnat.png}
+	\end{center}
+	\caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
+		données d'évaluation pour la détection d'erreurs en
+		français.}\label{fig:f05camembert}
 \end{figure}
-Le modèle Camemebert a atteint une mesure F-0.5 maximale de x %%TODO: remplacer x par mesure f0.5 maximale atteinte
-après 100 époques.
+Le modèle Camemebert a atteint une mesure F-0.5 maximale de x.
+%% TODO: remplacer x par mesure f0.5 maximale atteinte après 100 époques.
 
-%TODO: insérer citations à camembert et oscar.
-%TODO: Insérer graphique des performances de CAMEMBERT
-%TODO: Mettre à jour tableau des performances de Camembert et les autres modèles
+%% TODO: insérer citations à camembert et oscar.
+%% TODO: Insérer graphique des performances de CAMEMBERT
+%% TODO: Mettre à jour tableau des performances de Camembert et les autres modèles
 
 
 
 \chapter{Modèle final}
-Notre modèle final consiste en un modèle ELECTRA-small, faisant usage du
-jetoniseur de CAMEMBERT. Néanmoins, nous estimons que le plus gros gains de
-performance proviennent des deux actions suivantes: la recherche
-d'hyper-paramètres, à l'aide de la librairie Optuna, et l'ajout d'une phase
-d'entraînement intermédiaire. %TODO: insérer référence à Optuna
+Notre modèle final consiste en un modèle ELECTRA-small, faisant usage
+du jetoniseur de CAMEMBERT. Néanmoins, les augmentations de
+performance les plus importants proviennent des deux modifications
+suivantes: la recherche d'hyper-paramètres, à l'aide de la librairie
+Optuna, et l'ajout d'une phase d'entraînement intermédiaire.
+%% TODO: insérer référence à Optuna
 \section{Recherche d'hyper-paramètres}
+L'un des plus important facteur permettant d'augmenter la performance
+de notre modèle final est l'usage de méthode de recherche
+d'hyper-paramètres. Nous avons utiliser la librairie Optuna, une
+librairie Python spécialisée pour la recherche d'hyper-paramètres. En
+particulier, nous utilisons l'algorithme \textit{TPE}
+\cite{watanabe2023treestructuredparzenestimatorunderstanding},
+\cite{NIPS2011_86e8f7ab}.
+\subsection{Remarques sur les hyper-paramètres}
 \subsection{Note sur la qualité des données d'affinage}
 La recherche d'hyper-paramètres a révélé une tendance intéressante: les modèles
 gagnent à avoir une très petite taille de lot (\textit{batch size}) lors de
@@ -862,12 +873,12 @@ sont basés sur des corpus filtrés des humains, bien souvent des linguistes.
 \section{Fast-ELECTRA}
 \section{Architecture hybrides à base de MOE}
 \chapter{Conclusions}
-%TODO: Discuter des directions futures: Génération de données artificielles
+%% TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
 %%     index    %
 %%--------------%
 
-%% S'il y a lieu, décommenter la ligne pour m ettre votre index
+%% S'il y a lieu, décommenter la ligne pour mettre votre index
 
 %%\printindex
 
