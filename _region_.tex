@@ -9,7 +9,7 @@
 %% of the jurabib package
 %% Copyright (C) 1999, 2000, 2001 Jens Berger
 %% See dms.ins  for the copyright details.
-%% 
+%%
 %%% ====================================================================
 %%%  @LaTeX-file{
 %%%     filename        = "dms.dtx",
@@ -51,6 +51,7 @@
 
 \usepackage[utf8]{inputenc} %Obligatoires
 \usepackage[T1]{fontenc}    %
+\usepackage{tabularx}
 
 %% <lmodern> incorpore les fontes en T1, pour
 %% faciliter le dépôt final. Ceci n'est pas la
@@ -109,7 +110,7 @@
 %% subfigure    simplifie l'inclusion de figures côtes-à-côtes
 
 %% Packages parfois utiles.
-%%\usepackage{dsfont,mathrsfs,color,url,verbatim,booktabs}
+\usepackage{dsfont,mathrsfs,color,url,verbatim,booktabs}
 %% dsfont       symboles mathématiques \mathds
 %% mathrsfs     plus de symboles mathématiques \mathscr
 %% color        pour utiliser des couleurs (comparer avec <xcolor>)
@@ -183,6 +184,8 @@
 %%% commandes de la forme :
 %%%
 
+
+
 %%\newtheorem{cor}{\corollaryname}[section]
 %%\newtheorem{deff}{\definitionname}[section]
 %%\newtheorem{ex}{\examplename}[section]
@@ -218,7 +221,6 @@
 %% \usepackage[onehalfspacing]{setspace}
  % ou
 \renewcommand{\baselinestretch}{1.286} %Interligne et demi (environ 18pt (12pt+6pt) entre les lignes)
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%                                     %%%%%%%%%%%%%
@@ -242,7 +244,6 @@
 %% \version est la version de votre manuscrit
 %%
 \version{1}
-\pagenumbering{roman}
 
 %%------------------------------------------------- %
 %%              pages i et ii                       %
@@ -314,17 +315,25 @@
 \francais
 
 \chapter*{Résumé}
+Le logiciel Antidote permet de corriger des textes en français et en anglais.
+Il détecte plusieurs milliers de types d’erreurs orthographiques et
+grammaticales. Le logiciel dispose d'un modèle ELECTRA capable de détecter
+efficacement les erreurs en français. L'équipe de TAL de Druide désire mettre
+en place un système similaire pour la langue française . Dans le cadre de ce
+stage, le but est de créer un modèle ELECTRA capable de détecter les erreurs
+grammaticales en français. Pour ce faire, plusieurs approches ont été testées
+et les résultats des derniers modèles sont prometteurs. On remarque entre autre
+une hausse importante des performances en introduisant une tâche intermédiaire
+et en faisant une recherche d'hyperparamètres.\\
 
-...sommaire et mots clés en français...
+\textit{Mots clés: Apprentissage automatique, Apprentissage profond,
+Apprentissage machine, Traitement de texte, Détection de mot manquants,
+Encodeur, Transformers, BERT, Electra, Réseaux de neurones, Intelligence
+artificielle.}
 
 %%------------------------------------------------- %
 %%              pages iv                            %
 %%------------------------------------------------- %
-
-\anglais
-\chapter*{Abstract}
-
-...summary and keywords in english...
 
 %%------------------------------------------------- %
 %%        page v --- Table de matieres              %
@@ -379,6 +388,17 @@
 %%
 
 \chapter*{Liste des sigles et des abréviations}
+\begin{twocolumnlist}{.2\textwidth}{.7\textwidth}
+	MLM & Modélisation de langage avec masque, de l'anglais
+	\textit{Masked Language Modeling}\\
+	TAL & Traitement automatique du langage\\
+	NER & Reconnaissance d'entitées, de l'anglais
+	\textit{Named-Entity Recognition}\\
+	DDP & Parallélisme distribué des données, de l'anglais
+	\textit{Distributed Data Parallel}\\
+	MOE & Mélange d'expertes, de l'anglais
+	\textit{Mixture of experts}\\
+\end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
 %%% \def\colun{\bf} % Première colonne en gras
@@ -388,16 +408,6 @@
 %%% \def\plusun{\global\advance\abbrlist by 1\relax}
 %%% \def\colun{\plusun\the\abbrlist. }
 %%\def\coldeux{\relax}
-\begin{twocolumnlist}{.2\textwidth}{.7\textwidth}
-	KQ-Methode & Méthode des moindres carrés, de l'allemand
-	\textit{Methode der kleinsten Quadrate}\\
-	MCMC  & Monte Carlo par chaînes de Markov, de l'anglais
-	\textit{Markov Chain Monte Carlo} \\
-	MSE  &  Erreur quadratique moyenne, de l'anglais \textit{Mean Square Error}\\
-	NDR & Retract d'un voisinage, de l'anglais \textit{Neighbourhood Deformation Retract}\\
-	OLS  &  Moindres carrés ordinaires, de l'anglais \textit{Ordinary Least Square}\\
-	ZFC & Théorie des ensembles de Zermelo-Fraenkel avec l'axiome du choix\\
-\end{twocolumnlist}
 %% L'environnement <threecolumnlist> existe aussi pour trois colonnes.
 
 %%------------------------------------------------- %
@@ -406,7 +416,10 @@
 
 \chapter*{Remerciements}
 
-...remerciements...
+Je tiens remercier Joss, pour sa précieuse aide tout au long de mon stage. Je
+n'aurais pas pu demander un meilleur superviseur. \\
+%TODO: En rajouter un ti peu
+Je remercie aussi Momo pour son support moral constant.
 
 %
 % Fin des pages liminaires.  À partir d'ici, les
@@ -425,244 +438,438 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter*{Introduction}
+Le domaine du traitement automatique des langues connaît une explosion
+fulgurante de techniques, de jeux de données et de modèles permettant de
+résoudre de nouveaux problèmes. Néanmoins, bon nombre de ces applications
+restent hors de portée des organisations désirant mettre en application des
+outils d'apprentissages automatique. En effet, la plupart des modèles de
+langues récents sont préentraînés sur des corpus majoritairement anglophones,
+avec des jetoniseurs spécialisés pour traiter le contenu anglophone. Ces deux
+facteurs limitent les modèles préentraînés disponibles ainsi que leur
+performance sur des tâches avec un corpus non anglophone.\\
 
-...introduction...
+Druide Inc. est une compagnie basée à Montréal dont le principal produit est
+Antidote, un logiciel de correction orthographique et grammaticale. Leur
+logiciel phare fait déjà usage de l'apprentissage profond pour leur moteur de
+correction en anglais, en plus d'utiliser un correcteur symbolique pour
+certains types d'erreurs. Le modèle utilisé en production pour la correction en
+anglais fait près de 2 corrections sur 3 et représente une part importante du
+moteur de correction. L'équipe de Druide désire mettre en place un modèle de
+correction similaire, mais adapté à la langue française. En particulier, ils
+désirent préentraîner un modèle ELECTRA avec un corpus et un jetoniseur
+francophones pour que le modèle puisse détecter les erreurs grammaticales
+présentes dans les textes des utilisateurs d'Antidote.\\
+
+Pour la réalisation du projet, nous disposons d'un jeu de données d'environ 40
+GB de données non structuré. De plus, l'entraînement du modèle se fait
+localement sur une machine ayant accès à 3 NVIDIA RTX A4000, disposant chacune
+de 16 GB de mémoire VRAM.
+
 
 %%------------------------------------------------- %
 %%                pages 1                           %
 %%------------------------------------------------- %
 
-\chapter{Titre du premier chapitre}
+\chapter{Druide et ELECTRA}
+L'équipe de Druide dispose de deux modèles déjà en place pour la correction des
+erreurs. Néanmoins, leur modèle en anglais corrige une plus grande gamme
+d'erreurs. Druide désire améliorer leur moteur de correction en français à
+l'aide de l'apprentissage profond. %NOTE: Nécessaire?
 
-Le 1$^{\text{er}}$ chapitre numéroté. Voici quelques mots en \emph{italique}, en \textbf{gras} et \textsf{sans serif}.
+\section{Contraintes}
+Le modèle doit être intégré dans le logiciel principal de Druide, Antidote. Or,
+le logiciel Antidote est déployé sur les ordinateurs personnels des usagers.
+Cela implique d'importantes contraintes quant aux ressources disponibles pour
+l'exécution du modèle, notamment en ce qui à trait à la consommation de
+mémoire. De plus, le logiciel Antidote se doit d'être rapide, puisque attendre
+plusieurs minutes pour la correction d'un texte volumineux dégrade la qualité
+de l'expérience des utilisateurs. En d'autres mots, le modèle doit être rapide
+durant l'inférence. Finalement, le logiciel antidote cible deux système
+d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur les machines
+des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime} et CoreML.\@
+Il est donc nécessaire que le modèle soit supporté par les deux librairies.
+En résumé, nous avons des limites quant aux ressources disponibles durant
+l'inférence ainsi que des contraintes quant aux couches et modèles utilisables.\\
 
-\section{Section un du premier chapitre}
+Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner
+des petits modèles Transformers\cite{vaswani2023attentionneed} avec
+encodeur. Ces derniers contiennent environ 14 millions de paramètres.
 
-La premi\`ere section du 1$^{\text{er}}$ chapitre.
+\section{Méthode de préentraînement ELECTRA}
 
-\subsection {Sous-section un}
+La méthode ELECTRA\cite{clark2020electrapretrainingtextencoders} est une
+méthode inspirée de la modélisation de langage avec masque (Masked Language
+Modeling; MLM), mais qui se veut plus efficace et rapide que le MLM. La méthode
+ELECTRA consiste à entraîner deux modèles: un petit modèle, appelé le
+générateur, et le modèle final, appelé le discriminant. Le générateur reçoit
+des jetons masqués et doit prédire quel était le jeton original situé à la
+position du masque. Les prédictions du modèle sont échantillonnés, de façon à
+obtenir une nouvelle séquence, potentiellement différente de la séquence
+originale. Le discriminant reçoit la nouvelle séquence et à pour tâche de
+prédire quels jetons sont corrompus et lesquels n'ont pas été modifiés par le
+générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est
+visualisée dans la figure \ref{fig:electra}.
 
-Un peu de texte\dots
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
+    \end{center}
+    \caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+    \label{fig:electra}
+\end{figure}
 
-\subsubsection{Sous-sous-section un}
+Trois éléments rendent l'entraînement du discriminant plus facile.
+Premièrement, le générateur dispose de significativement moins de capacité que
+le discriminant. En effet, ce dernier contient en général 3 à 4 fois plus de
+paramètres (en excluant les couches de projections \textit{embeddings}) que le
+générateur. De plus, les entrées du discriminant sont échantillonnées depuis la
+distribution engendrée par le générateur, au lieu de sélectionner les entrées
+les plus probables selon la distribution du générateur. Finalement, les poids
+du générateur sont initialisés aléatoirement et ce dernier est entraîné en même
+temps que le discriminant, rendant la tâche de plus en plus difficile au fur et
+à mesure que le générateur s'entraîne. Ces trois facteurs rendent la tâche du
+discriminant plus facile et permettent de générer des erreurs similaire à ce
+que le modèle rencontrera en production.\\
 
-Encore du texte\dots et un tableau
+La méthode ELECTRA a été choisie pour deux raisons: c'est une méthode de
+préentraînement similaire à la correction d'erreurs dans un texte et la méthode
+ELECTRA permet d'augmenter l'efficacité du préentraînement en atteignant des
+performances similaires aux performances du MLM en moins d'itérations.
 
-\begin{table}[htb]
-	\centering
-	\begin{tabular}{|c||l|c|r|p{0.4\textwidth}|}
-		\hline          &          &           &          &                           \\
-		\textbf{Option} & g        & c         & d        & \verb|p{0.4\textwidth}|   \\[3mm]
-		\hline\hline    &          &           &          &                           \\
-		\textbf{Effet}  & À gauche & Au centre & À droite & Le texte de cette colonne
-		est justifié et la largeur de la colonne est fixée à 40\,\% de la zone
-		de texte (hors tableau).                                                      \\[3mm]
-		\hline
-	\end{tabular}
-	\caption{Un tableau simple dans le premier chapitre.}
-	\label{tab:simple1}
-\end{table}
-Le tableau \ref{tab:simple1} n'est pas tr\`es garni.
 
-Voici un exemple de pseudo-code. L'exemple utilise
-les macros offertent par la classe \texttt{dms}, mais
-les utilisateurs peuvent bien utiliser les packages
-de leur choix.
-
-\begin{algo} Cet algorithme ne fait rien d'intéressant et
-	sert à illustrer un exemple.
-	% On aligne les colonnes à l'aide de &
-	% et on utilise \cleartabs pour "effacer"
-	% l'alignement.
-	% Notez qu'il l'alignement est toujours préservé d'un \+
-	% à l'autre, c'est pourquoi il est nécessaire d'utiliser
-	% \cleartabs lorsque \+ doit oublier l'ancien alignement.
-	\Hline
-	\noindent\hbox{\hskip2\parindent\vbox{
-	\+ \bf Si $n$ \rm est impair, \cleartabs&\bf alors ${\it imprimer}(n)$\rm;\cr
-	\+     &\bf sinon $n:= n +1$;\cr
-	\+ \bf Tant que $n < N$~:\cr % Le ~ est un espace insécable
-	\+ \qquad\cleartabs& \bf ${\it imprimer}(n)$;\cr
-	\+     &\bf  $n:= n+1$;\cr
-	\+     &\bf  $j:= j + {\it factoriel}(n)$;\cr
-	\+ \bf fin;\cr
-	\+ \bf retourner $j$;\cr
-	}}
-	\Hline
-\end{algo}
-
-Voici un autre exemple; cette fois le pseudo-code d'une
-fonction.
-
-\begin{algo} Cet algorithme inspecte une matrice et
-	imprime les entrées impaires et les notes dans un
-	tableau qu'il retourne.
-	\Hline
-	\noindent\hbox{\kern2\parindent\vbox{
-	\+ \bf Tableau$^\ast$\ ${\it Imprimer\_Elements\_Impaires}({\bf Matrice}^\ast\ M, {\bf Tableau}^\ast\ T)\ \{$ \cr
-	\+ \qquad\cleartabs& \bf $m := {\it nb\_ligne}(M)$;\cr
-	\+     & \bf $n := {\it nb\_col}(M)$;\cr
-	\+     & \bf Pour $i \in \{1,\ldots, m\}$~:\cr
-	\+     &\qquad\cleartabs & \bf Pour $j \in \{1,\ldots,n\}$~:\cr
-	\+     &&\qquad\cleartabs& \bf Si $M(i,j)$ \rm est &impaire, \cr
-	\+     &&&\hfill&\bf alors~: & \bf ${\it imprimer}(M(i,j))$;\cr
-	\+     &&&&& \bf $T(i,j) := M(i,j)$;\cr
-	\+     &&&&\bf fin;&\cr
-	\+     && \bf fin;\cr
-	\+     &\bf fin;\cr
-	\+     &\bf Retourner $T$; &&&& \cleartabs\qquad&\tt\% Un commentaire\cr
-	\+ \bf $\}$;\cr
-	}}
-	\Hline
-\end{algo}
-
-\noindent\textbf{Note~:} Les exemples illustrent comment
-obtenir un alignement souhaité, mais la mise en page
-et le style sont laissés à la discrétion de l'utilisateur.
-Autrement dit, {\it l'étudiant ou l'étudiante choisi$\,\cdot$e
-		ce qui devrait apparaître en italique, en gras, en roman,
-		en couleur, ce qui doit être indenté. Elle ou il choisit aussi la
-		langue\/} (mais il est important d'en discuter avec le directeur de recherche
-et même de vérifier les règlements en vigueur).
-
-\subsection{Sous-section deux}
-
-Un peu plus de texte\dots
-
-\begin{description}
-	\item [exemple] premier element
-	\item [second exemple]
-\end{description}
-
-\chapter{Quelques exemples}
-
-Voici quelques exemples simples.
-
-\section{Énumérations}
-
-Voici une énumération avec numérotation :
-\begin{enumerate}
-	\item item 1;
-	\item item 2;
-	\item item 3.
-\end{enumerate}
-Maintenant, une énumération sans numérotation avec des marqueurs différents :
+\section{Architecture ELECTRA}
+Le modèle ELECTRA utilise une architecture basée sur les modules d'encodeurs
+des Transformers \cite{vaswani2023attentionneed}. L'usage d'une architecture
+basée sur les transformeur permet d'obtenir une représentation contextuelle
+pour tous les jetons d'une séquence. Cette avancée à été marquée par l'arrivée
+de \cite{bert},  un modèle Transformers (Bidirectional Encoder Representation
+from Transformers). Ce modèle a été développé par Google en 2018 et comprend de
+nombreuses versions de différentes tailles et entraînés sur différentes tâches.
+Les deux versions canoniques de BERT sont BERT-BASE et BERT-LARGE. Ces deux
+versions comprennent respectivement 12 couches et 24 couches, chacune étant
+composée de 768 unités de large, divisées en 12 têtes d’attention multiples.
+ELECTRA ajoute une nouvelle version plus petite de BERT, dénommée
+ELECTRA-small. Celle-ci consiste en 12 couches de 256 unités de large. Ces
+modèles à base d'encodeur sont composées de trois parties:
 \begin{itemize}
-	\item Marqueur par défaut;
-	\item[$\bullet$] \verb|$\bullet$|;
-	\item[$\star$] \verb|$\star$|.
+    \item Un \textbf{jetoniseur}, qui s'occupe de traiter le texte entrant et
+        de le convertir un une séquence de d'entiers.
+    \item Une \textbf{couche de projection}, qui permet d'associer à chacun des
+        jetons d'entrées une représentation vectorielle qui dépend de la
+        position du jeton dans la séquence ainsi que du jeton lui-même.
+    \item Un module d'\textbf{encodeur}, qui permet d'obtenir une
+        représentation contextualisée des entrés. Cette représentation est
+        apprise et varie selon la tâche finale du modèle ainsi que le corpus
+        utiliser pour entraîner le modèle.
 \end{itemize}
+Notre modèle ELECTRA utilise l'architecture ELECTRA-small.
 
-\section{Équations mathématiques}
+\section{Affinage pour la détection d'erreurs}
+Une fois le modèle ELECTRA préentraîné, il est nécessaire d'adapter le modèle
+pour que celui-ci soit en mesure de détecter efficacement les erreurs dans les
+textes des utilisateurs. Druide a développé une liste des différents types
+d'erreurs, permettant de classifier les différents types d'erreurs en de
+grandes catégories, telles que les erreurs de virgules, les erreurs de mots
+manquants, les erreurs d'accord du nom, etc. Cette liste contient 750
+différents types d'erreurs. Chaque erreur fait partie d'une de ces grandes
+catégories, et bon nombre de ces erreurs ont une sous-catégorie, précisant
+encore plus le contexte associée à l'erreur. La détection d'erreur est
+modélisée comme une tâche de détection d'entité nommée (DEN/NER), dans laquelle
+chaque jeton dispose d'un classe. Les classes d'erreurs sont représenté avec un
+identifiant, tandis que la classe représentant l'absence d'erreurs est
+représenté par l'identifiant $O$. Le modèle à comme objectif de spécifier la
+classe de chaque jeton de la séquence. Le schéma $IOB2$ \cite{schemas} est
+utilisé pour représenter sans ambiguïté les jetons contigus contenus dans la
+même erreur.
 
-Une équation :
-\begin{equation*}
-	\otimes^n\,\mathbb{C}^2 \cong \bigoplus_{m=-n/2}^{n/2} W_m.
-\end{equation*}
+\section{Infrastructures en place}
+Notre tâche principale consistait à préentraîner un modèle ELECTRA.\@ Or, un
+modèle ELECTRA est déjà utilisé pour la tâche de correction en anglais. Ce
+dernier n'a pas été préentraîné par Druide. En effet, la librairie
+Transformers\cite{wolf-etal-2020-transformers} permet un usage libre de
+différents modèles ELECTRA préentraînés. De plus, il existe quelques modèles
+ELECTRA préentraînés sur des corpus francophone. Cependant, aucun d'entre eux
+ne respectent nos contraintes de tailles et de vitesse. Il est donc nécessaire
+d'entraîner un modèle à partir d'un initialisation aléatoire.\\
 
-Une autre équation, cette fois-ci numérotée :
-\begin{equation}
-	\label{eq:eulerlagrange}
-	\frac{\partial\mathcal{L}}{\partial\phi^a}-\partial_\mu\frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi^a)}=0,\qquad\mu=0,1,2,3.
-\end{equation}
-Les équations \eqref{eq:eulerlagrange} précédentes sont appelées \emph{équations d'Euler-Lagrange} ou encore \emph{équations du mouvement}. Dans les calculs suivants,
-\begin{align*}
-	\delta S
-	 & = \int_\Omega \mathrm{d}^dx\, \mathcal{L}\left(\phi'^a(x), \partial_\mu\phi'^a(x)\right)
-	- \int_\Omega \mathrm{d}^dx\, \mathcal{L}\left(\phi^a(x), \partial_\mu\phi^a(x)\right)          \\
-	 & = \int_\Omega \mathrm{d}^dx\, \left[\delta \phi^a \frac{\partial\mathcal{L}}{\partial\phi^a}
-	+ \partial_\mu \delta\phi^a \frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi^a)}\right]     \\
-	 & = \int_\Omega \mathrm{d}^dx\, \left[(\delta\phi^a \frac{\partial\mathcal{L}}{\partial\phi^a}
-		+ \partial_\mu \left(\delta \phi^a \frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi^a)}\right)
-	- \delta\phi^a \partial_\mu \frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi^a)}\right]     \\
-	 & = 0,
-\end{align*}
-aucune ligne n'est numérotée. Alors que dans ce qui suit, la derni\`ere ligne l'est :
-\begin{align}
-	\delta S
-	 & = \int_{\Omega'} \mathrm{d}^dx' \,\mathcal{L}\bigl(\phi'^a(x'), \partial'_\mu\phi'^a(x')\bigr)
-	- \int_\Omega\mathrm{d}^dx\,\mathcal{L}\bigl(\phi^a(x),\partial_\mu\phi^a(x)\bigr)
-	\notag                                                                                               \\
-	 & = \int_\Omega \mathrm{d}^dx \,\left[\bar{\delta}\phi^a \frac{\partial\mathcal{L}}{\partial\phi^a}
-		+ \partial_\mu \bar{\delta} \phi^a \frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi^a)}\right]
-	+ \int_{\partial\Omega}\mathrm{d} \sigma_\mu\,\mathcal{L}
-	\bigl(\phi^a,\partial_\mu\phi^a\bigr)\delta x^\mu
-	\notag                                                                                               \\
-	 & = \int_\Omega\mathrm{d}^dx\,\partial_\mu\mathcal{J}^\mu(x).
-	\label{eq:variationaction}
-\end{align}
+Nous disposons de deux corpus déjà préparés pour préentraîner et affiner un
+modèle Electra. Le corpus de préentraînement est une collection de textes non
+structuré provenant de nombreuses sources, notamment des manuels, des articles
+de blogues, des livres. Ce corpus de préentraînement est appelé corpus des
+Combis et représente 40 gigaoctes (Go) de données et 7 milliard de jetons.
+C'est un corpus deux fois plus grand que le corpus de préentraînement utilisé
+pour le préentraînement par Google du modèle ELECTRA de même taille. Pour
+l'affinage, Druide dispose d'un corpus contenant près de 100000 annotations sur
+des textes francophones. Ces annotation sont fournies par Druide et proviennent
+d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
+les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
+Druide.
+%TODO: Insérer un exemple d'annotation
 
-\section{Définitions, théorèmes et preuves}
 
-Voici une définition.
-\begin{deff}[La définition]
-	La définition.
-\end{deff}
-Voici un théorème.
-\begin{theo}[Titre]
-	Ceci est vrai !
-\end{theo}
-\begin{proof}
-	Voici la preuve.
-\end{proof}
-\begin{demo}
-	Voici la preuve en gras.
-\end{demo}
+\chapter{Entraînement de modèles initiaux}
+Le préentraînement d'un modèle de langue se fait en trois étapes. Il est
+nécessaire de prétraiter les données, de sélectionner un jetonniseur adapté à
+la tâche ainsi que d'entraîner le modèle sur la tâche de préentraînement.
 
-\section{Construction d'un tableau}
+\section{Normalisation des données et entraînement d'un jetoniseur}
+La normalisation consiste à réduire le nombre de charactèrs différents contenus
+dans le corpus. C'est une étape importante puisqu'elle permet de réduire la
+taille du vocabulaire du jetoniseur sans pour autant perdre des éléments
+syntaxiques. Notre normalisation consistait à tranformer tous les espaces en le
+même charactère d'espace (espaces insécables, tabulations), de transformer tous
+les guillements (guillements français, guillemets informatiques, etc.) en
+guillemets anglais, de retirer les espaces en trop et modifier les types
+d'apostrophes pour que ceux-ci soient uniformes. La normalisation modifie aussi
+certains les espacements entre certains mots, de façon à ce que par exemple le
+texte "11 ème étage" devienne "11ème étage".\\% TODO: Retravailler cette phrase
 
-\begin{table}[htb]
-	\centering
-	\begin{tabular}{|c||l|c|r|p{0.4\textwidth}|}
-		\hline          &          &           &          &                                                                                                                           \\
-		\textbf{Option} & g        & c         & d        & \verb|p{0.4\textwidth}|                                                                                                   \\[3mm]
-		\hline\hline    &          &           &          &                                                                                                                           \\
-		\textbf{Effet}  & À gauche & Au centre & À droite & Le texte de cette colonne est justifié et la largeur de la colonne est fixée à 40\,\% de la zone de texte (hors tableau). \\[3mm]
-		\hline
-	\end{tabular}
-	\caption{Un tableau simple dans le second chapitre.}
-	\label{tab:simple2}
+Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
+la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece.
+%TODO: Ajouter citation pour wordpiece.
+C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
+actuellement utilisé en production chez Druide. Il répond donc à nos
+contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
+combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
+sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau \ref{table:hp}.\\
+
+\section{Préentraînement initial}
+Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
+Celle-ci est disponible au dépôt git suivant:
+\url{https://github.com/google-research/electra}. Notre machine dédiée à
+l'entraînement dispose de 3 GPUs de 16GB de VRAM chacun. Or, l'implémentation
+originale utilise moins de 16GB de VRAM et ne permet pas l'usage de DDP,
+limitant la vitesse d'entraînement ainsi que la taille de lot (\textit{batch
+size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
+initialisé aléatoirement trois modèle ELECTRA et avons changé l'ordre des
+données. En entraînant 3 modèles sur le même jeu de données modifié, nous
+espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
+fois les modèles affinés et faire un meilleur usage des ressources
+computationnelles à notre disposition. Les hyper-paramètres utilisés durant
+l'entraînement des trois modèles sont décrits dans le tableau \ref{table:hp}.
+Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
+l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
+%TODO: Retirer soupe si pas les résultats ?
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c||}
+ \hline
+ Hyper-paramètres & Discriminant & Générateur \\ [0.5ex]
+ \hline\hline
+ Nombre de couches  & 12 & 12 \\
+ Taille des couches cachées & 256 & 64 \\
+ Taille du MLP cachés & 15 & 15 \\
+ Taille des couches de projection & 128 & 128 \\
+ Nombre de têtes d'attention & 4 & 1 \\
+ Taille du vocabulaire & 30522 & 30522 \\
+ Ignore la casse & oui & oui \\
+ \% des jetons masqués & - & 15 \\
+ Taux d'apprentissage & 5e-4 & 5e-4 \\
+ Poids de la perte du générateur & - & 1 \\
+ Poids de la perte du discriminant & 50 & - \\
+ Nombre d'itérations de \textit{warmup} & 10000 & 10000\\
+ \hline
+\end{tabular}
+\caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
+\label{table:hp}
 \end{table}
-Le tableau \ref{tab:simple2} n'est pas très garni.
 
-\section{Référence à une entrée bibliographique}
+Une fois le préentraînement complété, nous avons obtenu les résultats suivants
+durant l'évaluation des modèles sur la tâche d'ELECTRA:
 
-La présente section est pour illustrer l'utilisation de
-bib\TeX. On cite une référence avec la commande \verb|\cite|.
-L'argument est l'étiquette donné à votre référence dans
-le fichier \texttt{.bib}, dans notre exemple c'est \texttt{exemple}.
-Consulter \cite{exemple} pour \textit{beaucoup} de détail sur \LaTeX.
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c c||}
+ \hline
+    Métrique & Modèle 1 & Modèle 2 & Modèle 3 \\ [0.5ex]
+ \hline\hline
+    Exactitude du discriminant & 0.952 &  0.949 & 0.950 \\
+    AUC du discrimiantn & 0.934 &  0.929 & 0.934 \\
+    Perte du discriminant & 0.135 &  0.142 & 0.138 \\
+    Précision du discriminant & 0.801 &  0.794 & 0.793 \\
+    Rappel du discriminant & 0.469 &  0.449 & 0.483 \\
+    Perte totale & 8.967 &  9.411 & 9.276 \\
+    Exactitude du générateur & 0.570 &  0.562 & 0.550 \\
+    Perte du générateur & 2.216 &  2.308 & 2.342 \\
+    Exactitude du générateur & 0.469 &  0.458 & 0.448 \\
+ \hline
+\end{tabular}
+\caption{Résultats d'évaluation des trois modèles sur la tâche ELECTRA}
+\label{table:respreentrainementsanscasse}
+\end{table}
+Malgré le changement de l'ordre des données, aucun des trois modèles n'a
+performé différemment des autres modèles. Cette remarque nous a poussé à
+utiliser la méthode de la soupe \cite{soup} dans le but d'améliorer la
+performance du modèle. Cette méthode sera discutée plus en détails dans la
+section \ref{chapitre:autretechnique}
 
-Ensuite, on compile avec (pdf)\LaTeX\ pour générer un fichier auxilliaire
-\texttt{.aux}, on compile bib\TeX\ et on compile \textbf{deux} fois
-avec (pdf)\LaTeX.
 
-Les entrées du fichier \verb|.bib| qui ne sont pas référencées
-dans le texte ne sont pas ajoutées à la bibliographie.
+\section{Premiers modèles affinés}
+Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
+ces trois modèles sur la tâche de détection des erreurs en français. Les
+meilleur métriques enregistrées sont détaillées dans le tableau
+\ref{table:premiermodeles}
 
-\section{Insertion de figures}
+Les mesures F-0.5 obtenues sur l'ensemble de test durant
+l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}.
 
+%TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
 
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.2\textwidth]{figures/cercle.pdf}
-	\caption{Un cercle.}
-	\label{fig:Cercle}
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=1.40\textwidth]{figures/3premiersmodelesf05.png}
+    \end{center}
+    \caption{Mesure F-0.5 des trois premiers modèles selon le nombre d'itérations sur données d'évaluation pour la détection d'erreurs en français.}
+    \label{fig:3premiermodeles}
 \end{figure}
-La figure \ref{fig:Cercle} est un \emph{cercle}.
-\begin{figure}[t]
-	\centering
-	\subfigure[Un triangle.]{\label{fig:Triangle}\includegraphics[width=0.2\textwidth]{figures/triangle.pdf}}\hspace{2cm}
-	\subfigure[Un carré.]{\label{fig:Carre}\includegraphics[width=0.2\textwidth]{figures/carre.pdf}}
-	\caption{\label{fig:TriCar}Un carré et un triangle.}
-\end{figure}
-À la figure \ref{fig:TriCar}, le triangle \subref{fig:Triangle} et le carré \subref{fig:Carre} ont été placés côtes-à-côtes grâce à la commande \verb|\subfigure|.
 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c | c | c||}
+ \hline
+    Modèle & Précision & Rappel & F0.5 \\ [0.5ex]
+ \hline\hline
+    Modèle initial 1  & 39.59 & 23.84 & 34.97 \\
+    Modèle initial 2  & 40.22 & 24.36 & 35.63 \\
+    Modèle initial 3  & 39.85 & 24.88 & 35.57  \\
+ \hline
+\end{tabular}
+    \caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction}
+\label{table:premiermodeles}
+\end{table}
+
+
+\section{Entraînement d'un modèle avec casse}
+
+Nos premiers modèles prentraînés sont limités en terme de performance par leur
+jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
+la case, et certains types d'erreurs, tel que les majuscules pour les noms
+propres, nécessite de connaître la casse des mots. Ce choix n'affecte que peu
+la performance du modèle durant le préentraînement, mais pose problème durant
+l'affinage sur la tâche de détection des erreurs. Nous avons donc entraîné un
+second jetoniseur WordPiece, cette fois-ci sensible à la casse et avec tous les
+autres hyper-paramètres identiques. Nous avons par la suite entraîné le modèle
+sur l'ensemble des données, encore une fois avec l'ordre des données mélangée
+et avec les hyper-paramètres du tableau \ref{table:hp}. Les résultats du modèle
+avec casse ainsi que les modèles préliminaires sont contenus dans le tableau
+\ref{table:respreentrainementaveccasse}.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c | c c c c||}
+ \hline
+    Métrique & Modèle 1 & Modèle 2 & Modèle 3 & Modèle avec casse\\ [0.5ex]
+ \hline\hline
+    Exactitude du discriminant & 0.952 &  0.949 & 0.950 & 0.946 \\
+    AUC du discrimiantn & 0.934 &  0.929 & 0.934  & 0.931\\
+    Perte du discriminant & 0.135 &  0.142 & 0.138 & 0.149 \\
+    Précision du discriminant & 0.801 &  0.794 & 0.793 & 0.795\\
+    Rappel du discriminant & 0.469 &  0.449 & 0.483 & 0.471\\
+    Perte totale & 8.967 &  9.411 & 9.276 & 10.31\\
+    Exactitude du générateur & 0.570 &  0.562 & 0.550 & 0.499\\
+    Perte du générateur & 2.216 &  2.308 & 2.342 & 2.848\\
+    Exactitude du générateur & 0.469 &  0.458 & 0.448 & 0.403\\
+ \hline
+\end{tabular}
+\caption{Résultats d'évaluation des trois modèles et du modèle avec casse sur la tâche ELECTRA}
+\label{table:respreentrainementaveccasse}
+\end{table}
+
+La performance du discriminant sensible à la cassse est similaire à celles des
+autres discriminant. Cependant, le générateur sensible à la casse performe
+moins biens que les autres. Une explications possible est que la tâche de
+prédire le bon jeton en place en plus difficile avec la casse, puisque les
+jetons contenant la casse sont sont souvent syntaxiquement identiques, mais
+sont traités comme étant différents durant l'évaluation.\\
+
+Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
+détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
+des trois modèles précédents, contenus dans le tableau.
+%TODO: retirer cette partie s'il n'y a pas de tableau.
+%TODO: insérer ref à tableau, si le tabeau existe.
+
+Les mesures F-0.5 obtenues sur l'ensemble de test durant
+l'affinage pour le modèle avec casse sont contenues dans la figure
+\ref{fig:f05electraaveccasse}.
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/electraaveccassef05.png}
+    \end{center}
+    \caption{Mesure F-0.5 du modèle avec casse selon le nombre d'itérations sur
+    données d'évaluation pour la détection d'erreurs en
+    français.}\label{fig:f05electraaveccasse}
+\end{figure}
+
+%TODO: Insérer résultats de tableau pour ELECTRA avec casse + sans casse pour affinage
+
+\section{Comparaison avec CAMEMBERT}
+Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
+modèles plus volumineux, nous avons affiné une plus gros modèle et avons
+comparé la performances des modèles. Nous avons utilisé CAMEMBERT, un modèle
+basé sur BERT et préentraîné sur le corpus francophone OSCAR à l'aide de la
+méthode MLM. CAMEMBERT-base possède plus de 100 millions de paramètres, le rendant
+près de 7 fois plus gros que nos modèle basés sur l'architecture de
+ELECTRA-small. Ainsi, il est trop gros pour être déployé dans Antidote.
+Néanmoins, il offre un possible plafond quant aux performance que nos modèles
+peuvent atteindre. \\
+
+Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
+CAMEMBERT sur la tâche de détection des erreurs en français:
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/camembertbasef05100epoquesnat.png}
+    \end{center}
+    \caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
+    données d'évaluation pour la détection d'erreurs en
+    français.}\label{fig:f05camembert}
+\end{figure}
+Le modèle Camemebert a atteint une mesure F-0.5 maximale de x %TODO: remplacer x par mesure f0.5 maximale atteinte
+après 100 époques.
+
+%TODO: insérer citations à camembert et oscar.
+%TODO: Insérer graphique des performances de CAMEMBERT
+%TODO: Mettre à jour tableau des performances de Camembert et les autres modèles
+
+
+
+\chapter{Modèle final}
+Notre modèle final consiste en un modèle ELECTRA-small, faisant usage du
+jetoniseur de CAMEMBERT. Néanmoins, nous estimons que le plus gros gains de
+performance proviennent des deux actions suivantes: la recherche
+d'hyper-paramètres, à l'aide de la librairie Optuna, et l'ajout d'une phase
+d'entraînement intermédiaire. %TODO: insérer référence à Optuna
+\section{Recherche d'hyper-paramètres}
+\subsection{Note sur la qualité des données d'affinage}
+La recherche d'hyper-paramètres a révélé une tendance intéressante: les modèles
+gagnent à avoir une très petite taille de lot (\textit{batch size}) lors de
+leur entraînement. En effet, les modèles performant le mieux ont obtenus leur
+meilleure performance en utilisant une taille de lot de 8. Cette observation
+offre un contraste drastique entre les méthodes d'entraînement contemporaines
+pour les modèles de langue, qui font souvent usage d'une très grande taille de
+lot. Une raison souvent données pour expliquer les meilleures performances des
+modèles entraînés avec une grande taille de lot est qu'une taille de lot plus
+grande offre une plus grande résistance quant aux exemples bruités, contenant
+des erreurs ou plus généralement de mauvaise qualité. Or, la meilleure
+performance des modèles utilisant une petite taille de lot s'explique par la
+qualité des données annotés. En effet, les exemples contenus dans le corpus de
+test sont annotés par des humains formés pour une telle tâche, et les textes
+sont basés sur des corpus filtrés des humains, bien souvent des linguistes.
+\section{Phase d'entraînement intermédiaire}
+\chapter{Autre techniques} \label{chapitre:autretechnique}
+\section{Soupe}
+\section{Nettoyage des données}
+\section{Fast-ELECTRA}
+\section{Architecture hybrides à base de MOE}
+\chapter{Conclusions}
+%TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
 %%     index    %
 %%--------------%
 
-%% S'il y a lieu, décommenter la ligne pour mettre votre index
+%% S'il y a lieu, décommenter la ligne pour m ettre votre index
 
 %%\printindex
 
@@ -749,4 +956,4 @@ web de la facutlé (www.fes.umontreal.ca).
 %%
 %% End of file `gabaritmem.tex'.
 
-\message{ !name(rapport.tex) !offset(-752) }
+\message{ !name(rapport.tex) !offset(-959) }

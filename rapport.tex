@@ -434,6 +434,7 @@ Je remercie aussi Momo pour son support moral constant.
 %%                                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\setcounter{page}{17} % Resets the page counter to start from 1
 \chapter*{Introduction}
 Le domaine du traitement automatique des langues connaît une explosion
 fulgurante de techniques, de jeux de données et de modèles permettant de
@@ -666,7 +667,7 @@ l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
  Taux d'apprentissage & 5e-4 & 5e-4 \\
  Poids de la perte du générateur & - & 1 \\
  Poids de la perte du discriminant & 50 & - \\
- Nombre d'itération de \textit{warmup} & 10000 & 10000\\
+ Nombre d'itérations de \textit{warmup} & 10000 & 10000\\
  \hline
 \end{tabular}
 \caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
@@ -784,9 +785,8 @@ sont traités comme étant différents durant l'évaluation.\\
 
 Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
 détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
-des trois modèles précédents, contenus dans le tableau 
+des trois modèles précédents, contenus dans le tableau.
 %TODO: retirer cette partie s'il n'y a pas de tableau.
-
 %TODO: insérer ref à tableau, si le tabeau existe.
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
@@ -808,19 +808,59 @@ Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
 modèles plus volumineux, nous avons affiné une plus gros modèle et avons
 comparé la performances des modèles. Nous avons utilisé CAMEMBERT, un modèle
 basé sur BERT et préentraîné sur le corpus francophone OSCAR à l'aide de la
-méthode MLM. %TODO: insérer citations à camembert et oscar.
+méthode MLM. CAMEMBERT-base possède plus de 100 millions de paramètres, le rendant
+près de 7 fois plus gros que nos modèle basés sur l'architecture de
+ELECTRA-small. Ainsi, il est trop gros pour être déployé dans Antidote.
+Néanmoins, il offre un possible plafond quant aux performance que nos modèles
+peuvent atteindre. \\
+
+Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
+CAMEMBERT sur la tâche de détection des erreurs en français:
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{figures/camembertbasef05100epoquesnat.png}
+    \end{center}
+    \caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
+    données d'évaluation pour la détection d'erreurs en
+    français.}\label{fig:f05camembert}
+\end{figure}
+Le modèle Camemebert a atteint une mesure F-0.5 maximale de x %%TODO: remplacer x par mesure f0.5 maximale atteinte
+après 100 époques.
+
+%TODO: insérer citations à camembert et oscar.
 %TODO: Insérer graphique des performances de CAMEMBERT
 %TODO: Mettre à jour tableau des performances de Camembert et les autres modèles
 
 
+
 \chapter{Modèle final}
-\subsection{Recherche d'hyper-paramètres}
-\subsection{Phase d'entraînement intermédiaire}
+Notre modèle final consiste en un modèle ELECTRA-small, faisant usage du
+jetoniseur de CAMEMBERT. Néanmoins, nous estimons que le plus gros gains de
+performance proviennent des deux actions suivantes: la recherche
+d'hyper-paramètres, à l'aide de la librairie Optuna, et l'ajout d'une phase
+d'entraînement intermédiaire. %TODO: insérer référence à Optuna
+\section{Recherche d'hyper-paramètres}
+\subsection{Note sur la qualité des données d'affinage}
+La recherche d'hyper-paramètres a révélé une tendance intéressante: les modèles
+gagnent à avoir une très petite taille de lot (\textit{batch size}) lors de
+leur entraînement. En effet, les modèles performant le mieux ont obtenus leur
+meilleure performance en utilisant une taille de lot de 8. Cette observation
+offre un contraste drastique entre les méthodes d'entraînement contemporaines
+pour les modèles de langue, qui font souvent usage d'une très grande taille de
+lot. Une raison souvent données pour expliquer les meilleures performances des
+modèles entraînés avec une grande taille de lot est qu'une taille de lot plus
+grande offre une plus grande résistance quant aux exemples bruités, contenant
+des erreurs ou plus généralement de mauvaise qualité. Or, la meilleure
+performance des modèles utilisant une petite taille de lot s'explique par la
+qualité des données annotés. En effet, les exemples contenus dans le corpus de
+test sont annotés par des humains formés pour une telle tâche, et les textes
+sont basés sur des corpus filtrés des humains, bien souvent des linguistes.
+\section{Phase d'entraînement intermédiaire}
 \chapter{Autre techniques} \label{chapitre:autretechnique}
-\subsection{Soupe}
-\subsection{Nettoyage des données}
-\subsection{Fast-ELECTRA}
-\subsection{Architecture hybrides à base de MOE}
+\section{Soupe}
+\section{Nettoyage des données}
+\section{Fast-ELECTRA}
+\section{Architecture hybrides à base de MOE}
 \chapter{Conclusions}
 %TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
