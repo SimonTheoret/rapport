@@ -847,26 +847,59 @@ L'un des plus important facteur permettant d'augmenter la performance
 de notre modèle final est l'usage de méthode de recherche
 d'hyper-paramètres. Nous avons utiliser la librairie Optuna, une
 librairie Python spécialisée pour la recherche d'hyper-paramètres. En
-particulier, nous utilisons l'algorithme \textit{TPE}
+particulier, nous avons utilisé l'algorithme itératif \textit{TPE}
 \cite{watanabe2023treestructuredparzenestimatorunderstanding},
-\cite{NIPS2011_86e8f7ab}.
-\subsection{Remarques sur les hyper-paramètres}
+\cite{NIPS2011_86e8f7ab}. Cet algorithme itératif part d'un ensemble
+d'hyper-paramèters possibles et tente de trouver la combinaison
+maximisant une métrique donnée. Dans notre cas, nous avons utilisé la
+mesure f-0.5 comme métrique à maximiser. Nous avons permis à
+l'algorithme TPE d'exécuter un maximum de 8 expériences, chacune
+faisant usage d'un différent ensemble d'hyper-paramètres. Pour toutes
+ces expériences, nous avons permis à l'algorithme \texit{TPE} de
+sélectionner la valeur des hyper-paramètres suivants:
+\begin{itemize}
+	\item Taille des lots durant la phase d'entraînement
+	\item \textit{Weight decay} de l'optimisateur
+	\item Taux d'apprentissage
+\end{itemize}
+
+Cette recherche d'hyper-paramètres requiert un affinage complet du
+modèle pour chaque expérience et est donc trop dispendieux pour être
+utilisé à grande échelle. Néanmoins, la recherche d'hyper-paramètres à
+permis d'établir un nouveau record sur la tâche de correction en
+français, augmentant la F-mesure à 41,23.
+
+% TODO: Ajouter cette section les hyper-paramèters sont disponibles
+% \subsection{Remarques sur les hyper-paramètres}
+% Durant les affinages sur la tâche de correction neuronale, nous avons
+% noté la tendance du modèle à sélectionner les hyper-paramètres
+
 \subsection{Note sur la qualité des données d'affinage}
-La recherche d'hyper-paramètres a révélé une tendance intéressante: les modèles
-gagnent à avoir une très petite taille de lot (\textit{batch size}) lors de
-leur entraînement. En effet, les modèles performant le mieux ont obtenus leur
-meilleure performance en utilisant une taille de lot de 8. Cette observation
-offre un contraste drastique entre les méthodes d'entraînement contemporaines
-pour les modèles de langue, qui font souvent usage d'une très grande taille de
-lot. Une raison souvent données pour expliquer les meilleures performances des
-modèles entraînés avec une grande taille de lot est qu'une taille de lot plus
-grande offre une plus grande résistance quant aux exemples bruités, contenant
-des erreurs ou plus généralement de mauvaise qualité. Or, la meilleure
-performance des modèles utilisant une petite taille de lot s'explique par la
-qualité des données annotés. En effet, les exemples contenus dans le corpus de
-test sont annotés par des humains formés pour une telle tâche, et les textes
-sont basés sur des corpus filtrés des humains, bien souvent des linguistes.
+La recherche d'hyper-paramètres a révélé une tendance intéressante:
+les modèles gagnent à avoir une très petite taille de lot
+(\textit{batch size}) lors de leur entraînement. En effet, les modèles
+performant le mieux ont obtenus leur meilleure performance en
+utilisant une taille de lot de 8. Cette observation offre un contraste
+drastique entre les méthodes d'entraînement contemporaines pour les
+modèles de langue, qui font souvent usage d'une très grande taille de
+lot. Une raison souvent données pour expliquer les meilleures
+performances des modèles entraînés avec une grande taille de lot est
+qu'une taille de lot plus grande offre une plus grande résistance
+quant aux exemples bruités, contenant des erreurs ou plus généralement
+de mauvaise qualité. Or, la meilleure performance des modèles
+utilisant une petite taille de lot s'explique par la qualité des
+données annotés. En effet, les exemples contenus dans le corpus de
+test sont annotés par des humains formés pour une telle tâche, et les
+textes sont basés sur des corpus filtrés des humains, bien souvent des
+linguistes.
 \section{Phase d'entraînement intermédiaire}
+Le plus gros gain de performance enregistré durant l'entraînement, en
+terme de mesure f-0.5 est l'ajout d'une phase d'entraînement
+intermédiaire. Cette phase additionnelle a rendu l'entraînement plus
+stable ainsi qu'augmenté la performance du modèle final.
+\subsection{Collecte et extraction des données}
+
+\subsection{Résultat de la phase intermédiaire}
 \chapter{Autre techniques} \label{chapitre:autretechnique}
 \section{Soupe}
 \section{Nettoyage des données}
