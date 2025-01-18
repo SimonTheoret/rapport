@@ -474,7 +474,8 @@ de 16 GB de mémoire VRAM.
 L'équipe de Druide dispose de deux modèles déjà en place pour la correction des
 erreurs. Néanmoins, leur modèle en anglais corrige une plus grande gamme
 d'erreurs. Druide désire améliorer leur moteur de correction en français à
-l'aide de l'apprentissage profond. %NOTE: Nécessaire?
+l'aide de l'apprentissage profond.
+% NOTE: Nécessaire?
 
 \section{Contraintes}
 Le modèle doit être intégré dans le logiciel principal de Druide, Antidote. Or,
@@ -855,7 +856,7 @@ maximisant une métrique donnée. Dans notre cas, nous avons utilisé la
 mesure f-0.5 comme métrique à maximiser. Nous avons permis à
 l'algorithme TPE d'exécuter un maximum de 8 expériences, chacune
 faisant usage d'un différent ensemble d'hyper-paramètres. Pour toutes
-ces expériences, nous avons permis à l'algorithme \texit{TPE} de
+ces expériences, nous avons permis à l'algorithme \textit{TPE} de
 sélectionner la valeur des hyper-paramètres suivants:
 \begin{itemize}
 	\item Taille des lots durant la phase d'entraînement
@@ -898,21 +899,50 @@ terme de mesure f-0.5 est l'ajout d'une phase d'entraînement
 intermédiaire. Cette phase additionnelle a rendu l'entraînement plus
 stable ainsi qu'augmenté la performance du modèle final.
 \subsection{Collecte et extraction des données}
-L'application Antidote dispose d'une version Web. Celle-ci est établie
-depuis de nombreuses années et collecte les données anonymisées des
-utilisateurs. Cette base de données comporte notamment les phrases
-anonymisée entrée par les utilisateurs de Antidote Web, ainsi que les
-phrases corrigées correspondantes et les annotations proposées par
-Antidote.
+Nous avons été en mesure d'augmenter les données annotés à l'aide des
+corrections des utilisateurs. L'application Antidote dispose d'une version
+Web. Celle-ci est établie depuis de nombreuses années et collecte les données
+anonymisées des utilisateurs. Cette base de données comporte notamment les
+phrases anonymisée entrée par les utilisateurs de Antidote Web, ainsi que les
+phrases corrigées correspondantes et les correctins proposées par Antidote
+qui ont été acceptées par les utilisateurs. Ainsi, les faux positifs proposés
+par antidote sont potentiellement ignorés par utilisateurs et ne font donc pas
+partie du nouveau corpus.
 %% TODO: Refaire la formulation de cette phrase:
-Malheureusement, seule une années de ces données contient
-les phrases corrigées appareillée, limitant l'usage du jeu de données
-à cette année uniquement.
-
-
+Après l'extraction des données, nous avons traiter ces nouvelles données pour
+que ces derniers soit compatibles avec notre méthodologie d'entraînement. Nous
+avons nettoyer le corpus en retirant les corrections ne faisant par partie de
+la liste de corrections utilisées dans l'affinage. Ce nouveau corpus contient un
+total de 3.5 millions de phrases annotés provenant des utilisateurs et corrigés
+par Antidote. Ce nouveau corpus est ainsi 35 fois plus grand que le corpus
+d'affinage initial, qui contient 100000 corrections faites par des linguistes.
 \subsection{Résultat de la phase intermédiaire}
+Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci est exécutée après le pré-entraînement et après l'affinage du modèle. Cette nouvelle phase intermédiaire s'est avérée être très importante pour la performance du modèle sur la correction des erreurs en français. Nous avons observé une augmentation de près de 5 points de mesure F-0.5 ainsi qu'une hausse importante dans la vitesse à laquelle les modèles convergent:
+ 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{figures/electrasentencepieceawebf05optuna.png}
+	\end{center}
+	\caption{Mesures F-0.5 des modèles ELECTRA avec SentencePiece sur la détections des erreurs en français, avec l'ajout de la tâche intermédiaire. Les différentes courbes correspondent à différentes expériences faites à l'aide d'Optuna. L'axe des 5 représente le nombre d'itérations et l'axe horizontal représente la mesure F-0.5.}\label{fig:electraaweb}
+\end{figure}
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{figures/meilleurmodelenatf05.png}
+	\end{center}
+	\caption{Courbe de la mesure F-0.5 durant l'affinage du modèle final. Ce dernier correspond au meilleur modèle et utilise l'architecture ELECTRA. De plus, ce modèle a été entraîné avec la phase intermédiaire et utilise le jetoniseur SentencePiece.}\label{fig:meilleurmodeleaweb}
+\end{figure}
+
+Le nouveau modèle obtient la meilleure performance, telle qu'indiqué dans le tableau des résultats \ref{table:resultatfinaux}
+% TODO: Insérer tableau des résultats finaux
+
 \chapter{Autre techniques} \label{chapitre:autretechnique}
+Cette section contient les résultats de différentes techniques qui n'ont pas
+améliorée ou même dégradé la performance des modèles. Ces techniques y seront
+brièvement abordées.
 \section{Soupe}
+Nous avons appliqué la méthode Soupe, qui consiste en une somme pondérée des poids des paramètres des différents modèles
 \section{Nettoyage des données}
 \section{Fast-ELECTRA}
 \section{Architecture hybrides à base de MOE}
