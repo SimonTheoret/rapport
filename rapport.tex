@@ -513,7 +513,7 @@ visualisée dans la figure \ref{fig:electra}.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{figures/electra_entr.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/electra_entr.pdf}
 	\end{center}
 	\caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
 	\label{fig:electra}
@@ -626,8 +626,7 @@ certains les espacements entre certains mots, de façon à ce que par exemple le
 texte "11 ème étage" devienne "11ème étage".\\% TODO: Retravailler cette phrase
 
 Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
-la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece.
-%% TODO: Ajouter citation pour wordpiece.
+la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece \cite{wu2016googlesneuralmachinetranslation}.
 C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
 actuellement utilisé en production chez Druide. Il répond donc à nos
 contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
@@ -643,14 +642,13 @@ originale utilise moins de 16GB de VRAM et ne permet pas l'usage de DDP,
 limitant la vitesse d'entraînement ainsi que la taille de lot (\textit{batch
 	size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
 initialisé aléatoirement trois modèle ELECTRA et avons changé l'ordre des
-données. En entraînant 3 modèles sur le même jeu de données modifié, nous
+données. En entraînant trois modèles sur le même jeu de données modifié, nous
 espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
 l'entraînement des trois modèles sont décrits dans le tableau \ref{table:hp}.
 Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
 l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
-%% TODO: Retirer soupe si pas les résultats ?
 
 
 \begin{table}[h!]
@@ -707,14 +705,14 @@ performance du modèle. Cette méthode sera discutée plus en détails dans la
 section \ref{chapitre:autretechnique}
 
 
-\section{Premiers modèles affinés}
+\section{Premiers modèles affinés}\label{section:premiersmodelesaffines}
 Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
 ces trois modèles sur la tâche de détection des erreurs en français. Les
 meilleur métriques enregistrées sont détaillées dans le tableau
 \ref{table:premiermodeles}
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
-l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}.
+l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure F-0.5 comme principale métrique pour guider nos décisions. Un poids de 0.5 donne deux fois plus d'importance 
 
 %% TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
 
@@ -725,7 +723,6 @@ l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}.
 	\caption{Mesure F-0.5 des trois premiers modèles selon le nombre d'itérations sur données d'évaluation pour la détection d'erreurs en français.}
 	\label{fig:3premiermodeles}
 \end{figure}
-
 
 \begin{table}[h!]
 	\centering
@@ -797,7 +794,7 @@ l'affinage pour le modèle avec casse sont contenues dans la figure
 \ref{fig:f05electraaveccasse}.
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{figures/electraaveccassef05.png}
+		\includegraphics[width=1.0\textwidth]{figures/electraaveccassef05.png}
 	\end{center}
 	\caption{Mesure F-0.5 du modèle avec casse selon le nombre d'itérations sur
 		données d'évaluation pour la détection d'erreurs en
@@ -819,9 +816,10 @@ peuvent atteindre. \\
 
 Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
 CAMEMBERT sur la tâche de détection des erreurs en français:
+
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{figures/camembertbasef05100epoquesnat.png}
+		\includegraphics[width=1.0\textwidth]{figures/camembertbasef05100epoquesnat.png}
 	\end{center}
 	\caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
 		données d'évaluation pour la détection d'erreurs en
@@ -836,7 +834,7 @@ Le modèle Camemebert a atteint une mesure F-0.5 maximale de x.
 
 
 
-\chapter{Modèle final}
+\chapter{Modèle final}\label{chapitre:meilleurmodele}
 Notre modèle final consiste en un modèle ELECTRA-small, faisant usage
 du jetoniseur de CAMEMBERT. Néanmoins, les augmentations de
 performance les plus importants proviennent des deux modifications
@@ -863,7 +861,6 @@ sélectionner la valeur des hyper-paramètres suivants:
 	\item \textit{Weight decay} de l'optimisateur
 	\item Taux d'apprentissage
 \end{itemize}
-
 Cette recherche d'hyper-paramètres requiert un affinage complet du
 modèle pour chaque expérience et est donc trop dispendieux pour être
 utilisé à grande échelle. Néanmoins, la recherche d'hyper-paramètres à
@@ -921,7 +918,7 @@ Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci e
  
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{figures/electrasentencepieceawebf05optuna.png}
+		\includegraphics[width=1.0\textwidth]{figures/electrasentencepieceawebf05optuna.png}
 	\end{center}
 	\caption{Mesures F-0.5 des modèles ELECTRA avec SentencePiece sur la détections des erreurs en français, avec l'ajout de la tâche intermédiaire. Les différentes courbes correspondent à différentes expériences faites à l'aide d'Optuna. L'axe des 5 représente le nombre d'itérations et l'axe horizontal représente la mesure F-0.5.}\label{fig:electraaweb}
 \end{figure}
@@ -929,7 +926,7 @@ Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci e
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{figures/meilleurmodelenatf05.png}
+		\includegraphics[width=1.0\textwidth]{figures/meilleurmodelenatf05.png}
 	\end{center}
 	\caption{Courbe de la mesure F-0.5 durant l'affinage du modèle final. Ce dernier correspond au meilleur modèle et utilise l'architecture ELECTRA. De plus, ce modèle a été entraîné avec la phase intermédiaire et utilise le jetoniseur SentencePiece.}\label{fig:meilleurmodeleaweb}
 \end{figure}
@@ -937,15 +934,92 @@ Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci e
 Le nouveau modèle obtient la meilleure performance, telle qu'indiqué dans le tableau des résultats \ref{table:resultatfinaux}
 % TODO: Insérer tableau des résultats finaux
 
-\chapter{Autre techniques} \label{chapitre:autretechnique}
-Cette section contient les résultats de différentes techniques qui n'ont pas
-améliorée ou même dégradé la performance des modèles. Ces techniques y seront
-brièvement abordées.
+\chapter{Autres techniques} \label{chapitre:autretechnique}
+La plupart des techniques mise en oeuvre durant ma recherche n'ont pas eu
+données les résultast escomptés. Cette section contient les résultats de ces
+différentes techniques qui n'ont pas améliorée la performance des modèles. Ces
+techniques y seront brièvement abordées.
 \section{Soupe}
-Nous avons appliqué la méthode Soupe, qui consiste en une somme pondérée des poids des paramètres des différents modèles
+Nous avons appliqué la méthode Soupe (de l'anglais \textit{Soup}) \cite{soup},
+qui consiste en une somme pondérée des poids des paramètres des différents
+modèles. Cette méthode permet simple permet d'augmenter la performance de
+modèles affinés sans pour autant faire usage de beaucoup de ressources et sans
+augmenter le temps d'inférence. L'intuition derrière cette technique est qu'un
+meilleur modèle se trouve souvent entre plusieurs modèles affinés. Donc, si nos
+modèles utilisés pour faire la soupe sont à proximité d'un minimum local pour
+une fonction de perte donnée, alors la moyenne arithmétique des poids des
+modèles pourrait résuler en un modèle dont la perte est plus proche de l'optimum
+local.\\
+\\
+Nous avons fait une soupe à partir de nos 3 premiers modèles affinés, décris dans
+la section \ref{section:premiersmodelesaffines}. Nous avons par la suite affiné
+notre soupe sur la tâche de détection des erreurs. Malheureusement, notre modèle
+n'a jamais été en mesure de converger durant l'affinage. Une explication
+possible est qu'au moins une de nos trois modèles affinés convergeait vers un
+optimum local différent. Ainsi, l'initialisation du modèle soupe était éloignée
+des optimums locaux des modèles.
 \section{Nettoyage des données}
+Une part éssentielle de l'entraînement est de fournir des données de qualité
+à notre modèle. Or, une partie importante du corpus de pré-entraînement est
+de piètre qualité. En effet, les données proviennent de plusieurs types de
+sources différentes: livres, revues, article de blogue et site internet. Toutes
+ces sources ne sont pas sans erreurs ou ne contiennent pas nécessairement des
+textes avec un niveau de langue suffisant. C'est pourquoi retirer les exemples
+de piètre qualité est importants. Or, le nettoyage d'un corpus de grande
+taille nécessite l'usage d'heuristiques de sélection. Pour la création du
+pipeline de nettoyage, nous avons utiliser la librarie \textit{Datatrove} de
+\textit{HuggingFace} \cite{penedo2024datatrove} et l'avons modifié pour qu'elle
+convienne à notre usage.\\
+\\
+Nous avons appliqués principalement 4 filtres, dont l'ordre d'apparition est le suivant:
+\begin{itemize}
+	\item Filtre de longueur
+	\item Filtre de langue
+	\item Filtre de Gopher
+	\item Filtre de C4
+\end{itemize}
+ Le filtre de longueur retire les exemples qui contiennent moins de 6 mots
+et Le filtre de langue retire les exemples qui ne sont pas en français. Ce
+dernier fait usage d'un modèle FastText \cite{joulin2016fasttext} pour détecter
+la langue du texte. Le filtre Gopher est plus complexe et utilises plusieurs
+heuristiques pour filtrer le contenu du corpus:
+\begin{itemize}
+	\item La longueur de l'exemple est supérieure à 100000 mots et inférieure à 5 mots
+	\item La proportion de lettres parmi l'exemple est inférieure à 70\%
+	\item La proportion de symboles parmi les mots est supérieure à 10\%
+	\item Le nombre de \textit{stop words} est inférieur à 2
+\end{itemize}
+Finalement, le filtre C4 retire les exemples contenant du JavaScript, le terme
+\textit{Lorem Ipsum}, le symbole $\{$  ou encore les exemples contenant des
+conditions d'utilisations.\\
+Les filtres ont retiré près de 23\% du contenu total initial du corpus: des  314
+907 209 exemples initiaux, il en reste 242 710 245 dans le corpus nettoyé. Les
+différents filtres ont eu un impact variable sur le résultat final:
+\begin{itemize}
+	\item filtre de longueur: retiré 38 585 180 exemples
+	\item filtre de langue: retiré 8 283 109 exemples
+	\item Gopher: retiré 25 228 530 exemples
+	\item C4: retiré 14 741 exemples
+\end{itemize}
+Après le nettoyage du corpus, nous avons entraîné une nouvelle fois un modèle,
+mais cette fois-ci sur le corpus restreint. Nous avons utilisé les mêmes
+hyper-paramètres que le meilleur modèle décrit au chapitre
+\ref{chapitre:meilleurmodele} durant le pré-entraînement et la phase
+intermédiaire, puis avons effectué une recherche d'hyper-paramètres à l'aide
+d'Optuna. La figure \ref{fig:electrapropre} montre les courbe de mesure F-0.5 durant la recherche
+d'hyper-paramètre sur la tâche de détection des erreurs en français.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/electrasentenecepicepropreoptunaf05.png}
+	\end{center}
+	\caption{Mesure F-0.5 durant la recherche d'hyper-paramètres après avoir pré-entraîné sur le corpus nettoyé. Aucun des modèle n'atteint la performance du modèle final (\ref{fig:meilleurmodeleaweb})}
+	\label{fig:electrapropre}
+\end{figure}
+
 \section{Fast-ELECTRA}
-\section{Architecture hybrides à base de MOE}
+%% TODO: Discuter de MOE si suffisament de place
+% \section{Architecture hybrides à base de MOE}
 \chapter{Conclusions}
 %% TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
@@ -982,54 +1056,6 @@ Nous avons appliqué la méthode Soupe, qui consiste en une somme pondérée des
 %%------------------------------------------------- %
 %%                  Annexe A                        %
 %%------------------------------------------------- %
-
-\appendix
-\chapter{Le titre}
-
-\section{Section un de l'Annexe A}
-
-...texte...
-
-\chapter{Les différentes parties et leur ordre d'apparition}
-
-J'ajoute ici les différentes parties d'un mémoire ou d'une thèse ainsi
-que leur ordre d'apparition tel que décrit dans le guide de
-présentation des mémoires et des thèses de la Faculté des études
-supérieures.  Pour plus d'information, consultez le guide sur le site
-web de la facutlé (www.fes.umontreal.ca).
-
-\newcount\colnum
-\colnum=1
-\def\i{\number\colnum. \global\advance\colnum by 1\ignorespaces}
-\begin{table}[p]
-	\begin{center}
-		\begin{tabular}{|l|l|r|}\hline
-			\noindent\hfil
-			\textbf{\strut Ordre des éléments constitutifs du mémoire ou de la thèse}
-			\hfil\span\omit\span\omit                                                   \\\hline % \span\omit pour couvrir plus d'une
-			% case sans utiliser le package multirow ou autre
-			\i & La page de titre                                        & obligatoire  \\\hline
-			\i & La page d'identification des membres du jury            & obligatoire  \\\hline
-			\i & Le résumé en français et les mots clés français\kern3em & obligatoires \\\hline
-			\i & Le résumé en anglais et les mots clés anglais           & obligatoires \\\hline
-			\i & Le résumé dans une autre langue que l'anglais           & obligatoire  \\
-			   & ou le français (si le document est écrit dans           &              \\
-			   & une autre langue que l'anglais ou le français)          &              \\\hline
-			\i & Le résumé de vulgarisation                              & facultatif   \\\hline
-			\i & La table des matières, la liste des tableaux,           & obligatoires \\
-			   & la liste des figures ou autre                           &              \\\hline
-			\i & La liste des sigles et des abréviations                 & obligatoire  \\\hline
-			\i & La dédicace                                             & facultative  \\\hline
-			\i & Les remerciements                                       & facultatifs  \\\hline
-			\i & L'avant-propos                                          & facultatif   \\\hline
-			\i & Le corps de l'ouvrage                                   & obligatoire  \\\hline
-			\i & Les index                                               & facultatif   \\\hline
-			\i & Les références bibliographiques                         & obligatoires \\\hline
-			\i & Les annexes                                             & facultatifs  \\\hline
-			\i & Les documents spéciaux                                  & facultatifs  \\\hline
-		\end{tabular}
-	\end{center}
-\end{table}
 
 \end{document}
 
