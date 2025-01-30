@@ -1,4 +1,3 @@
-%%
 %% This is file `gabaritmem.tex',
 %% generated with the docstrip utility.
 %%
@@ -712,7 +711,7 @@ meilleur métriques enregistrées sont détaillées dans le tableau
 \ref{table:premiermodeles}
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
-l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure F-0.5 comme principale métrique pour guider nos décisions. Un poids de 0.5 donne deux fois plus d'importance 
+l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure F-0.5 comme principale métrique pour guider nos décisions. Un poids de 0.5 donne deux fois plus d'importance
 
 %% TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
 
@@ -845,7 +844,7 @@ Optuna, et l'ajout d'une phase d'entraînement intermédiaire.
 L'un des plus important facteur permettant d'augmenter la performance
 de notre modèle final est l'usage de méthode de recherche
 d'hyper-paramètres. Nous avons utiliser la librairie Optuna, une
-librairie Python spécialisée pour la recherche d'hyper-paramètres. En
+librairie \textit{Python} spécialisée pour la recherche d'hyper-paramètres. En
 particulier, nous avons utilisé l'algorithme itératif \textit{TPE}
 \cite{watanabe2023treestructuredparzenestimatorunderstanding},
 \cite{NIPS2011_86e8f7ab}. Cet algorithme itératif part d'un ensemble
@@ -915,7 +914,7 @@ par Antidote. Ce nouveau corpus est ainsi 35 fois plus grand que le corpus
 d'affinage initial, qui contient 100000 corrections faites par des linguistes.
 \subsection{Résultat de la phase intermédiaire}
 Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci est exécutée après le pré-entraînement et après l'affinage du modèle. Cette nouvelle phase intermédiaire s'est avérée être très importante pour la performance du modèle sur la correction des erreurs en français. Nous avons observé une augmentation de près de 5 points de mesure F-0.5 ainsi qu'une hausse importante dans la vitesse à laquelle les modèles convergent:
- 
+
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures/electrasentencepieceawebf05optuna.png}
@@ -1006,8 +1005,11 @@ mais cette fois-ci sur le corpus restreint. Nous avons utilisé les mêmes
 hyper-paramètres que le meilleur modèle décrit au chapitre
 \ref{chapitre:meilleurmodele} durant le pré-entraînement et la phase
 intermédiaire, puis avons effectué une recherche d'hyper-paramètres à l'aide
-d'Optuna. La figure \ref{fig:electrapropre} montre les courbe de mesure F-0.5 durant la recherche
-d'hyper-paramètre sur la tâche de détection des erreurs en français.
+d'Optuna. La figure \ref{fig:electrapropre} montre les courbe de mesure F-0.5
+durant la recherche d'hyper-paramètre sur la tâche de détection des erreurs
+en français.
+% TODO: Ajouter une explication quant à la différence de performance. Données
+% court sont pertinents, permettent de réguler le modèle?
 
 \begin{figure}
 	\begin{center}
@@ -1017,10 +1019,33 @@ d'hyper-paramètre sur la tâche de détection des erreurs en français.
 	\label{fig:electrapropre}
 \end{figure}
 
-\section{Fast-ELECTRA}
+%% TODO: Discuter de Fast-Electra si suffisament de place
+% \section{Fast-ELECTRA}
 %% TODO: Discuter de MOE si suffisament de place
 % \section{Architecture hybrides à base de MOE}
 \chapter{Conclusions}
+Durant ce stage, je me suis familiarisé avec les principales étapes du
+développement d'un système en traitement automatique de la langue. J'ai
+travaillé sur le nettoyage et traitement des données, le prototypage de
+différents modèles ainsi que l'évaluation des modèles d'aprentissage
+automatique. De plus, nous avons appris à connaître l'écosystème
+d'apprentissage automatique en \textit{Python} ainsi que les modèles considérés
+comme l'état de l'art en traitement automatique des langues.
+
+Nous avons obtenu de bons résultats préliminaires, notamment en ajoutant une
+phase intermédiaire durant l'entraînement et en effectuant une recherche
+d'hyper-paramètre. Nous pensons qu'une avenue d'amélioration du modèle
+consisterait à faire usage de grands modèles de langues dans le but de générer
+des données artificielles de bonnes qualité. En particulier, une stratégie qui
+pourrait être intéressante pour augmenter la performance du modèle serait
+d'utiliser un grand modèle de langue pour générer des phrases comportant des
+erreurs dans le but d'augmenter la taille du corpus d'entraînement. Il serait
+particulièrement intéressant de générer des données artificielles pour les
+types d'erreurs avec lesquels notre modèle à encore de la difficulté. Cela
+permettrait de réduire le coût et le temps de génération des phrases
+artificielles et permettrait d'Avoir un modèle plus performant sur tous les
+types d'erreurs présent dans la liste des erreurs corrigés par Antidote.
+
 %% TODO: Discuter des directions futures: Génération de données artificielles
 %%--------------%
 %%     index    %
