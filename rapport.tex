@@ -609,7 +609,7 @@ Druide.
 	\begin{center}
 		\includegraphics[width=0.4\textwidth]{figures/exemple_annotation.png}
 	\end{center}
-	\caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+	\caption{Exemple de texte annoté. Les annotations se font au niveau des jetons et sont donc spécifiques au jetoniseur}
 	\label{fig:ex_annotation}
 \end{figure}
 
@@ -758,19 +758,19 @@ le tableau \ref{table:affinage-hp}.
 
 
 \begin{table}
-    %% TODO: Mettre à jour les hyper-paramètres d'affinage avec les vraies valeurs
+	%% TODO: Mettre à jour les hyper-paramètres d'affinage avec les vraies valeurs
 	\centering
 	\begin{tabular}{||c | c ||}
 		\hline
-		Hyper-paramètres                        & Discriminant \\ [0.5ex]
+		Hyper-paramètres                       & Discriminant \\ [0.5ex]
 		\hline\hline
-		Taux d'apprentissage                    & 12           \\
-		Optimisateur                            & 256          \\
-		Nombre d'époques                        & 128          \\
-        \textit{Weight decay}                   & 4            \\
-		Betas de l'optimisateur                 & 30522        \\
-		Taille de lots                          & 30522        \\
-		Nombre d'itérations de \textit{warmup}  & 10000        \\
+		Taux d'apprentissage                   & 12           \\
+		Optimisateur                           & 256          \\
+		Nombre d'époques                       & 128          \\
+		\textit{Weight decay}                  & 4            \\
+		Betas de l'optimisateur                & 30522        \\
+		Taille de lots                         & 30522        \\
+		Nombre d'itérations de \textit{warmup} & 10000        \\
 		\hline
 	\end{tabular}
 	\caption{Hyper-paramètres utilisés pour l'affinage des modèles initiaux}
@@ -833,11 +833,11 @@ pré-entraînement plus efficace.
 	\centering
 	\begin{tabular}{||c | c | c | c||}
 		\hline
-		Modèle           & Précision & Rappel & F0.5  \\ [0.5ex]
+		Modèle            & Précision & Rappel & F0.5  \\ [0.5ex]
 		\hline\hline
-		Modèle initial 1 & 39.59     & 23.84  & 34.97 \\
-		Modèle initial 2 & 40.22     & 24.36  & 35.63 \\
-		Modèle initial 3 & 39.85     & 24.88  & 35.57 \\
+		Modèle initial 1  & 39.59     & 23.84  & 34.97 \\
+		Modèle initial 2  & 40.22     & 24.36  & 35.63 \\
+		Modèle initial 3  & 39.85     & 24.88  & 35.57 \\
 		Modèle avec casse & 42.59     & 25.81  & 37.69 \\
 		\hline
 	\end{tabular}
@@ -860,13 +860,13 @@ l'affinage pour le modèle avec casse sont contenues dans la figure
 \section{Comparaison avec CAMEMBERT}
 Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
 modèles plus volumineux, nous avons affiné une plus gros modèle et avons
-comparé la performances des modèles. Nous avons utilisé CAMEMBERT, un modèle
-basé sur BERT et préentraîné sur le corpus francophone OSCAR à l'aide de la
-méthode MLM. CAMEMBERT-base possède plus de 100 millions de paramètres, le
-rendant près de 7 fois plus gros que nos modèle basés sur l'architecture de
-ELECTRA-small. Ainsi, il est trop gros pour être déployé dans Antidote.
-Néanmoins, il offre un possible plafond quant aux performance que nos modèles
-peuvent atteindre. \\
+comparé la performances des modèles. Nous avons utilisé CAMEMBERT
+\cite{camembert}, un modèle basé sur BERT et préentraîné sur le corpus
+francophone OSCAR \cite{oscar} à l'aide de la méthode MLM. CAMEMBERT-base
+possède plus de 100 millions de paramètres, le rendant près de 7 fois plus gros
+que nos modèle basés sur l'architecture de ELECTRA-small. Ainsi, il est trop
+gros pour être déployé dans Antidote. Néanmoins, il offre un possible plafond
+quant aux performance que nos modèles peuvent atteindre. \\
 
 Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
 CAMEMBERT sur la tâche de détection des erreurs en français:
@@ -880,19 +880,25 @@ CAMEMBERT sur la tâche de détection des erreurs en français:
 		français.}\label{fig:f05camembert}
 \end{figure}
 Le modèle Camembert a atteint une mesure F-0.5 maximale de 40.47, performant
-mieux que nos modèles initaux et que le modèle sensible à la casse.
+mieux que nos modèles initaux et que le modèle sensible à la casse. La
+comparaison complète est disponible dans le tableau
+\ref{table:perf_initiaux_camembert}. L'évolution de la performance de Camembert
+est disponible dans la figure \ref{fig:f05camembert}. Nous avons limité le
+nombre d'époque maximal à 100. Il aurait été intéressant de laisser le modèle
+s'entraîner pour plus d'époque et ansi s'assurer que le modèle à atteint sa
+performance maximale.
 
 \begin{table}
 	\centering
 	\begin{tabular}{||c | c | c | c||}
 		\hline
-		Modèle           & Précision & Rappel & F0.5  \\ [0.5ex]
+		Modèle            & Précision & Rappel & F0.5  \\ [0.5ex]
 		\hline\hline
-		Modèle initial 1  & 39.59    & 23.84  & 34.97 \\
-		Modèle initial 2  & 40.22    & 24.36  & 35.63 \\
-		Modèle initial 3  & 39.85    & 24.88  & 35.57 \\
-		Modèle avec casse & 42.59    & 25.81  & 37.69 \\
-		Camembert-base    & 44.74    & 29.3   & 40.47 \\
+		Modèle initial 1  & 39.59     & 23.84  & 34.97 \\
+		Modèle initial 2  & 40.22     & 24.36  & 35.63 \\
+		Modèle initial 3  & 39.85     & 24.88  & 35.57 \\
+		Modèle avec casse & 42.59     & 25.81  & 37.69 \\
+		Camembert-base    & 44.74     & 29.30  & 40.47 \\
 		\hline
 	\end{tabular}
 	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction avec le modèle sensible à la casse et Camembert}
@@ -1017,9 +1023,9 @@ résultats \ref{table:resultatfinaux}.
 		\hline
 		Modèle           & F0.5  \\ [0.5ex]
 		\hline\hline
-		Modèle initial 1  & 34.97 \\
-		Modèle initial 2  & 35.63 \\
-		Modèle initial 3  & 35.57 \\
+		Modèle initial 1 & 34.97 \\
+		Modèle initial 2 & 35.63 \\
+		Modèle initial 3 & 35.57 \\
 		\hline
 	\end{tabular}
 	\caption{Résultats finaux des modèles sur corpus d'évaluation de la tâche de correction}
