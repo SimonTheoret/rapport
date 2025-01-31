@@ -52,6 +52,7 @@
 \usepackage[T1]{fontenc}    %
 \usepackage{tabularx}
 
+
 %% <lmodern> incorpore les fontes en T1, pour
 %% faciliter le dépôt final. Ceci n'est pas la
 %% seule option :
@@ -416,7 +417,6 @@ et en faisant une recherche d'hyperparamètres.\\
 
 Je tiens remercier Joss, pour sa précieuse aide tout au long de mon stage. Je
 n'aurais pas pu demander un meilleur superviseur. \\
-%% TODO: En rajouter un ti peu
 Je remercie aussi Momo pour son support moral constant.
 
 %
@@ -604,7 +604,14 @@ des textes francophones. Ces annotation sont fournies par Druide et proviennent
 d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
 les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
 Druide.
-%% TODO: Insérer un exemple d'annotation
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{figures/exemple_annotation.png}
+	\end{center}
+	\caption{Exemple de la méthode ELECTRA. Figure provenant de \cite{clark2020electrapretrainingtextencoders}.}
+	\label{fig:ex_annotation}
+\end{figure}
 
 
 \chapter{Entraînement de modèles initiaux}
@@ -616,21 +623,23 @@ la tâche ainsi que d'entraîner le modèle sur la tâche de préentraînement.
 La normalisation consiste à réduire le nombre de charactèrs différents contenus
 dans le corpus. C'est une étape importante puisqu'elle permet de réduire la
 taille du vocabulaire du jetoniseur sans pour autant perdre des éléments
-syntaxiques. Notre normalisation consistait à tranformer tous les espaces en le
-même charactère d'espace (espaces insécables, tabulations), de transformer tous
-les guillements (guillements français, guillemets informatiques, etc.) en
-guillemets anglais, de retirer les espaces en trop et modifier les types
-d'apostrophes pour que ceux-ci soient uniformes. La normalisation modifie aussi
-certains les espacements entre certains mots, de façon à ce que par exemple le
-texte "11 ème étage" devienne "11ème étage".\\% TODO: Retravailler cette phrase
+syntaxiques. Notre processus de normalisation consistait à tranformer tous les
+caractères d'espacement (espaces insécables, tabulations, \textit{U+2002},
+etc.) en un même charactère d'espace \textit{U+0020}. La normalisation consiste
+aussi en transformer tous les guillements (guillements français, guillemets
+informatiques, etc.) en guillemets anglais, de retirer les espaces en trop et
+modifier les types d'apostrophes pour que ceux-ci soient uniformes. La
+normalisation modifie aussi les espacements entre certains mots. Par exemple,
+c'est ainsi que le texte "11 ème étage" devienne "11ème étage".\\
 
 Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
-la tâche. En l'occurence, nous avons sélectionner le jetoniseur Wordpiece \cite{wu2016googlesneuralmachinetranslation}.
-C'est le jetoniseur choisi par les auteurs de l'article de ELECTRA et est
-actuellement utilisé en production chez Druide. Il répond donc à nos
-contraintes. Pour l'entraînement du jetoniseur, nous utilisons le corpus des
-combis normalisé, comprenant environ 40 GO de données. Les hyper-paramètres
-sélectionnés pour le jetoniseur wordpiece sont donnés dans le tableau \ref{table:hp}.\\
+la tâche. En l'occurence, nous avons initialement sélectionné le jetoniseur
+Wordpiece \cite{wu2016googlesneuralmachinetranslation}. C'est le jetoniseur
+choisi par les auteurs de l'article de ELECTRA et est actuellement utilisé en
+production chez Druide. Il répond donc à nos contraintes. Pour l'entraînement
+du jetoniseur, nous utilisons le corpus des combis normalisé, comprenant
+environ 40 GO de données. Les hyper-paramètres sélectionnés pour le jetoniseur
+wordpiece sont donnés dans le tableau \ref{table:pre-entr-hp}.\\
 
 \section{Préentraînement initial}
 Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
@@ -645,7 +654,7 @@ données. En entraînant trois modèles sur le même jeu de données modifié, n
 espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
-l'entraînement des trois modèles sont décrits dans le tableau \ref{table:hp}.
+l'entraînement des trois modèles sont décrits dans le tableau \ref{table:pre-entr-hp}.
 Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
 l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 
@@ -658,7 +667,6 @@ l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 		\hline\hline
 		Nombre de couches                      & 12           & 12         \\
 		Taille des couches cachées             & 256          & 64         \\
-		Taille du MLP cachés                   & 15           & 15         \\
 		Taille des couches de projection       & 128          & 128        \\
 		Nombre de têtes d'attention            & 4            & 1          \\
 		Taille du vocabulaire                  & 30522        & 30522      \\
@@ -671,7 +679,7 @@ l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 		\hline
 	\end{tabular}
 	\caption{Hyper-paramètres utilisés pour l'entraînement des modèles}
-	\label{table:hp}
+	\label{table:pre-entr-hp}
 \end{table}
 
 Une fois le préentraînement complété, nous avons obtenu les résultats suivants
@@ -708,12 +716,20 @@ section \ref{chapitre:autretechnique}
 Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
 ces trois modèles sur la tâche de détection des erreurs en français. Les
 meilleur métriques enregistrées sont détaillées dans le tableau
-\ref{table:premiermodeles}
+\ref{table:premiermodeles} \\
 
-Les mesures F-0.5 obtenues sur l'ensemble de test durant
-l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure F-0.5 comme principale métrique pour guider nos décisions. Un poids de 0.5 donne deux fois plus d'importance
+Les mesures F-0.5 obtenues sur l'ensemble de test durant l'affinage sont
+contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure
+F-0.5, dont la formule est données explicitement dans l'équation \ref{eq:f05},
+comme principale métrique pour guider nos décisions. Un poids de 0.5 donne deux
+fois plus d'importance à la précision par rapport au rappel. Ce choix de
+métrique permet de prioriser les modèles qui minimisent les faux positifs et
+qui sont donc plus prudents dans leur détection des erreurs.
 
-%% TODO: Ajouter les hyper-paramètres utilisés, les époques, etc.
+\begin{equation*} \label{eq:f05}
+	F_{0.5}=(1+0.5^2)\frac{\text{précision}\cdot\text{rappel}}{(0.5^2 \cdot \text{précision}) + \text{rappel}}
+\end{equation*}
+
 
 \begin{figure}
 	\begin{center}
@@ -723,7 +739,7 @@ l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utiliso
 	\label{fig:3premiermodeles}
 \end{figure}
 
-\begin{table}[h!]
+\begin{table}
 	\centering
 	\begin{tabular}{||c | c | c | c||}
 		\hline
@@ -737,7 +753,29 @@ l'affinage sont contenues dans la figure \ref{fig:3premiermodeles}. Nous utiliso
 	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction}
 	\label{table:premiermodeles}
 \end{table}
+Tous les modèles ont été entraînés pour avec les hyper-paramètres décrits dans
+le tableau \ref{table:affinage-hp}.
 
+
+\begin{table}
+    %% TODO: Mettre à jour les hyper-paramètres d'affinage avec les vraies valeurs
+	\centering
+	\begin{tabular}{||c | c ||}
+		\hline
+		Hyper-paramètres                        & Discriminant \\ [0.5ex]
+		\hline\hline
+		Taux d'apprentissage                    & 12           \\
+		Optimisateur                            & 256          \\
+		Nombre d'époques                        & 128          \\
+        \textit{Weight decay}                   & 4            \\
+		Betas de l'optimisateur                 & 30522        \\
+		Taille de lots                          & 30522        \\
+		Nombre d'itérations de \textit{warmup}  & 10000        \\
+		\hline
+	\end{tabular}
+	\caption{Hyper-paramètres utilisés pour l'affinage des modèles initiaux}
+	\label{table:affinage-hp}
+\end{table}
 
 \section{Entraînement d'un modèle avec casse}
 
@@ -750,9 +788,9 @@ l'affinage sur la tâche de détection des erreurs. Nous avons donc entraîné u
 second jetoniseur WordPiece, cette fois-ci sensible à la casse et avec tous les
 autres hyper-paramètres identiques. Nous avons par la suite entraîné le modèle
 sur l'ensemble des données, encore une fois avec l'ordre des données mélangée
-et avec les hyper-paramètres du tableau \ref{table:hp}. Les résultats du modèle
-avec casse ainsi que les modèles préliminaires sont contenus dans le tableau
-\ref{table:respreentrainementaveccasse}.
+et avec les hyper-paramètres du tableau \ref{table:pre-entr-hp}. Les résultats
+du modèle avec casse ainsi que les modèles préliminaires sont contenus dans le
+tableau \ref{table:respreentrainementaveccasse}.
 
 \begin{table}[h!]
 	\centering
@@ -784,9 +822,28 @@ sont traités comme étant différents durant l'évaluation.\\
 
 Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
 détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
-des trois modèles précédents, contenus dans le tableau.
-%% TODO: retirer cette partie s'il n'y a pas de tableau.
-%% TODO: insérer ref à tableau, si le tabeau existe.
+des trois modèles précédents, contenus dans le tableau \ref{table:pre-entr-hp}.
+Les résultats du modèle affiné et prenant en compte la casse sont contenus dans
+le tableau \ref{table:resaffinagecasse}. Le modèle sensible à la casse performe
+mieux que les trois modèle initaux. Cette différence de performance s'explique
+par la présence d'erreurs basée sur la casse des mots ainsi qu'un
+pré-entraînement plus efficace.
+
+\begin{table}
+	\centering
+	\begin{tabular}{||c | c | c | c||}
+		\hline
+		Modèle           & Précision & Rappel & F0.5  \\ [0.5ex]
+		\hline\hline
+		Modèle initial 1 & 39.59     & 23.84  & 34.97 \\
+		Modèle initial 2 & 40.22     & 24.36  & 35.63 \\
+		Modèle initial 3 & 39.85     & 24.88  & 35.57 \\
+		Modèle avec casse & 42.59     & 25.81  & 37.69 \\
+		\hline
+	\end{tabular}
+	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction avec le modèle sensible à la casse}
+	\label{table:resaffinagecasse}
+\end{table}
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant
 l'affinage pour le modèle avec casse sont contenues dans la figure
@@ -800,15 +857,13 @@ l'affinage pour le modèle avec casse sont contenues dans la figure
 		français.}\label{fig:f05electraaveccasse}
 \end{figure}
 
-%% TODO: Insérer résultats de tableau pour ELECTRA avec casse + sans casse pour affinage
-
 \section{Comparaison avec CAMEMBERT}
 Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
 modèles plus volumineux, nous avons affiné une plus gros modèle et avons
 comparé la performances des modèles. Nous avons utilisé CAMEMBERT, un modèle
 basé sur BERT et préentraîné sur le corpus francophone OSCAR à l'aide de la
-méthode MLM. CAMEMBERT-base possède plus de 100 millions de paramètres, le rendant
-près de 7 fois plus gros que nos modèle basés sur l'architecture de
+méthode MLM. CAMEMBERT-base possède plus de 100 millions de paramètres, le
+rendant près de 7 fois plus gros que nos modèle basés sur l'architecture de
 ELECTRA-small. Ainsi, il est trop gros pour être déployé dans Antidote.
 Néanmoins, il offre un possible plafond quant aux performance que nos modèles
 peuvent atteindre. \\
@@ -824,8 +879,26 @@ CAMEMBERT sur la tâche de détection des erreurs en français:
 		données d'évaluation pour la détection d'erreurs en
 		français.}\label{fig:f05camembert}
 \end{figure}
-Le modèle Camemebert a atteint une mesure F-0.5 maximale de x.
-%% TODO: remplacer x par mesure f0.5 maximale atteinte après 100 époques.
+Le modèle Camembert a atteint une mesure F-0.5 maximale de 40.47, performant
+mieux que nos modèles initaux et que le modèle sensible à la casse.
+
+\begin{table}
+	\centering
+	\begin{tabular}{||c | c | c | c||}
+		\hline
+		Modèle           & Précision & Rappel & F0.5  \\ [0.5ex]
+		\hline\hline
+		Modèle initial 1  & 39.59    & 23.84  & 34.97 \\
+		Modèle initial 2  & 40.22    & 24.36  & 35.63 \\
+		Modèle initial 3  & 39.85    & 24.88  & 35.57 \\
+		Modèle avec casse & 42.59    & 25.81  & 37.69 \\
+		Camembert-base    & 44.74    & 29.3   & 40.47 \\
+		\hline
+	\end{tabular}
+	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction avec le modèle sensible à la casse et Camembert}
+	\label{table:perf_initiaux_camembert}
+\end{table}
+
 
 %% TODO: insérer citations à camembert et oscar.
 %% TODO: Insérer graphique des performances de CAMEMBERT
@@ -889,11 +962,13 @@ données annotés. En effet, les exemples contenus dans le corpus de
 test sont annotés par des humains formés pour une telle tâche, et les
 textes sont basés sur des corpus filtrés des humains, bien souvent des
 linguistes.
+
 \section{Phase d'entraînement intermédiaire}
 Le plus gros gain de performance enregistré durant l'entraînement, en
 terme de mesure f-0.5 est l'ajout d'une phase d'entraînement
 intermédiaire. Cette phase additionnelle a rendu l'entraînement plus
 stable ainsi qu'augmenté la performance du modèle final.
+
 \subsection{Collecte et extraction des données}
 Nous avons été en mesure d'augmenter les données annotés à l'aide des
 corrections des utilisateurs. L'application Antidote dispose d'une version
@@ -929,9 +1004,27 @@ Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci e
 	\end{center}
 	\caption{Courbe de la mesure F-0.5 durant l'affinage du modèle final. Ce dernier correspond au meilleur modèle et utilise l'architecture ELECTRA. De plus, ce modèle a été entraîné avec la phase intermédiaire et utilise le jetoniseur SentencePiece.}\label{fig:meilleurmodeleaweb}
 \end{figure}
-
-Le nouveau modèle obtient la meilleure performance, telle qu'indiqué dans le tableau des résultats \ref{table:resultatfinaux}
-% TODO: Insérer tableau des résultats finaux
+Il est intéressant de noter la diminution du temps avant d'atteindre la
+convergence. En effet, les modèles initaux (figure \ref{fig:3premiermodeles})
+débutent leur affinage avec une mesure F-0.5 de 0, tandis que le modèle final
+débute son affinage avec une mesure F-0.5 de près de 0.4. De plus, le nouveau
+modèle obtient une meilleure performance finale, telle qu'indiqué dans le tableau des
+résultats \ref{table:resultatfinaux}.
+%%TODO: Mettre à jour le tableau des résultats finaux
+\begin{table}
+	\centering
+	\begin{tabular}{||c | c||}
+		\hline
+		Modèle           & F0.5  \\ [0.5ex]
+		\hline\hline
+		Modèle initial 1  & 34.97 \\
+		Modèle initial 2  & 35.63 \\
+		Modèle initial 3  & 35.57 \\
+		\hline
+	\end{tabular}
+	\caption{Résultats finaux des modèles sur corpus d'évaluation de la tâche de correction}
+	\label{table:resultatfinaux}
+\end{table}
 
 \chapter{Autres techniques} \label{chapitre:autretechnique}
 La plupart des techniques mise en oeuvre durant ma recherche n'ont pas eu
@@ -977,7 +1070,7 @@ Nous avons appliqués principalement 4 filtres, dont l'ordre d'apparition est le
 	\item Filtre de Gopher
 	\item Filtre de C4
 \end{itemize}
- Le filtre de longueur retire les exemples qui contiennent moins de 6 mots
+Le filtre de longueur retire les exemples qui contiennent moins de 6 mots
 et Le filtre de langue retire les exemples qui ne sont pas en français. Ce
 dernier fait usage d'un modèle FastText \cite{joulin2016fasttext} pour détecter
 la langue du texte. Le filtre Gopher est plus complexe et utilises plusieurs
@@ -1043,7 +1136,7 @@ erreurs dans le but d'augmenter la taille du corpus d'entraînement. Il serait
 particulièrement intéressant de générer des données artificielles pour les
 types d'erreurs avec lesquels notre modèle à encore de la difficulté. Cela
 permettrait de réduire le coût et le temps de génération des phrases
-artificielles et permettrait d'Avoir un modèle plus performant sur tous les
+artificielles et permettrait d'avoir un modèle plus performant sur tous les
 types d'erreurs présent dans la liste des erreurs corrigés par Antidote.
 
 %% TODO: Discuter des directions futures: Génération de données artificielles
