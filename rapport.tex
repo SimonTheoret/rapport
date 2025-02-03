@@ -667,7 +667,7 @@ limitant la vitesse d'entraînement ainsi que la taille de lot (\textit{batch
 	size}). Pour tirer parti au maximum des 3 GPUs disponibles, nous avons
 initialisé aléatoirement trois modèle ELECTRA et avons changé l'ordre des
 données. En entraînant trois modèles sur le même jeu de données modifié, nous
-espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
+espérions être en mesure d'appliquer la méthode de la Soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
 l'entraînement des trois modèles sont décrits dans le tableau
@@ -725,7 +725,7 @@ d'évaluation de nos trois modèles sur la tâche d'ELECTRA. Les résulats sont 
 \end{table}
 Malgré le changement de l'ordre des données, aucun des trois modèles n'a
 performé significativement différemment des autres modèles. Cette remarque nous
-a poussé à utiliser la méthode de la soupe \cite{soup} dans le but d'améliorer
+a poussé à utiliser la méthode de la Soupe \cite{soup} dans le but d'améliorer
 la performance du modèle. Cette méthode est discutée plus en détails dans la
 section \ref{chapitre:autretechnique}.
 
@@ -1034,10 +1034,9 @@ illustre ce gain de performance.
 Il est intéressant de noter la diminution du temps avant d'atteindre la
 convergence. En effet, les modèles initaux (figure \ref{fig:3premiermodeles})
 débutent leur affinage avec une mesure F-0.5 de 0, tandis que le modèle final
-débute son affinage avec une mesure F-0.5 de près de 0.4. De plus, le nouveau
+débute son affinage avec une mesure F-0.5 de près de 40. De plus, le nouveau
 modèle obtient une meilleure performance finale, telle qu'indiqué dans le tableau des
 résultats \ref{table:resultatfinaux}.
-%%TODO: Mettre à jour le tableau des résultats finaux
 \begin{table}
 	\centering
 	\begin{tabular}{||c | c||}
@@ -1065,22 +1064,24 @@ techniques y seront brièvement abordées.
 \section{Soupe}
 Nous avons appliqué la méthode Soupe (de l'anglais \textit{Soup}) \cite{soup},
 qui consiste en une somme pondérée des poids des paramètres des différents
-modèles. Cette méthode permet simple permet d'augmenter la performance de
-modèles affinés sans pour autant faire usage de beaucoup de ressources et sans
+modèles. Cette méthode simple permet d'augmenter la performance de modèles
+affinés sans pour autant faire usage de beaucoup de ressources et sans
 augmenter le temps d'inférence. L'intuition derrière cette technique est qu'un
 meilleur modèle se trouve souvent entre plusieurs modèles affinés. Donc, si nos
-modèles utilisés pour faire la soupe sont à proximité d'un minimum local pour
+modèles utilisés pour faire la Soupe sont à proximité d'un minimum local pour
 une fonction de perte donnée, alors la moyenne arithmétique des poids des
-modèles pourrait résuler en un modèle dont la perte est plus proche de l'optimum
-local.\\
+modèles pourrait résuler en un modèle dont la perte est plus proche de
+l'optimum local.
 \\
-Nous avons fait une soupe à partir de nos 3 premiers modèles affinés, décris dans
-la section \ref{section:premiersmodelesaffines}. Nous avons par la suite affiné
-notre soupe sur la tâche de détection des erreurs. Malheureusement, notre modèle
-n'a jamais été en mesure de converger durant l'affinage. Une explication
-possible est qu'au moins une de nos trois modèles affinés convergeait vers un
-optimum local différent. Ainsi, l'initialisation du modèle soupe était éloignée
-des optimums locaux des modèles.
+\\
+Nous avons fait une Soupe à partir de nos 3 premiers modèles affinés, décris
+dans la section \ref{section:premiersmodelesaffines}. Nous avons par la suite
+affiné notre Soupe sur la tâche de détection des erreurs. Malheureusement,
+notre modèle n'a jamais été en mesure de converger durant l'affinage. Une
+explication possible est qu'au moins une de nos trois modèles affinés
+convergeait vers un optimum local différent des optimums des autres modèles.
+Ainsi, l'initialisation du modèle Soupe était éloignée des optimums locaux des
+modèles et résulte en un modèle incapable d'apprendre efficacement.
 \section{Nettoyage des données}
 Une part éssentielle de l'entraînement est de fournir des données de qualité
 à notre modèle. Or, une partie importante du corpus de préentraînement est
@@ -1092,20 +1093,23 @@ de piètre qualité est importants. Or, le nettoyage d'un corpus de grande
 taille nécessite l'usage d'heuristiques de sélection. Pour la création du
 pipeline de nettoyage, nous avons utiliser la librarie \textit{Datatrove} de
 \textit{HuggingFace} \cite{penedo2024datatrove} et l'avons modifié pour qu'elle
-convienne à notre usage.\\
+convienne à notre usage.
 \\
-Nous avons appliqués principalement 4 filtres, dont l'ordre d'apparition est le suivant:
+\\
+Nous avons appliqués principalement 4 filtres, dont l'ordre d'apparition est le
+suivant:
 \begin{itemize}
 	\item Filtre de longueur
 	\item Filtre de langue
 	\item Filtre de Gopher
 	\item Filtre de C4
 \end{itemize}
-Le filtre de longueur retire les exemples qui contiennent moins de 6 mots
-et Le filtre de langue retire les exemples qui ne sont pas en français. Ce
-dernier fait usage d'un modèle FastText \cite{joulin2016fasttext} pour détecter
-la langue du texte. Le filtre Gopher est plus complexe et utilises plusieurs
-heuristiques pour filtrer le contenu du corpus:
+Le filtre de longueur retire les exemples qui contiennent moins de 6 mots et le
+filtre de langue retire les exemples qui ne sont pas en français. Ce dernier
+fait usage d'un modèle FastText \cite{joulin2016fasttext} pour détecter la
+langue du texte. Le filtre Gopher est plus complexe et utilises plusieurs
+heuristiques pour filtrer le contenu du corpus. Si l'une des conditions
+suivantes est remplie, alors l'exemple sera retiré du corpus propre.
 \begin{itemize}
 	\item La longueur de l'exemple est supérieure à 100000 mots et inférieure à 5 mots
 	\item La proportion de lettres parmi l'exemple est inférieure à 70\%
@@ -1113,11 +1117,11 @@ heuristiques pour filtrer le contenu du corpus:
 	\item Le nombre de \textit{stop words} est inférieur à 2
 \end{itemize}
 Finalement, le filtre C4 retire les exemples contenant du JavaScript, le terme
-\textit{Lorem Ipsum}, le symbole $\{$  ou encore les exemples contenant des
-conditions d'utilisations.\\
-Les filtres ont retiré près de 23\% du contenu total initial du corpus: des  314
-907 209 exemples initiaux, il en reste 242 710 245 dans le corpus nettoyé. Les
-différents filtres ont eu un impact variable sur le résultat final:
+\textit{Lorem Ipsum}, le symbole '$\{$'  ou encore les exemples contenant des
+conditions d'utilisations.\\ Les filtres ont retiré près de 23\% du contenu
+total initial du corpus: parmi les 314 907 209 exemples initiaux, il en reste 242
+710 245 dans le corpus nettoyé. Les différents filtres ont eu un impact
+variable sur le résultat final:
 \begin{itemize}
 	\item filtre de longueur: retiré 38 585 180 exemples
 	\item filtre de langue: retiré 8 283 109 exemples
@@ -1133,14 +1137,14 @@ d'Optuna. La figure \ref{fig:electrapropre} montre les courbe de mesure F-0.5
 durant la recherche d'hyper-paramètre sur la tâche de détection des erreurs en
 français.\\
 
-Nous sommes incertain quant à la cause de la baisse de performance après le
+Nous sommes incertain de la cause de la baisse de performance après le
 nettoyage des données. Une hypothèse est que nos heuristiques sont trop
 sévères. Par exemple, le filtre de longueur retire les exemples de moins de 6
-mots, ce qui correspond à retirer plus de 38 millions d'exemples. Plus de tests
-sont nécessaires pour vérifier la pertinence de nos heuristiques.
-
-% TODO: Ajouter une explication quant à la différence de performance. Données
-% court sont pertinents, permettent de réguler le modèle?
+mots, ce qui correspond à retirer plus de 38 millions d'exemples. Il en résulte
+que notre modèle n'aura jamais été entraîné sur des exemples contenant moins de
+6 mots durant l'affinage.  Plus de tests sont nécessaires pour vérifier la
+  pertinence de nos heuristiques. En particulier, il serait pertinent de
+  s'assurer que le filtre de longueur n'est pas trop sévère.
 
 \begin{figure}
 	\begin{center}
@@ -1161,25 +1165,25 @@ Durant ce stage, je me suis familiarisé avec les principales étapes du
 développement d'un système en traitement automatique de la langue. J'ai
 travaillé sur le nettoyage et traitement des données, le prototypage de
 différents modèles ainsi que l'évaluation des modèles d'aprentissage
-automatique. De plus, nous avons appris à connaître l'écosystème
+automatique. De plus, j'ai appris à connaître l'écosystème
 d'apprentissage automatique en \textit{Python} ainsi que les modèles considérés
 comme l'état de l'art en traitement automatique des langues.
 
-Nous avons obtenu de bons résultats préliminaires, notamment en ajoutant une
-phase intermédiaire durant l'entraînement et en effectuant une recherche
-d'hyper-paramètre. Notre meilleur modèle est même en mesure de battre
-CAMEMBERT, un modèle disposant de presque 8 fois plus de paramètres. Nous
-pensons qu'une avenue d'amélioration du modèle consisterait à faire usage de
-grands modèles de langues dans le but de générer des données artificielles de
-bonnes qualité. En particulier, une stratégie qui pourrait être intéressante
-pour augmenter la performance du modèle serait d'utiliser un grand modèle de
-langue pour générer des phrases comportant des erreurs dans le but d'augmenter
-la taille du corpus d'entraînement. Il serait particulièrement intéressant de
-générer des données artificielles pour les types d'erreurs avec lesquels notre
-modèle à encore de la difficulté. Cela permettrait de réduire le coût et le
-temps de génération des phrases artificielles et permettrait d'avoir un modèle
-plus performant sur tous les types d'erreurs présent dans la liste des erreurs
-corrigés par Antidote.
+J'ai obtenu de bons résultats,  notamment en ajoutant une phase intermédiaire
+durant l'entraînement et en effectuant une recherche d'hyper-paramètre. Notre
+meilleur modèle est même en mesure de battre CAMEMBERT, un modèle disposant de
+presque 8 fois plus de paramètres. Nous pensons qu'une avenue d'amélioration du
+modèle consisterait à faire usage de grands modèles de langues dans le but de
+générer des données artificielles de bonnes qualité. En particulier, une
+stratégie qui pourrait être intéressante pour augmenter la performance du
+modèle serait d'utiliser un grand modèle de langue pour générer des phrases
+comportant des erreurs dans le but d'augmenter la taille du corpus
+d'entraînement. Il serait particulièrement intéressant de générer des données
+artificielles pour les types d'erreurs avec lesquels notre modèle à encore de
+la difficulté. Cela permettrait de réduire le coût et le temps de génération
+des phrases artificielles et permettrait d'avoir un modèle plus performant sur
+tous les types d'erreurs présent dans la liste des erreurs corrigés par
+Antidote.
 
 %%--------------%
 %%     index    %
