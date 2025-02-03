@@ -315,17 +315,18 @@
 Le logiciel Antidote permet de corriger des textes en français et en anglais.
 Il détecte plusieurs milliers de types d’erreurs orthographiques et
 grammaticales. Le logiciel dispose d'un modèle ELECTRA capable de détecter
-efficacement les erreurs en français. L'équipe de TAL de Druide désire mettre
-en place un système similaire pour la langue française . Dans le cadre de ce
-stage, le but est de créer un modèle ELECTRA capable de détecter les erreurs
+efficacement les erreurs en anglais. L'équipe de TAL de Druide désire mettre en
+place un système similaire pour la langue française. Dans le cadre de ce stage,
+le but est de créer un modèle ELECTRA capable de détecter les erreurs
 grammaticales en français. Pour ce faire, plusieurs approches ont été testées
 et les résultats des derniers modèles sont prometteurs. On remarque entre autre
 une hausse importante des performances en introduisant une tâche intermédiaire
-et en faisant une recherche d'hyperparamètres.\\
+et en faisant une recherche d'hyperparamètres. Les méthodes n'ayant pas donné
+les résultats escomptés sont aussi discutées \\
 
 \textit{Mots clés: Apprentissage automatique, Apprentissage profond,
 	Apprentissage machine, Traitement de texte, Détection de mot manquants,
-	Encodeur, Transformers, BERT, Electra, Réseaux de neurones, Intelligence
+	Encodeur, Transformers, BERT, ELECTRA, Réseaux de neurones, Intelligence
 	artificielle.}
 
 %%------------------------------------------------- %
@@ -393,10 +394,10 @@ et en faisant une recherche d'hyperparamètres.\\
 	\textit{Named-Entity Recognition}\\
 	DDP & Parallélisme distribué des données, de l'anglais
 	\textit{Distributed Data Parallel}\\
-	MOE & Mélange d'expertes, de l'anglais
-	\textit{Mixture of experts}\\
 	TPE & Estimateur de Parzen à base d'arbres, de l'anglais
 	\textit{Tree-Structured Parzen Estimator}\\
+	LLM & Grand modèle de langue, de l'anglais
+	\textit{Large Language Model}\\
 \end{twocolumnlist}
 % Option de colonnes: definir \colun ou \coldeux
 %%% Exemple
@@ -439,11 +440,13 @@ Je remercie aussi Momo pour son support moral constant.
 \chapter*{Introduction}
 Le domaine du traitement automatique des langues connaît une explosion
 fulgurante de techniques, de jeux de données et de modèles permettant de
-résoudre de nouveaux problèmes. Néanmoins, bon nombre de ces applications
-restent hors de portée des organisations désirant mettre en application des
-outils d'apprentissages automatique. En effet, la plupart des modèles de
-langues récents sont préentraînés sur des corpus majoritairement anglophones,
-avec des jetoniseurs spécialisés pour traiter le contenu anglophone. Ces deux
+résoudre de nouveaux problèmes. L'avènement des LLM à notamment mis à
+l'avant-plan les possibilité d'utilisation des modèles d'intelligence
+artificiels. Néanmoins, bon nombre de ces applications restent hors de portée
+des organisations désirant mettre en application des outils d'apprentissages
+automatique. En effet, la plupart des modèles de langues récents sont
+préentraînés sur des corpus majoritairement anglophones, avec des jetoniseurs
+spécialisés pour traiter le contenu anglophone. Ces deux
 facteurs limitent les modèles préentraînés disponibles ainsi que leur
 performance sur des tâches avec un corpus non anglophone.\\
 
@@ -457,12 +460,12 @@ moteur de correction. L'équipe de Druide désire mettre en place un modèle de
 correction similaire, mais adapté à la langue française. En particulier, ils
 désirent préentraîner un modèle ELECTRA avec un corpus et un jetoniseur
 francophones pour que le modèle puisse détecter les erreurs grammaticales
-présentes dans les textes des utilisateurs d'Antidote.\\
+présentes dans les textes francophones des utilisateurs d'Antidote.\\
 
 Pour la réalisation du projet, nous disposons d'un jeu de données d'environ 40
-GB de données non structuré. De plus, l'entraînement du modèle se fait
-localement sur une machine ayant accès à 3 NVIDIA RTX A4000, disposant chacune
-de 16 GB de mémoire VRAM.
+GB de données non structuré, ainsi que d'un ensemble de phrases annotées. De
+plus, l'entraînement du modèle se fait localement sur une machine ayant accès à
+3 NVIDIA RTX A4000, disposant chacune de 16 GB de mémoire VRAM.
 
 
 %%------------------------------------------------- %
@@ -474,41 +477,44 @@ L'équipe de Druide dispose de deux modèles déjà en place pour la correction 
 erreurs. Néanmoins, leur modèle en anglais corrige une plus grande gamme
 d'erreurs. Druide désire améliorer leur moteur de correction en français à
 l'aide de l'apprentissage profond.
-% NOTE: Nécessaire?
 
 \section{Contraintes}
-Le modèle doit être intégré dans le logiciel principal de Druide, Antidote. Or,
-le logiciel Antidote est déployé sur les ordinateurs personnels des usagers.
-Cela implique d'importantes contraintes quant aux ressources disponibles pour
-l'exécution du modèle, notamment en ce qui à trait à la consommation de
-mémoire. De plus, le logiciel Antidote se doit d'être rapide, puisque attendre
-plusieurs minutes pour la correction d'un texte volumineux dégrade la qualité
-de l'expérience des utilisateurs. En d'autres mots, le modèle doit être rapide
-durant l'inférence. Finalement, le logiciel antidote cible deux système
-d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur les machines
-des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime} et CoreML.\@
-Il est donc nécessaire que le modèle soit supporté par les deux librairies.
-En résumé, nous avons des limites quant aux ressources disponibles durant
-l'inférence ainsi que des contraintes quant aux couches et modèles utilisables.\\
+Le modèle doit être intégré dans le logiciel Antidote, principal produit de
+Druide. Or, le logiciel Antidote est déployé sur les ordinateurs personnels des
+usagers. Cela implique d'importantes contraintes quant aux ressources
+disponibles pour l'exécution du modèle, notamment en ce qui à trait à la
+consommation de mémoire. De plus, le logiciel Antidote se doit d'être rapide,
+puisque attendre plusieurs minutes pour la correction d'un texte volumineux
+dégrade la qualité de l'expérience pour les utilisateurs. En d'autres mots, le
+modèle doit être rapide durant l'inférence et ne peut pas consommer beaucoup de
+ressourecs sur l'appareil des usagers. Finalement, le logiciel antidote cible
+deux système d'exploitation: Windows et MacOS.\@ Le déploiement du modèle sur
+les machines des usagers se fait à l'aide des librairies ONNX\cite{onnxruntime}
+et CoreML.\@ Il est donc nécessaire que le modèle soit supporté par les deux
+librairies. En résumé, nous avons des limites quant aux ressources disponibles
+durant l'inférence ainsi que des contraintes quant aux couches et modèles
+utilisables.\\
 
-Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner
-des petits modèles Transformers\cite{vaswani2023attentionneed} avec
-encodeur. Ces derniers contiennent environ 14 millions de paramètres.
+Ces contraintes ont poussé l'équipe du TAL de Druide à sélectionner des petits
+modèles Transformers\cite{vaswani2023attentionneed} avec encodeur pour la tâche
+de détection des erreurs en anglais. Ces modèles contiennent environ 14
+millions de paramètres et sont très rapides durant l'inférence.
 
 \section{Méthode de préentraînement ELECTRA}
 
 La méthode ELECTRA\cite{clark2020electrapretrainingtextencoders} est une
-méthode inspirée de la modélisation de langage avec masque (Masked Language
-Modeling; MLM), mais qui se veut plus efficace et rapide que le MLM. La méthode
-ELECTRA consiste à entraîner deux modèles: un petit modèle, appelé le
-générateur, et le modèle final, appelé le discriminant. Le générateur reçoit
-des jetons masqués et doit prédire quel était le jeton original situé à la
-position du masque. Les prédictions du modèle sont échantillonnés, de façon à
-obtenir une nouvelle séquence, potentiellement différente de la séquence
-originale. Le discriminant reçoit la nouvelle séquence et à pour tâche de
-prédire quels jetons sont corrompus et lesquels n'ont pas été modifiés par le
-générateur. Seul le discriminant est réutilisé pour l'affinage. La méthode est
-visualisée dans la figure \ref{fig:electra}.
+méthode inspirée de la modélisation de langage avec masque (\text{MLM}), mais
+qui se veut plus efficace et rapide que le MLM. La méthode ELECTRA consiste à
+entraîner deux modèles: un petit modèle, appelé le générateur, et le modèle
+final, appelé le discriminant. Le générateur reçoit des jetons masqués
+aléatoirement et doit prédire quel était le jeton original situé à la position
+du masque. Les prédictions du modèle sont échantillonnés, de façon à obtenir
+une nouvelle séquence, potentiellement différente de la séquence originale. Le
+discriminant reçoit la nouvelle séquence et à pour tâche de prédire quels
+jetons sont corrompus et lesquels n'ont pas été modifiés par le générateur.
+Seul le discriminant est réutilisé pour l'affinage. La méthode est visualisée
+dans la figure \ref{fig:electra}.
+\\
 
 \begin{figure}
 	\begin{center}
@@ -518,46 +524,53 @@ visualisée dans la figure \ref{fig:electra}.
 	\label{fig:electra}
 \end{figure}
 
+
 Trois éléments rendent l'entraînement du discriminant plus facile.
 Premièrement, le générateur dispose de significativement moins de capacité que
 le discriminant. En effet, ce dernier contient en général 3 à 4 fois plus de
 paramètres (en excluant les couches de projections \textit{embeddings}) que le
 générateur. De plus, les entrées du discriminant sont échantillonnées depuis la
 distribution engendrée par le générateur, au lieu de sélectionner les entrées
-les plus probables selon la distribution du générateur. Finalement, les poids
-du générateur sont initialisés aléatoirement et ce dernier est entraîné en même
-temps que le discriminant, rendant la tâche de plus en plus difficile au fur et
-à mesure que le générateur s'entraîne. Ces trois facteurs rendent la tâche du
-discriminant plus facile et permettent de générer des erreurs similaire à ce
-que le modèle rencontrera en production.\\
+les plus probables selon la distribution du générateur. Celà rend les
+prédiction du générateur moins précises. Finalement, les poids du générateur
+sont initialisés aléatoirement et ce dernier est entraîné en même temps que le
+discriminant, rendant la tâche de plus en plus difficile au fur et à mesure que
+le générateur s'entraîne. Ce dernier facteur est l'une des raison pourquoi le
+discriminant est en mesure d'apprendre durant l'entraînement. Ces trois
+facteurs rendent la tâche du discriminant plus facile et permettent de générer
+des erreurs similaires à ce que le modèle rencontrera en production.\\
 
-La méthode ELECTRA a été choisie pour deux raisons: c'est une méthode de
-préentraînement similaire à la correction d'erreurs dans un texte et la méthode
+La méthode ELECTRA a été choisie pour deux raisons: C'est une méthode de
+préentraînement similaire à la correction d'erreurs dans un texte, ce qui
+augmente la performance du modèle durant l'affinage. De plus, la méthode
 ELECTRA permet d'augmenter l'efficacité du préentraînement en atteignant des
-performances similaires aux performances du MLM en moins d'itérations.
+performances similaires aux performances d'un modèle entraîné avec du MLM, et
+ce en moins d'itérations.
 
 
+%% NOTE: Contenu ci-haut a été révisé.
 \section{Architecture ELECTRA}
 Le modèle ELECTRA utilise une architecture basée sur les modules d'encodeurs
 des Transformers \cite{vaswani2023attentionneed}. L'usage d'une architecture
 basée sur les transformeur permet d'obtenir une représentation contextuelle
 pour tous les jetons d'une séquence. Cette avancée à été marquée par l'arrivée
-de \cite{bert},  un modèle Transformers (Bidirectional Encoder Representation
-from Transformers). Ce modèle a été développé par Google en 2018 et comprend de
-nombreuses versions de différentes tailles et entraînés sur différentes tâches.
-Les deux versions canoniques de BERT sont BERT-BASE et BERT-LARGE. Ces deux
-versions comprennent respectivement 12 couches et 24 couches, chacune étant
-composée de 768 unités de large, divisées en 12 têtes d’attention multiples.
-ELECTRA ajoute une nouvelle version plus petite de BERT, dénommée
-ELECTRA-small. Celle-ci consiste en 12 couches de 256 unités de large. Ces
-modèles à base d'encodeur sont composées de trois parties:
+de \cite{bert} (Bidirectional Encoder Representation from Transformers), un
+modèle Transformers. Ce modèle a été développé par Google en 2018 et comprend
+de nombreuses versions de différentes tailles et entraînés sur différentes
+tâches. Les deux versions canoniques de BERT sont BERT-BASE et BERT-LARGE. Ces
+deux versions comprennent respectivement 12 couches et 24 couches d'encodeurs,
+chacune étant composée de 768 unités de large, divisées en 12 têtes d’attention
+multiples. Les auteurs d'ELECTRA ajoute une nouvelle version plus petite basée
+sur BERT, dénommée ELECTRA-small. Celle-ci consiste en 12 couches de 256 unités
+de large et comporte environ 14 millions de paramètres. Ce modèle à base
+d'encodeur est composé de trois parties:
 \begin{itemize}
 	\item Un \textbf{jetoniseur}, qui s'occupe de traiter le texte entrant et
 	      de le convertir un une séquence de d'entiers.
 	\item Une \textbf{couche de projection}, qui permet d'associer à chacun des
 	      jetons d'entrées une représentation vectorielle qui dépend de la
 	      position du jeton dans la séquence ainsi que du jeton lui-même.
-	\item Un module d'\textbf{encodeur}, qui permet d'obtenir une
+	\item Un module d'\textbf{encodeurs}, qui permet d'obtenir une
 	      représentation contextualisée des entrés. Cette représentation est
 	      apprise et varie selon la tâche finale du modèle ainsi que le corpus
 	      utiliser pour entraîner le modèle.
@@ -570,17 +583,18 @@ pour que celui-ci soit en mesure de détecter efficacement les erreurs dans les
 textes des utilisateurs. Druide a développé une liste des différents types
 d'erreurs, permettant de classifier les différents types d'erreurs en de
 grandes catégories, telles que les erreurs de virgules, les erreurs de mots
-manquants, les erreurs d'accord du nom, etc. Cette liste contient 750
-différents types d'erreurs. Chaque erreur fait partie d'une de ces grandes
-catégories, et bon nombre de ces erreurs ont une sous-catégorie, précisant
-encore plus le contexte associée à l'erreur. La détection d'erreur est
-modélisée comme une tâche de détection d'entité nommée (DEN/NER), dans laquelle
-chaque jeton dispose d'un classe. Les classes d'erreurs sont représenté avec un
-identifiant, tandis que la classe représentant l'absence d'erreurs est
-représenté par l'identifiant $O$. Le modèle à comme objectif de spécifier la
-classe de chaque jeton de la séquence. Le schéma $IOB2$ \cite{schemas} est
-utilisé pour représenter sans ambiguïté les jetons contigus contenus dans la
-même erreur.
+manquants, les erreurs d'accord du nom, etc. Cette liste contient plusieurs
+milliers de types d'erreurs. Néanmoins, dans notre cas seuls 750 types
+d'erreurs doivent être détectés. Chaque erreur fait partie d'une des grandes
+catégories nommées ci-haut, et bon nombre de ces erreurs ont une
+sous-catégorie, précisant encore plus le contexte associée à l'erreur. La
+détection d'erreur est modélisée comme une tâche de détection d'entité nommée
+(NER), dans laquelle chaque jeton dispose d'un classe. Les classes d'erreurs
+sont représenté avec un identifiant, tandis que la classe représentant
+l'absence d'erreurs est représenté par l'identifiant $O$. Le modèle à comme
+objectif de spécifier la classe de chaque jeton de la séquence. Le schéma
+$IOB2$ \cite{schemas} est utilisé pour représenter sans ambiguïté les jetons
+contigus contenus dans la même erreur.
 
 \section{Infrastructures en place}
 Notre tâche principale consistait à préentraîner un modèle ELECTRA.\@ Or, un
@@ -590,26 +604,27 @@ Transformers\cite{wolf-etal-2020-transformers} permet un usage libre de
 différents modèles ELECTRA préentraînés. De plus, il existe quelques modèles
 ELECTRA préentraînés sur des corpus francophone. Cependant, aucun d'entre eux
 ne respectent nos contraintes de tailles et de vitesse. Il est donc nécessaire
-d'entraîner un modèle à partir d'un initialisation aléatoire.\\
+d'entraîner un modèle à partir d'un initialisation aléatoire.
+\\
 
 Nous disposons de deux corpus déjà préparés pour préentraîner et affiner un
 modèle Electra. Le corpus de préentraînement est une collection de textes non
 structuré provenant de nombreuses sources, notamment des manuels, des articles
-de blogues, des livres. Ce corpus de préentraînement est appelé corpus des
-Combis et représente 40 gigaoctes (Go) de données et 7 milliard de jetons.
-C'est un corpus deux fois plus grand que le corpus de préentraînement utilisé
-pour le préentraînement par Google du modèle ELECTRA de même taille. Pour
-l'affinage, Druide dispose d'un corpus contenant près de 100000 annotations sur
-des textes francophones. Ces annotation sont fournies par Druide et proviennent
-d'équipes de linguistes et d'annotateurs corrigeant des textes et classifiant
-les erreurs qu'ils y trouvent en fonction des types d'erreurs proposés par
-Druide.
+de blogues, des livres et des sites internet. Ce corpus de préentraînement est
+appelé corpus des Combis et représente 40 gigaoctes (Go) de données et 7
+milliard de jetons. C'est un corpus deux fois plus grand que le corpus de
+préentraînement utilisé pour le préentraînement par Google du modèle ELECTRA de
+même taille. Pour l'affinage, Druide dispose d'un corpus contenant près de
+100000 annotations sur des textes francophones. Ces annotation sont fournies
+par Druide et proviennent d'équipes de linguistes et d'annotateurs corrigeant
+des textes et classifiant les erreurs qu'ils y trouvent en fonction des types
+d'erreurs proposés par Druide.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.4\textwidth]{figures/exemple_annotation.png}
+		\includegraphics[width=0.4\textwidth]{figures/annotation.png}
 	\end{center}
-	\caption{Exemple de texte annoté. Les annotations se font au niveau des jetons et sont donc spécifiques au jetoniseur}
+	\caption{Exemple de texte annoté. Les annotations se font au niveau des positions des charactères et ne sont donc pas spécifiques au jetoniseur}
 	\label{fig:ex_annotation}
 \end{figure}
 
@@ -625,21 +640,22 @@ dans le corpus. C'est une étape importante puisqu'elle permet de réduire la
 taille du vocabulaire du jetoniseur sans pour autant perdre des éléments
 syntaxiques. Notre processus de normalisation consistait à tranformer tous les
 caractères d'espacement (espaces insécables, tabulations, \textit{U+2002},
-etc.) en un même charactère d'espace \textit{U+0020}. La normalisation consiste
-aussi en transformer tous les guillements (guillements français, guillemets
-informatiques, etc.) en guillemets anglais, de retirer les espaces en trop et
-modifier les types d'apostrophes pour que ceux-ci soient uniformes. La
-normalisation modifie aussi les espacements entre certains mots. Par exemple,
-c'est ainsi que le texte "11 ème étage" devienne "11ème étage".\\
+etc.) en un même charactère d'espace \textit{U+0020}. Notre processus de
+normalisation consiste aussi en transformer tous les guillements (guillements
+français, guillemets informatiques, etc.) en guillemets anglais, de retirer les
+espaces en trop et de modifier les types d'apostrophes pour que ceux-ci soient
+uniformes. La normalisation modifie aussi les espacements entre certains mots.
+Par exemple, c'est ainsi que le texte "11 ème étage" devienne "11ème étage".\\
 
 Une fois le texte normalisé, il est possible d'entraîner un jetoniseur adapté à
 la tâche. En l'occurence, nous avons initialement sélectionné le jetoniseur
-Wordpiece \cite{wu2016googlesneuralmachinetranslation}. C'est le jetoniseur
+WordPiece \cite{wu2016googlesneuralmachinetranslation}. C'est le jetoniseur
 choisi par les auteurs de l'article de ELECTRA et est actuellement utilisé en
 production chez Druide. Il répond donc à nos contraintes. Pour l'entraînement
-du jetoniseur, nous utilisons le corpus des combis normalisé, comprenant
-environ 40 GO de données. Les hyper-paramètres sélectionnés pour le jetoniseur
-wordpiece sont donnés dans le tableau \ref{table:pre-entr-hp}.\\
+du jetoniseur, nous utilisons le corpus des Combis après normalisation,
+comprenant environ 40 GO de données. Les hyper-paramètres sélectionnés pour le
+jetoniseur WordPiece ainsi que pour le préentraînement sont donnés dans le
+tableau \ref{table:pre-entr-hp}.\\
 
 \section{Préentraînement initial}
 Nous préentraînons le modèle à l'aide de l'implémentation originale de ELECTRA.
@@ -654,9 +670,11 @@ données. En entraînant trois modèles sur le même jeu de données modifié, n
 espérions être en mesure d'appliquer la méthode de la soupe \cite{soup} une
 fois les modèles affinés et faire un meilleur usage des ressources
 computationnelles à notre disposition. Les hyper-paramètres utilisés durant
-l'entraînement des trois modèles sont décrits dans le tableau \ref{table:pre-entr-hp}.
-Nous avons divisé par 4 la largeur du générateur, tel que recommandé dans
-l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
+l'entraînement des trois modèles sont décrits dans le tableau
+\ref{table:pre-entr-hp}. Nous avons divisé par 4 la largeur du générateur, tel
+que recommandé dans l'article original de ELECTRA
+\cite{clark2020electrapretrainingtextencoders}. Nous avons suivi de près les
+hyper-paramètres énumérés dans l'article ELECTRA.
 
 
 \begin{table}[h!]
@@ -682,8 +700,8 @@ l'article original de ELECTRA \cite{clark2020electrapretrainingtextencoders}.
 	\label{table:pre-entr-hp}
 \end{table}
 
-Une fois le préentraînement complété, nous avons obtenu les résultats suivants
-durant l'évaluation des modèles sur la tâche d'ELECTRA:
+Une fois le préentraînement complété, nous avons collecté les résultats
+d'évaluation de nos trois modèles sur la tâche d'ELECTRA. Les résulats sont disponibles dans le tableau \ref{table:respreentrainementsanscasse}. \\
 
 \begin{table}[h!]
 	\centering
@@ -706,17 +724,17 @@ durant l'évaluation des modèles sur la tâche d'ELECTRA:
 	\label{table:respreentrainementsanscasse}
 \end{table}
 Malgré le changement de l'ordre des données, aucun des trois modèles n'a
-performé différemment des autres modèles. Cette remarque nous a poussé à
-utiliser la méthode de la soupe \cite{soup} dans le but d'améliorer la
-performance du modèle. Cette méthode sera discutée plus en détails dans la
-section \ref{chapitre:autretechnique}
+performé significativement différemment des autres modèles. Cette remarque nous
+a poussé à utiliser la méthode de la soupe \cite{soup} dans le but d'améliorer
+la performance du modèle. Cette méthode est discutée plus en détails dans la
+section \ref{chapitre:autretechnique}.
 
 
 \section{Premiers modèles affinés}\label{section:premiersmodelesaffines}
 Une fois les trois premiers modèles initaux préentraînés, nous avons entraîné
 ces trois modèles sur la tâche de détection des erreurs en français. Les
 meilleur métriques enregistrées sont détaillées dans le tableau
-\ref{table:premiermodeles} \\
+\ref{table:premiermodeles}. \\
 
 Les mesures F-0.5 obtenues sur l'ensemble de test durant l'affinage sont
 contenues dans la figure \ref{fig:3premiermodeles}. Nous utilisons la mesure
@@ -758,7 +776,7 @@ le tableau \ref{table:affinage-hp-modeles-initiaux}.
 
 
 \begin{table}
-    %% TODO: Mettre à jour les hyper-paramètres d'affinage avec les vraies valeurs (notamment taux d'apprentissage et Weight decay)
+	%% TODO: Mettre à jour les hyper-paramètres d'affinage avec les vraies valeurs (notamment taux d'apprentissage et Weight decay)
 	\centering
 	\begin{tabular}{||c | c ||}
 		\hline
@@ -780,7 +798,6 @@ le tableau \ref{table:affinage-hp-modeles-initiaux}.
 \end{table}
 
 \section{Entraînement d'un modèle avec casse}
-
 Nos premiers modèles prentraînés sont limités en terme de performance par leur
 jetoniseur. En effet, le jetoniseur WordPiece entraîné sur les données ignore
 la case, et certains types d'erreurs, tel que les majuscules pour les noms
@@ -791,8 +808,8 @@ second jetoniseur WordPiece, cette fois-ci sensible à la casse et avec tous les
 autres hyper-paramètres identiques. Nous avons par la suite entraîné le modèle
 sur l'ensemble des données, encore une fois avec l'ordre des données mélangée
 et avec les hyper-paramètres du tableau \ref{table:pre-entr-hp}. Les résultats
-du modèle avec casse ainsi que les modèles préliminaires sont contenus dans le
-tableau \ref{table:respreentrainementaveccasse}.
+du modèle avec casse ainsi que les résultats des modèles préliminaires sont
+contenus dans le tableau \ref{table:respreentrainementaveccasse}.
 
 \begin{table}[h!]
 	\centering
@@ -817,10 +834,11 @@ tableau \ref{table:respreentrainementaveccasse}.
 
 La performance du discriminant sensible à la cassse est similaire à celles des
 autres discriminant. Cependant, le générateur sensible à la casse performe
-moins biens que les autres. Une explications possible est que la tâche de
-prédire le bon jeton en place en plus difficile avec la casse, puisque les
-jetons contenant la casse sont sont souvent syntaxiquement identiques, mais
-sont traités comme étant différents durant l'évaluation.\\
+moins biens que les autres. Une explications possible est que la tâche du
+générateur, qui consiste à prédire le bon jeton à la position donnée, estplus
+difficile avec la casse, puisque les jetons contenant la casse sont sont
+souvent syntaxiquement identiques, mais sont traités comme étant différents
+durant l'évaluation.\\
 
 Nous avons complété l'affinage du modèle en l'entraînant sur la tâche de
 détection des erreurs en français. Nous avons réutilisé les hyper-paramètres
@@ -828,8 +846,8 @@ des trois modèles précédents, contenus dans le tableau \ref{table:pre-entr-hp
 Les résultats du modèle affiné et prenant en compte la casse sont contenus dans
 le tableau \ref{table:resaffinagecasse}. Le modèle sensible à la casse performe
 mieux que les trois modèle initaux. Cette différence de performance s'explique
-par la présence d'erreurs basée sur la casse des mots ainsi qu'un
-pré-entraînement plus efficace.
+par la présence d'erreurs basées sur la casse des mots dans le corpus
+d'affinage.
 
 \begin{table}
 	\centering
@@ -847,9 +865,8 @@ pré-entraînement plus efficace.
 	\label{table:resaffinagecasse}
 \end{table}
 
-Les mesures F-0.5 obtenues sur l'ensemble de test durant
-l'affinage pour le modèle avec casse sont contenues dans la figure
-\ref{fig:f05electraaveccasse}.
+Les mesures F-0.5 obtenues sur l'ensemble de test durant l'affinage pour le
+modèle avec casse sont contenues dans la figure \ref{fig:f05electraaveccasse}.
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures/electraaveccassef05.png}
@@ -859,36 +876,36 @@ l'affinage pour le modèle avec casse sont contenues dans la figure
 		français.}\label{fig:f05electraaveccasse}
 \end{figure}
 
-\section{Comparaison avec Camembert}
+\section{Comparaison avec CAMEMBERT}
 Pour connaître le manque à gagner entre nos petits modèles ELECTRA et des
 modèles plus volumineux, nous avons affiné une plus gros modèle et avons
-comparé la performances des modèles. Nous avons utilisé Camembert
+comparé la performances des modèles. Nous avons utilisé CAMEMBERT
 \cite{camembert}, un modèle basé sur BERT et préentraîné sur le corpus
-francophone OSCAR \cite{oscar} à l'aide de la méthode MLM. Camembert-base
-possède plus de 100 millions de paramètres, le rendant près de 7 fois plus gros
-que nos modèle basés sur l'architecture de ELECTRA-small. Ainsi, il est trop
-gros pour être déployé dans Antidote. Néanmoins, il offre un possible plafond
-quant aux performance que nos modèles peuvent atteindre. \\
+francophone OSCAR \cite{oscar} à l'aide de la méthode MLM. CAMEMBERT-base
+possède plus de 100 millions de paramètres, le rendant près de 8 fois plus gros
+que nos modèles, qui eux sont basés sur l'architecture de ELECTRA-small. Ainsi,
+il est trop volumineux et lent pour être déployé dans Antidote. Néanmoins, il
+offre un possible plafond quant aux performance que nos modèles peuvent
+atteindre. De plus, le jetoniseur associé au modèle est sensible à la casse. \\
 
-Nous avons obtenu la courbe d'entraînement suivante lors de l'affinage de
-Camembert sur la tâche de détection des erreurs en français:
 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures/camembertbasef05100epoquesnat.png}
 	\end{center}
-	\caption{Mesure F-0.5 de Camembert selon le nombre d'itérations sur
+	\caption{Mesure F-0.5 de CAMEMBERT selon le nombre d'itérations sur
 		données d'évaluation pour la détection d'erreurs en
 		français.}\label{fig:f05camembert}
 \end{figure}
-Le modèle Camembert a atteint une mesure F-0.5 maximale de 40.47, performant
-mieux que nos modèles initaux et que le modèle sensible à la casse. La
+
+Le modèle CAMEMBERT a atteint une mesure F-0.5 maximale de 40.47, performant
+mieux que nos modèles initiaux et que le modèle sensible à la casse. La
 comparaison complète est disponible dans le tableau
-\ref{table:perf_initiaux_camembert}. L'évolution de la performance de Camembert
-est disponible dans la figure \ref{fig:f05camembert}. Nous avons limité le
-nombre d'époque maximal à 100. Il aurait été intéressant de laisser le modèle
-s'entraîner pour plus d'époque et ansi s'assurer que le modèle à atteint sa
-performance maximale.
+\ref{table:perf_initiaux_camembert}. L'évolution de la performance de CAMEMBERT
+au cours de son affinage est disponible dans la figure \ref{fig:f05camembert}.
+Nous avons limité le nombre d'époque maximal à 100. Il aurait été intéressant
+de laisser le modèle s'entraîner pour plus d'époque et ansi s'assurer que le
+modèle à atteint sa performance maximale.
 
 \begin{table}
 	\centering
@@ -900,17 +917,17 @@ performance maximale.
 		Modèle initial 2  & 40.22     & 24.36  & 35.63 \\
 		Modèle initial 3  & 39.85     & 24.88  & 35.57 \\
 		Modèle avec casse & 42.59     & 25.81  & 37.69 \\
-		Camembert-base    & 44.74     & 29.30  & 40.47 \\
+		CAMEMBERT-base    & 44.74     & 29.30  & 40.47 \\
 		\hline
 	\end{tabular}
-	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction avec le modèle sensible à la casse et Camembert}
+	\caption{Résultats des modèles préliminaires sur corpus d'évaluation de la tâche de correction avec le modèle sensible à la casse et CAMEMBERT}
 	\label{table:perf_initiaux_camembert}
 \end{table}
 
 
 \chapter{Modèle final}\label{chapitre:meilleurmodele}
 Notre modèle final consiste en un modèle ELECTRA-small, faisant usage du
-jetoniseur de Camembert. Le jetoniseur de Camembert est un jetoniseur
+jetoniseur de CAMEMBERT. Le jetoniseur de CAMEMBERT est un jetoniseur
 SentencePiece sensible à la casse et entraîné sur un corpus francophone. Les
 augmentations de performance les plus importants proviennent des deux
 modifications suivantes: la recherche d'hyper-paramètres, à l'aide de la
@@ -936,66 +953,69 @@ suivants:
 \begin{itemize}
 	\item Taille des lots durant la phase d'entraînement
 	\item \textit{Weight decay} de l'optimisateur
-	\item Taux d'apprentissage
+	\item Taux d'apprentissage de l'optimisateur
 \end{itemize}
-Cette recherche d'hyper-paramètres requiert un affinage complet du
-modèle pour chaque expérience et est donc trop dispendieux pour être
-utilisé à grande échelle. Néanmoins, la recherche d'hyper-paramètres à
-permis d'établir un nouveau record sur la tâche de correction en
-français, augmentant la F-mesure à 41,23.
+Cette recherche d'hyper-paramètres requiert un affinage complet du modèle pour
+chaque expérience et est donc trop dispendieux pour être utilisé à grande
+échelle. Néanmoins, la recherche d'hyper-paramètres à permis d'établir un
+nouveau record sur la tâche de correction en français, augmentant la F-mesure à
+41,23.
 
 \subsection{Note sur la qualité des données d'affinage}
-La recherche d'hyper-paramètres a révélé une tendance intéressante:
-les modèles gagnent à avoir une très petite taille de lot
-(\textit{batch size}) lors de leur entraînement. En effet, les modèles
-performant le mieux ont obtenus leur meilleure performance en
-utilisant une taille de lot de 8. Cette observation offre un contraste
-drastique entre les méthodes d'entraînement contemporaines pour les
-modèles de langue, qui font souvent usage d'une très grande taille de
-lot. Une raison souvent données pour expliquer les meilleures
-performances des modèles entraînés avec une grande taille de lot est
-qu'une taille de lot plus grande offre une plus grande résistance
-quant aux exemples bruités, contenant des erreurs ou plus généralement
-de mauvaise qualité. Or, la meilleure performance des modèles
-utilisant une petite taille de lot s'explique par la qualité des
-données annotés. En effet, les exemples contenus dans le corpus de
-test sont annotés par des humains formés pour une telle tâche, et les
+La recherche d'hyper-paramètres a révélé une tendance intéressante: les modèles
+gagnent à avoir une très petite taille de lot (\textit{batch size}) lors de
+leur entraînement. En effet, les modèles performant le mieux ont obtenus leur
+meilleure performance en utilisant une taille de lot de 8. Cette observation
+offre un contraste drastique entre les méthodes d'entraînement contemporaines
+pour les modèles de langue, qui font souvent usage d'une très grande taille de
+lot. Une raison souvent données pour expliquer les meilleures performances des
+modèles entraînés avec une grande taille de lot est qu'une taille de lot plus
+grande offre une plus grande résistance quant aux exemples bruités, contenant
+des erreurs ou plus généralement de mauvaise qualité. Or, nous pensons que la
+meilleure performance des modèles utilisant une petite taille de lot s'explique
+par la qualité des données annotés. En effet, les exemples contenus dans le
+corpus de test sont annotés par des humains formés pour une telle tâche, et les
 textes sont basés sur des corpus filtrés des humains, bien souvent des
-linguistes.
+linguistes. Il en résulte un corpus de très haute qualité contenant très peu
+d'exemples n'augmentant pas la performance finale du modèle.
 
 \section{Phase d'entraînement intermédiaire}
-Le plus gros gain de performance enregistré durant l'entraînement, en
-terme de mesure F-0.5 est l'ajout d'une phase d'entraînement
-intermédiaire. Cette phase additionnelle a rendu l'entraînement plus
-stable ainsi qu'augmenté la performance du modèle final.
+Le plus gros gain de performance enregistré durant l'entraînement, en terme de
+mesure F-0.5 est l'ajout d'une phase d'entraînement intermédiaire. Cette phase
+additionnelle a rendu l'entraînement plus stable, plus rapide et a augmenté la
+performance du modèle final.
 
 \subsection{Collecte et extraction des données}
 Nous avons été en mesure d'augmenter les données annotés à l'aide des
-corrections des utilisateurs. L'application Antidote dispose d'une version Web.
+corrections des utilisateurs. En effet, Antidote dispose d'une version Web.
 Celle-ci est établie depuis de nombreuses années et collecte les textes
 anonymisées des utilisateurs. Cette base de données comporte notamment les
 phrases anonymisée entrées par les utilisateurs de Antidote Web, ainsi que les
 corrections proposées par Antidote qui ont été acceptées par les utilisateurs.
 Ainsi, les erreurs détectées par Antidote qui ne sont pas réellement des
-erreurs (i.e. les faux positifs) sont potentiellement ignorés par les
-utilisateurs et ne font donc pas partie du nouveau corpus. Ce corpus contient
-ne contient pas toutes les erreurs contenues dans la liste de Druide. \\
+erreurs (c'est-à-dire les faux positifs) sont potentiellement ignorés par les
+utilisateurs et ne font donc pas partie du nouveau corpus. Ce corpus ne
+contient pas toutes les erreurs contenues dans la liste de Druide, mais
+contient des exemples qui ont été indirectement vérifiés par des humains.\\
 
 Après l'extraction des données, nous avons traité ces nouvelles données pour
 que ces derniers soit compatibles avec notre méthodologie d'entraînement. Nous
-avons nettoyer le corpus en retirant les corrections ne faisant par partie de
-la liste de corrections utilisées dans l'affinage. Ce nouveau corpus contient
-un total de 3.5 millions de phrases annotés provenant des utilisateurs et
-corrigés par Antidote. Ainsi, ce dernier est 35 fois plus grand que le corpus
-d'affinage initial, qui contient 100000 corrections faites par des linguistes
-et des annotateurs.
+avons notamment nettoyer le corpus en retirant les corrections ne faisant par
+partie de la liste de corrections utilisées dans l'affinage. Ce nouveau corpus
+contient un total de 3.5 millions de phrases annotés provenant des utilisateurs
+et corrigés par Antidote. Ainsi, ce dernier est 35 fois plus grand que le
+corpus d'affinage initial, qui contient 100000 corrections faites par des
+linguistes et des annotateurs.
+
 \subsection{Résultat de la phase intermédiaire}
-Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire. Celle-ci est
-exécutée après le pré-entraînement et après l'affinage du modèle. Cette
-nouvelle phase intermédiaire s'est avérée être très importante pour la
-performance du modèle sur la correction des erreurs en français. Nous avons
-observé une augmentation de près de 5 points de mesure F-0.5 ainsi qu'une
-hausse importante dans la vitesse à laquelle les modèles convergent:
+Nous avons utilisé ce nouveau corpus comme un tâche intermédiaire, exécutée
+après le préentraînement mais avant l'affinage. Cette nouvelle phase
+intermédiaire s'est avérée être très importante pour la performance du modèle
+sur la correction des erreurs en français. En effet, nous avons observé une
+augmentation de près de 5 points de mesure F-0.5 ainsi qu'une hausse importante
+dans la vitesse à laquelle les modèles convergent, notamment dans les
+expériences de recherche d'hyper-paramètre. La figure \ref{fig:electraaweb}
+illustre ce gain de performance.
 
 \begin{figure}
 	\begin{center}
@@ -1028,7 +1048,7 @@ résultats \ref{table:resultatfinaux}.
 		Modèle initial 2                                    & 35.63 \\
 		Modèle initial 3                                    & 35.57 \\
 		Modèle avec casse                                   & 37.69 \\
-		Camembert-base                                      & 40.47 \\
+		CAMEMBERT-base                                      & 40.47 \\
 		Modèle final (avec Optuna,sans phase intermédiaire) & 41.23 \\
 		Modèle final  (avec Optuna et phase intermédiaire)  & 46.39 \\
 		\hline
@@ -1063,7 +1083,7 @@ optimum local différent. Ainsi, l'initialisation du modèle soupe était éloig
 des optimums locaux des modèles.
 \section{Nettoyage des données}
 Une part éssentielle de l'entraînement est de fournir des données de qualité
-à notre modèle. Or, une partie importante du corpus de pré-entraînement est
+à notre modèle. Or, une partie importante du corpus de préentraînement est
 de piètre qualité. En effet, les données proviennent de plusieurs types de
 sources différentes: livres, revues, article de blogue et site internet. Toutes
 ces sources ne sont pas sans erreurs ou ne contiennent pas nécessairement des
@@ -1107,7 +1127,7 @@ différents filtres ont eu un impact variable sur le résultat final:
 Après le nettoyage du corpus, nous avons entraîné une nouvelle fois un modèle,
 mais cette fois-ci sur le corpus restreint. Nous avons utilisé les mêmes
 hyper-paramètres que le meilleur modèle décrit au chapitre
-\ref{chapitre:meilleurmodele} durant le pré-entraînement et la phase
+\ref{chapitre:meilleurmodele} durant le préentraînement et la phase
 intermédiaire, puis avons effectué une recherche d'hyper-paramètres à l'aide
 d'Optuna. La figure \ref{fig:electrapropre} montre les courbe de mesure F-0.5
 durant la recherche d'hyper-paramètre sur la tâche de détection des erreurs en
@@ -1127,7 +1147,7 @@ sont nécessaires pour vérifier la pertinence de nos heuristiques.
 		\includegraphics[width=1.0\textwidth]{figures/electrasentenecepicepropreoptunaf05.png}
 	\end{center}
 	\caption{Mesure F-0.5 durant la recherche d'hyper-paramètres après avoir
-		pré-entraîné sur le corpus nettoyé. Aucun des modèle n'atteint la
+		préentraîné sur le corpus nettoyé. Aucun des modèle n'atteint la
 		performance du modèle final (\ref{fig:meilleurmodeleaweb})}
 	\label{fig:electrapropre}
 \end{figure}
@@ -1147,17 +1167,19 @@ comme l'état de l'art en traitement automatique des langues.
 
 Nous avons obtenu de bons résultats préliminaires, notamment en ajoutant une
 phase intermédiaire durant l'entraînement et en effectuant une recherche
-d'hyper-paramètre. Nous pensons qu'une avenue d'amélioration du modèle
-consisterait à faire usage de grands modèles de langues dans le but de générer
-des données artificielles de bonnes qualité. En particulier, une stratégie qui
-pourrait être intéressante pour augmenter la performance du modèle serait
-d'utiliser un grand modèle de langue pour générer des phrases comportant des
-erreurs dans le but d'augmenter la taille du corpus d'entraînement. Il serait
-particulièrement intéressant de générer des données artificielles pour les
-types d'erreurs avec lesquels notre modèle à encore de la difficulté. Cela
-permettrait de réduire le coût et le temps de génération des phrases
-artificielles et permettrait d'avoir un modèle plus performant sur tous les
-types d'erreurs présent dans la liste des erreurs corrigés par Antidote.
+d'hyper-paramètre. Notre meilleur modèle est même en mesure de battre
+CAMEMBERT, un modèle disposant de presque 8 fois plus de paramètres. Nous
+pensons qu'une avenue d'amélioration du modèle consisterait à faire usage de
+grands modèles de langues dans le but de générer des données artificielles de
+bonnes qualité. En particulier, une stratégie qui pourrait être intéressante
+pour augmenter la performance du modèle serait d'utiliser un grand modèle de
+langue pour générer des phrases comportant des erreurs dans le but d'augmenter
+la taille du corpus d'entraînement. Il serait particulièrement intéressant de
+générer des données artificielles pour les types d'erreurs avec lesquels notre
+modèle à encore de la difficulté. Cela permettrait de réduire le coût et le
+temps de génération des phrases artificielles et permettrait d'avoir un modèle
+plus performant sur tous les types d'erreurs présent dans la liste des erreurs
+corrigés par Antidote.
 
 %%--------------%
 %%     index    %
